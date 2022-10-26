@@ -32,6 +32,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.png
   AssetGenImage get home => const AssetGenImage('assets/icons/home.png');
 
+  /// File path: assets/icons/menu-dot_vertical.png
+  AssetGenImage get menuDotVertical =>
+      const AssetGenImage('assets/icons/menu-dot_vertical.png');
+
   /// File path: assets/icons/menu.png
   AssetGenImage get menu => const AssetGenImage('assets/icons/menu.png');
 
@@ -79,6 +83,7 @@ class $AssetsIconsGen {
         book,
         dream,
         home,
+        menuDotVertical,
         menu,
         music,
         notebook,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_infinity_app/views/pages/main_page.dart';
+import 'package:todo_infinity_app/views/pages/task_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('fa', 'IR'), // Farsi, IRAN
       ],
-      home: MainPage(),
+      home: TaskListPage(),
     );
   }
 }
