@@ -5,9 +5,10 @@ import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/models/fake_data.dart';
+import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+class CategoryPage extends StatelessWidget {
+  const CategoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,7 @@ class MainPage extends StatelessWidget {
                                       ImageIcon(
                                         Image.asset(Assets.icons.notebook.path)
                                             .image,
-                                        color: SolidColors.primery,
+                                        color: SolidColors.primary,
                                         size: 34,
                                       ),
                                       Column(
@@ -114,10 +115,8 @@ class MainPage extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: MyFloatingActionButton(
           onPressed: () {},
-          backgroundColor: SolidColors.primery,
-          child: const Icon(FontAwesomeIcons.plus),
         ),
       ),
     );
