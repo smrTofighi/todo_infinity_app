@@ -1,17 +1,14 @@
-import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
+import 'package:todo_infinity_app/models/task_model.dart';
 
-@HiveType(typeId: 1)
+// part 'category_model.g.dart';
+
 class CategoryModel {
-  @HiveField(0)
-  int? id;
-  @HiveField(1)
   String? name;
-  @HiveField(2)
-  String? icon;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-    required this.icon,
-  });
+  ImageProvider? icon;
+
+  List<TaskModel> taskList;
+  CategoryModel(
+      {required this.name, required this.icon, required this.taskList});
 }
