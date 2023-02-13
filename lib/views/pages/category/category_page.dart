@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
+import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
+import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
 class CategoryPage extends StatelessWidget {
   CategoryPage({super.key});
   var categoryController = Get.find<CategoryController>();
+  var taskController = Get.find<TaskController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,9 +62,23 @@ class CategoryPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: InkWell(
-                          onTap: () {},
-                          splashColor: Colors.transparent,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (index ==
+                                categoryController.categoryList.length) {
+                              categoryController.addCategory();
+                            } else {
+                              taskController.categoryModel.value =
+                                  categoryController.categoryList[index];
+                              Get.toNamed(PageName.taskListPage);
+                            }
+                          },
+                          onLongPress: () {
+                            if (index !=
+                                categoryController.categoryList.length) {
+                              categoryController.categoryList.removeAt(index);
+                            }
+                          },
                           child: Container(
                             width: Get.width / 2.2,
                             height: Get.height / 3.2,
@@ -90,7 +107,8 @@ class CategoryPage extends StatelessWidget {
                                         ImageIcon(
                                           categoryController
                                               .categoryList[index].icon,
-                                          color: SolidColors.primary,
+                                          color: categoryController
+                                              .categoryList[index].color,
                                           size: 34,
                                         ),
                                         Column(
@@ -104,7 +122,9 @@ class CategoryPage extends StatelessWidget {
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 20),
                                             ),
-                                            const Text('10 یادداشت'),
+                                            Text(
+                                              '${categoryController.categoryList[index].taskList!.length} عدد',
+                                            ),
                                           ],
                                         )
                                       ],
@@ -122,6 +142,7 @@ class CategoryPage extends StatelessWidget {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {},
+          color: SolidColors.primary,
         ),
       ),
     );

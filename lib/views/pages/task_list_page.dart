@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
+// ignore: must_be_immutable
 class TaskListPage extends StatelessWidget {
-  const TaskListPage({super.key});
+  TaskListPage({super.key});
+  var taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: SolidColors.primary,
+        backgroundColor: taskController.categoryModel.value.color,
         body: Stack(
           children: [
             Column(
@@ -23,7 +26,9 @@ class TaskListPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                        },
                         icon: ImageIcon(
                           MyIcons.arrowRight,
                           color: Colors.white,
@@ -54,18 +59,21 @@ class TaskListPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(100),
                             color: SolidColors.card,
                           ),
-                          child: ImageIcon(MyIcons.noteBook),
+                          child: ImageIcon(
+                            taskController.categoryModel.value.icon,
+                            color: taskController.categoryModel.value.color,
+                          ),
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
-                        const Text(
-                          'همه',
+                        Text(
+                          taskController.categoryModel.value.name!,
                           style: MyTextStyles.bigTextWhite,
                         ),
-                        const Text(
-                          '24 یادداشت',
-                          style: TextStyle(color: Colors.white),
+                        Text(
+                          '${taskController.categoryModel.value.taskList!.length} یادداشت',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
@@ -90,6 +98,7 @@ class TaskListPage extends StatelessWidget {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {},
+          color: taskController.categoryModel.value.color!,
         ),
       ),
     );

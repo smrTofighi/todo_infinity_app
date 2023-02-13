@@ -5,10 +5,8 @@ import 'package:todo_infinity_app/models/task_model.dart';
 
 class CategoryModel {
   String? name;
-
   ImageProvider? icon;
-
-  List<TaskModel> taskList;
-  CategoryModel(
-      {required this.name, required this.icon, required this.taskList});
+  List<TaskModel>? taskList;
+  Color? color;
+  CategoryModel({this.name, this.icon, this.color, this.taskList});
 }

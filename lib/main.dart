@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo_infinity_app/bindings/binding.dart';
-import 'package:todo_infinity_app/gen/fonts.gen.dart';
 import 'package:todo_infinity_app/routes/routes.dart';
 import 'package:todo_infinity_app/views/pages/splash_page.dart';
+import 'core/themes/light_theme.dart';
 
 void main() async {
   await GetStorage.init();
-  await Hive.initFlutter();
+  // await Hive.initFlutter();
   //TODO: init Hive and register adaptor
   runApp(const MyApp());
 }
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ToDo Infinity',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: FontFamily.samim),
+      theme: lightTheme(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
