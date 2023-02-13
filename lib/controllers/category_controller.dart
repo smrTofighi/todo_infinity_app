@@ -32,7 +32,7 @@ class CategoryController extends GetxController {
     SolidColors.primary,
     Colors.red,
     Colors.green,
-    Colors.yellow,
+    Colors.brown,
     Colors.orange,
     Colors.purple
   ];
@@ -51,6 +51,7 @@ class CategoryController extends GetxController {
             TextField(
               controller: textEditingCategory,
               cursorColor: SolidColors.primary,
+              maxLength: 20,
               style: const TextStyle(fontSize: 14),
               decoration: const InputDecoration(
                 hintText: 'نام لیست',
@@ -124,8 +125,8 @@ class CategoryController extends GetxController {
                   ),
                   ColorWidget(
                     color: colorIndex.value == 3
-                        ? Colors.yellow
-                        : Colors.yellow.withOpacity(0.35),
+                        ? Colors.brown
+                        : Colors.brown.withOpacity(0.35),
                     onTap: () {
                       colorIndex.value = 3;
                     },
@@ -169,6 +170,8 @@ class CategoryController extends GetxController {
                         ),
                       );
                       textEditingCategory.text = '';
+                      iconIndex.value = 0;
+                      colorIndex.value = 0;
                       Get.back();
                     },
                     child: const Text('افزودن'),
