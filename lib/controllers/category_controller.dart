@@ -166,7 +166,10 @@ class CategoryController extends GetxController {
                           name: textEditingCategory.text,
                           icon: iconList[iconIndex.value],
                           color: colorList[colorIndex.value],
-                          taskList: [],
+                          allTaskList: [],
+                          completeTaskList: [],
+                          lastTaskList: [],
+                          todayTakList: [],
                         ),
                       );
                       textEditingCategory.text = '';
@@ -210,7 +213,10 @@ class CategoryController extends GetxController {
           name: MyStrings.all,
           icon: MyIcons.noteBook,
           color: SolidColors.primary,
-          taskList: [],
+          allTaskList: [],
+          completeTaskList: [],
+          lastTaskList: [],
+          todayTakList: [],
         ),
       );
       Get.offNamed(PageName.categoryPage);
@@ -221,7 +227,10 @@ class CategoryController extends GetxController {
           name: MyStrings.all,
           icon: MyIcons.noteBook,
           color: SolidColors.primary,
-          taskList: [],
+          allTaskList: [],
+          completeTaskList: [],
+          lastTaskList: [],
+          todayTakList: [],
         ),
       );
       Get.offNamed(PageName.categoryPage);

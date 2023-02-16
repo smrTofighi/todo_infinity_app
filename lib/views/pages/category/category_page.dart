@@ -118,7 +118,7 @@ class CategoryPage extends StatelessWidget {
                                                   fontSize: 20),
                                             ),
                                             Text(
-                                              '${categoryController.categoryList[index].taskList!.length} عدد',
+                                              '${categoryController.categoryList[index].allTaskList!.length} عدد',
                                             ),
                                           ],
                                         ),

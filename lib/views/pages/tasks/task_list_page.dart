@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
+import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
+import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
 // ignore: must_be_immutable
@@ -73,7 +75,7 @@ class TaskListPage extends StatelessWidget {
                           style: MyTextStyles.bigTextWhite,
                         ),
                         Text(
-                          '${taskController.categoryModel.value.taskList!.length} یادداشت',
+                          '${taskController.categoryModel.value.allTaskList!.length} یادداشت',
                           style: const TextStyle(color: Colors.white),
                         ),
                       ],
@@ -112,224 +114,7 @@ class TaskListPage extends StatelessWidget {
                         ),
                         collapsed: const SizedBox(),
                         expanded: Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      ExpandablePanel(
-                        // controller:
-                        //     ExpandableController(initialExpanded: false),
-                        header: const Text(
-                          'امروز',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        // controller: ExpandableController(initialExpanded: true),
-                        collapsed: const SizedBox(),
-                        expanded: Column(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                          children: [],
                         ),
                       ),
                       ExpandablePanel(
@@ -345,105 +130,58 @@ class TaskListPage extends StatelessWidget {
                         collapsed: const SizedBox(),
                         expanded: Column(
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'خرید تخم مرغ',
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 4.0,
-                                      ),
-                                      Text(
-                                        '25 فروردین - 1401',
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      )
-                                    ],
-                                  ),
-                                  Radio(
-                                    value: 0,
-                                    groupValue: 1,
-                                    onChanged: (value) {},
-                                  )
-                                ],
-                              ),
-                            ),
+                            taskController.categoryModel.value.allTaskList!
+                                        .length ==
+                                    0
+                                ? const Text('هنوز یادداشتی افزوده نشده')
+                                : SizedBox(
+                                  width: Dimens.width,
+                                  height: taskController.categoryModel.value.allTaskList!
+                                        .length * 65,
+                                  child: ListView.builder(
+                                      itemCount: taskController.categoryModel
+                                          .value.allTaskList!.length,
+                                      scrollDirection: Axis.vertical,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          height: 65,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children:  [
+                                                  Text(
+                                                    taskController.categoryModel.value.allTaskList![index].name!,
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 4.0,
+                                                  ),
+                                                  Text(
+                                                    '25 فروردین - 1401',
+                                                    style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 12),
+                                                  )
+                                                ],
+                                              ),
+                                              Radio(
+                                                value: 0,
+                                                groupValue: 1,
+                                                onChanged: (value) {},
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                )
                           ],
                         ),
                       ),
@@ -570,7 +308,9 @@ class TaskListPage extends StatelessWidget {
           ],
         ),
         floatingActionButton: MyFloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(PageName.addEditTaskPage);
+          },
           color: taskController.categoryModel.value.color!,
         ),
       ),

@@ -14,6 +14,8 @@ class MyIcons {
       Image.asset(Assets.icons.menuDotVertical.path).image;
   static ImageProvider arrowRight =
       Image.asset(Assets.icons.arrowRight.path).image;
+  static ImageProvider notification =
+      Image.asset(Assets.icons.notification.path).image;
+  static ImageProvider note = Image.asset(Assets.icons.notes.path).image;
+  static ImageProvider tags = Image.asset(Assets.icons.tags.path).image;
 }
-
-

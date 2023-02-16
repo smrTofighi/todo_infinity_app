@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 
@@ -22,6 +22,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow-right.png
   AssetGenImage get arrowRight =>
       const AssetGenImage('assets/icons/arrow-right.png');
+
+  /// File path: assets/icons/bell.png
+  AssetGenImage get bell => const AssetGenImage('assets/icons/bell.png');
 
   /// File path: assets/icons/book.png
   AssetGenImage get book => const AssetGenImage('assets/icons/book.png');
@@ -46,6 +49,9 @@ class $AssetsIconsGen {
   AssetGenImage get notebook =>
       const AssetGenImage('assets/icons/notebook.png');
 
+  /// File path: assets/icons/notes.png
+  AssetGenImage get notes => const AssetGenImage('assets/icons/notes.png');
+
   /// File path: assets/icons/notification.png
   AssetGenImage get notification =>
       const AssetGenImage('assets/icons/notification.png');
@@ -69,6 +75,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/sign-out.png
   AssetGenImage get signOut => const AssetGenImage('assets/icons/sign-out.png');
 
+  /// File path: assets/icons/tags.png
+  AssetGenImage get tags => const AssetGenImage('assets/icons/tags.png');
+
   /// File path: assets/icons/user.png
   AssetGenImage get user => const AssetGenImage('assets/icons/user.png');
 
@@ -80,6 +89,7 @@ class $AssetsIconsGen {
         ariplan,
         arrowLeft,
         arrowRight,
+        bell,
         book,
         dream,
         home,
@@ -87,6 +97,7 @@ class $AssetsIconsGen {
         menu,
         music,
         notebook,
+        notes,
         notification,
         school,
         search,
@@ -94,6 +105,7 @@ class $AssetsIconsGen {
         share,
         shop,
         signOut,
+        tags,
         user,
         work
       ];
