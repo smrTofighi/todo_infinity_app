@@ -7,9 +7,14 @@ class CategoryModel {
   String? name;
   ImageProvider? icon;
   List<TaskModel>? lastTaskList;
-  List<TaskModel>? todayTakList;
   List<TaskModel>? allTaskList;
   List<TaskModel>? completeTaskList;
   Color? color;
-  CategoryModel({this.name, this.icon, this.color, this.allTaskList, this.todayTakList, this.completeTaskList, this.lastTaskList});
+  CategoryModel(
+      {this.name,
+      this.icon,
+      this.color,
+      this.allTaskList,
+      this.completeTaskList,
+      this.lastTaskList});
 }

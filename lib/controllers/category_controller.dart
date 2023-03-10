@@ -16,7 +16,8 @@ class CategoryController extends GetxController {
   TextEditingController textEditingCategory = TextEditingController();
   RxInt colorIndex = 0.obs;
   RxInt iconIndex = 0.obs;
-
+  RxInt allCountItemsCategories = 0.obs;
+  RxInt completeCountItemsCategories = 0.obs;
   //? static variables
   List<ImageProvider> iconList = [
     MyIcons.airplan,
@@ -36,6 +37,20 @@ class CategoryController extends GetxController {
     Colors.orange,
     Colors.purple
   ];
+  @override
+  void onInit() {
+    super.onInit();
+    countAllItemsCategories();
+  }
+
+  countAllItemsCategories() {
+    allCountItemsCategories.value = 0;
+    completeCountItemsCategories.value = 0;
+    for (var category in categoryList) {
+      allCountItemsCategories.value += category.allTaskList!.length;
+      completeCountItemsCategories.value += category.completeTaskList!.length;
+    }
+  }
 
   addCategory() {
     Get.defaultDialog(
@@ -169,7 +184,6 @@ class CategoryController extends GetxController {
                           allTaskList: [],
                           completeTaskList: [],
                           lastTaskList: [],
-                          todayTakList: [],
                         ),
                       );
                       textEditingCategory.text = '';
@@ -216,7 +230,6 @@ class CategoryController extends GetxController {
           allTaskList: [],
           completeTaskList: [],
           lastTaskList: [],
-          todayTakList: [],
         ),
       );
       Get.offNamed(PageName.categoryPage);
@@ -230,7 +243,6 @@ class CategoryController extends GetxController {
           allTaskList: [],
           completeTaskList: [],
           lastTaskList: [],
-          todayTakList: [],
         ),
       );
       Get.offNamed(PageName.categoryPage);

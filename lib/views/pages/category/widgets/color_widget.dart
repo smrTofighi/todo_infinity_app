@@ -22,3 +22,5 @@ class ColorWidget extends StatelessWidget {
     );
   }
 }
+
+//? This widget is used on the main page where the user selects the color of the category icon 

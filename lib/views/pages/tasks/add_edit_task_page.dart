@@ -1,15 +1,28 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/models/task_model.dart';
+import 'package:todo_infinity_app/routes/pages.dart';
 
 // ignore: must_be_immutable
-class AddEditTaskPage extends StatelessWidget {
-  AddEditTaskPage({Key? key}) : super(key: key);
-  var controller = Get.find<TaskController>();
+class AddEditTaskPage extends StatefulWidget {
+  const AddEditTaskPage({Key? key}) : super(key: key);
+
+  @override
+  State<AddEditTaskPage> createState() => _AddEditTaskPageState();
+}
+
+class _AddEditTaskPageState extends State<AddEditTaskPage> {
+  var taskController = Get.find<TaskController>();
+  var categoryController = Get.find<CategoryController>();
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,7 +32,7 @@ class AddEditTaskPage extends StatelessWidget {
           title: const Text(
             'یادداشت جدید',
             style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.w300),
+                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           elevation: 0,
@@ -39,15 +52,20 @@ class AddEditTaskPage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
           child: Column(
             children: [
+              const SizedBox(
+                height: 32.0,
+              ),
               TextField(
                 maxLines: 3,
-                controller: controller.taskEditingController,
-                cursorColor: SolidColors.primary,
-                decoration: const InputDecoration(
+                controller: taskController.taskEditingController,
+                cursorColor: taskController.categoryModel.value.color,
+                decoration: InputDecoration(
                   filled: true,
                   fillColor: SolidColors.backGround,
                   labelText: 'چه برنامه ای داری؟',
-                  labelStyle: TextStyle(fontSize: 14),
+                  floatingLabelStyle: TextStyle(
+                      color: taskController.categoryModel.value.color),
+                  labelStyle: const TextStyle(fontSize: 14),
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -69,10 +87,13 @@ class AddEditTaskPage extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  const Text(
-                    'افزودن هشدار',
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
-                  )
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      taskController.alarm.value,
+                      style: const TextStyle(color: Colors.grey, fontSize: 13),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -88,10 +109,21 @@ class AddEditTaskPage extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  const Text(
-                    'افزودن نکته',
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
-                  )
+                  TextButton(
+                    onPressed: () {
+                      taskController.addNote();
+                    },
+                    style: ButtonStyle(
+                      alignment: Alignment.centerRight
+                    ),
+                    child: Obx(
+                      () => Text(
+                        taskController.importance.value,
+                        style: const TextStyle(
+                            color: Colors.grey, fontSize: 13),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -107,42 +139,78 @@ class AddEditTaskPage extends StatelessWidget {
                   const SizedBox(
                     width: 16,
                   ),
-                  const Text(
-                    'دسته بندی',
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
-                  )
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      taskController.categoryModel.value.name!,
+                      style: TextStyle(
+                          color: taskController.categoryModel.value.color,
+                          fontSize: 13),
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
         ),
-        bottomNavigationBar: SizedBox(
-          width: Dimens.width,
-          height: 55,
-          child: ElevatedButton(
-            onPressed: () {
-              TaskModel task = TaskModel(
-                  name: controller.taskEditingController.text,
-                  note: 'note',
-                  alarm: 'alarm',
-                  category: 'category',
-                  isComplete: false);
-              controller.categoryModel.value.allTaskList!.add(task);
-              Get.back();
-            },
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    // Change your radius here
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                    controller.categoryModel.value.color)),
-            child: const Text('افزودن'),
-          ),
+        bottomNavigationBar: AddEditTaskBottomNavigation(
+          taskController: taskController,
+          categoryController: categoryController,
         ),
       ),
     );
+  }
+}
+
+// ignore: must_be_immutable
+class AddEditTaskBottomNavigation extends StatelessWidget {
+  const AddEditTaskBottomNavigation({
+    super.key,
+    required this.taskController,
+    required this.categoryController,
+  });
+  final TaskController taskController;
+  final CategoryController categoryController;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Dimens.width,
+      height: 55,
+      child: ElevatedButton(
+        onPressed: () {
+          onTapAdd();
+        },
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                // Change your radius here
+                borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.all(
+                taskController.categoryModel.value.color)),
+        child: const Text('افزودن'),
+      ),
+    );
+  }
+
+  onTapAdd() {
+    var note = taskController.importance.value == 'میزان اهمیت'
+        ? ''
+        : taskController.importance.value;
+    TaskModel task = TaskModel(
+      name: taskController.taskEditingController.text,
+      note: note,
+      alarm: taskController.alarm.value,
+      category: taskController.category.value,
+      isComplete: false,
+    );
+    // var mainCategory = categoryController.categoryList[0];
+    // int index = taskController.categoryIndex.value;
+
+    taskController.categoryModel.value.allTaskList!.add(task);
+    categoryController.countAllItemsCategories();
+    Get.offAllNamed(PageName.categoryPage);
   }
 }
