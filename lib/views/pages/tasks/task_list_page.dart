@@ -116,36 +116,41 @@ class CompleteTaskList extends StatelessWidget {
                 width: Dimens.width,
                 height: taskController
                         .categoryModel.value.completeTaskList!.length *
-                    65,
+                    85,
                 child: ListView.separated(
                   itemCount: taskController
                       .categoryModel.value.completeTaskList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return Container(
-                      height: 65,
+                      height: 85,
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 taskController.categoryModel.value
                                     .completeTaskList![index].name!,
                                 style: const TextStyle(
                                     fontSize: 15,
+                                    color: Colors.grey,
                                     decoration: TextDecoration.lineThrough),
                               ),
-                              const SizedBox(
-                                height: 4.0,
+                              Text(
+                                taskController.categoryModel.value
+                                    .completeTaskList![index].alarm!,
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 12),
                               ),
-                              const Text(
-                                '',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 12),
-                              )
+                              Text(
+                                "اولویت : ${taskController.categoryModel.value.completeTaskList![index].importance!}",
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 12),
+                              ),
                             ],
                           ),
                           Column(
@@ -222,69 +227,78 @@ class AllTaskList extends StatelessWidget {
             : SizedBox(
                 width: Dimens.width,
                 height:
-                    taskController.categoryModel.value.allTaskList!.length * 65,
+                    taskController.categoryModel.value.allTaskList!.length * 85,
                 child: ListView.separated(
                   itemCount:
                       taskController.categoryModel.value.allTaskList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 65,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                taskController.categoryModel.value
-                                    .allTaskList![index].name!,
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                              const SizedBox(
-                                height: 4.0,
-                              ),
-                              const Text(
-                                '',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 12),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Obx(
-                                () => Checkbox(
-                                  value: taskController.categoryModel.value
-                                      .allTaskList![index].isComplete,
-                                  onChanged: (value) {
-                                    if (taskController.categoryModel.value
-                                            .allTaskList![index].isComplete ==
-                                        false) {
-                                      taskController.categoryModel
-                                          .update((val) {
-                                        val!.allTaskList![index].isComplete =
-                                            true;
-                                      });
-                                      taskController
-                                          .categoryModel.value.completeTaskList!
-                                          .add(taskController.categoryModel
-                                              .value.allTaskList![index]);
-                                      taskController
-                                          .categoryModel.value.allTaskList!
-                                          .removeAt(index);
-                                    }
-                                  },
-                                  activeColor:
-                                      taskController.categoryModel.value.color,
+                    return GestureDetector(
+                      onTap: () {
+                        taskController.editTaskState.value = true;
+                        Get.toNamed(PageName.addEditTaskPage);
+                      },
+                      child: Container(
+                        height: 85,
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  taskController.categoryModel.value
+                                      .allTaskList![index].name!,
+                                  style: const TextStyle(fontSize: 15),
                                 ),
-                              ),
-                              const Spacer()
-                            ],
-                          )
-                        ],
+                                Text(
+                                  taskController.categoryModel.value
+                                      .allTaskList![index].alarm!,
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  "اولویت : ${taskController.categoryModel.value.allTaskList![index].importance!}",
+                                  style: MyTextStyles
+                                      .importanceTextTaskListPageAll,
+                                ),
+                              ],
+                            ),
+                            
+                            Column(
+                              children: [
+                                Obx(
+                                  () => Checkbox(
+                                    value: taskController.categoryModel.value
+                                        .allTaskList![index].isComplete,
+                                    onChanged: (value) {
+                                      if (taskController.categoryModel.value
+                                              .allTaskList![index].isComplete ==
+                                          false) {
+                                        taskController.categoryModel
+                                            .update((val) {
+                                          val!.allTaskList![index].isComplete =
+                                              true;
+                                        });
+                                        taskController.categoryModel.value
+                                            .completeTaskList!
+                                            .add(taskController.categoryModel
+                                                .value.allTaskList![index]);
+                                        taskController
+                                            .categoryModel.value.allTaskList!
+                                            .removeAt(index);
+                                      }
+                                    },
+                                    activeColor: taskController
+                                        .categoryModel.value.color,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },

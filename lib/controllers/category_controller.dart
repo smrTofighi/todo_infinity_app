@@ -201,7 +201,7 @@ class CategoryController extends GetxController {
                     onPressed: () {
                       Get.back();
                       colorIndex.value = 0;
-                      colorIndex.value = 0;
+                      iconIndex.value = 0;
                       textEditingCategory.text = '';
                     },
                     child: const Text('لغو'),

@@ -1,12 +1,17 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
+import 'package:todo_infinity_app/core/styles/button_style.dart';
+import 'package:todo_infinity_app/core/styles/input_decoration.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
+import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/models/task_model.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 
@@ -22,16 +27,17 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
   var taskController = Get.find<TaskController>();
   var categoryController = Get.find<CategoryController>();
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: SolidColors.backGround,
         appBar: AppBar(
-          title: const Text(
-            'یادداشت جدید',
-            style: TextStyle(
+          title: Text(
+            taskController.editTaskState.value
+                ? MyStrings.editTask
+                : MyStrings.newTask,
+            style: const TextStyle(
                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -56,46 +62,15 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 height: 32.0,
               ),
               TextField(
-                maxLines: 3,
-                controller: taskController.taskEditingController,
-                cursorColor: taskController.categoryModel.value.color,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: SolidColors.backGround,
-                  labelText: 'چه برنامه ای داری؟',
-                  floatingLabelStyle: TextStyle(
-                      color: taskController.categoryModel.value.color),
-                  labelStyle: const TextStyle(fontSize: 14),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                ),
-              ),
+                  maxLines: 3,
+                  controller: taskController.taskEditingController,
+                  cursorColor: taskController.categoryModel.value.color,
+                  decoration: MyInputDecoration.textFieldAddEditTaskPage),
               const Divider(),
               const SizedBox(
                 height: 24,
               ),
-              Row(
-                children: [
-                  ImageIcon(
-                    MyIcons.notification,
-                    size: 18,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      taskController.alarm.value,
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
+              TaskAlarm(),
               const SizedBox(
                 height: 22,
               ),
@@ -113,14 +88,15 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                     onPressed: () {
                       taskController.addNote();
                     },
-                    style: ButtonStyle(
-                      alignment: Alignment.centerRight
-                    ),
+                    style: MyButtonStyle.textButtonAddEditTaskPage,
                     child: Obx(
                       () => Text(
                         taskController.importance.value,
-                        style: const TextStyle(
-                            color: Colors.grey, fontSize: 13),
+                        style: TextStyle(
+                            color: taskController.importanceState.value
+                                ? taskController.categoryModel.value.color
+                                : Colors.grey,
+                            fontSize: 13),
                       ),
                     ),
                   ),
@@ -141,6 +117,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                   ),
                   TextButton(
                     onPressed: () {},
+                    style: MyButtonStyle.textButtonAddEditTaskPage,
                     child: Text(
                       taskController.categoryModel.value.name!,
                       style: TextStyle(
@@ -153,24 +130,59 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
             ],
           ),
         ),
-        bottomNavigationBar: AddEditTaskBottomNavigation(
-          taskController: taskController,
-          categoryController: categoryController,
-        ),
+        bottomNavigationBar: AddEditTaskBottomNavigation(),
       ),
     );
   }
 }
 
 // ignore: must_be_immutable
-class AddEditTaskBottomNavigation extends StatelessWidget {
-  const AddEditTaskBottomNavigation({
+class TaskAlarm extends StatelessWidget {
+  TaskAlarm({
     super.key,
-    required this.taskController,
-    required this.categoryController,
   });
-  final TaskController taskController;
-  final CategoryController categoryController;
+  TaskController taskController = Get.find<TaskController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ImageIcon(
+          MyIcons.notification,
+          size: 18,
+          color: Colors.grey,
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        TextButton(
+          onPressed: () {
+            taskController.addAlarm(context);
+          },
+          style: MyButtonStyle.textButtonAddEditTaskPage,
+          child: Obx(
+            () => Text(
+              taskController.alarm.value,
+              style: TextStyle(
+                  color: taskController.alarmState.value
+                      ? taskController.categoryModel.value.color
+                      : Colors.grey,
+                  fontSize: 13),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class AddEditTaskBottomNavigation extends StatelessWidget {
+  AddEditTaskBottomNavigation({
+    super.key,
+  });
+  var taskController = Get.find<TaskController>();
+  var categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -179,38 +191,24 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          onTapAdd();
+          taskController.addTask();
+          categoryController.countAllItemsCategories();
         },
         style: ButtonStyle(
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                // Change your radius here
-                borderRadius: BorderRadius.circular(0),
-              ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              // Change your radius here
+              borderRadius: BorderRadius.circular(0),
             ),
-            backgroundColor: MaterialStateProperty.all(
-                taskController.categoryModel.value.color)),
-        child: const Text('افزودن'),
+          ),
+          backgroundColor: MaterialStateProperty.all(
+            taskController.categoryModel.value.color,
+          ),
+        ),
+        child: Text(
+          taskController.editTaskState.value ? MyStrings.edit : MyStrings.add,
+        ),
       ),
     );
-  }
-
-  onTapAdd() {
-    var note = taskController.importance.value == 'میزان اهمیت'
-        ? ''
-        : taskController.importance.value;
-    TaskModel task = TaskModel(
-      name: taskController.taskEditingController.text,
-      note: note,
-      alarm: taskController.alarm.value,
-      category: taskController.category.value,
-      isComplete: false,
-    );
-    // var mainCategory = categoryController.categoryList[0];
-    // int index = taskController.categoryIndex.value;
-
-    taskController.categoryModel.value.allTaskList!.add(task);
-    categoryController.countAllItemsCategories();
-    Get.offAllNamed(PageName.categoryPage);
   }
 }

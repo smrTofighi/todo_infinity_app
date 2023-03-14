@@ -9,7 +9,7 @@ import 'package:todo_infinity_app/views/pages/tasks/task_list_page.dart';
 List<GetPage> routes = [
   GetPage(
     name: PageName.categoryPage,
-    page: () => CategoryPage(),
+    page: () => const CategoryPage(),
     bindings: [CategoryBinding(), TaskBinding()],
   ),
   GetPage(
