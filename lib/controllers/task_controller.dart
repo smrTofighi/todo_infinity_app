@@ -15,12 +15,15 @@ class TaskController extends GetxController {
   //? A TextEditingController is for task title
   RxInt categoryIndex = RxInt(0);
   RxInt importanceIndex = RxInt(0);
+  RxInt taskIndex = 0.obs;
   RxString category = 'دسته بندی'.obs;
   RxString alarm = 'افزودن هشدار'.obs;
   RxString importance = 'میزان اهمیت'.obs;
   RxBool importanceState = false.obs;
   RxBool alarmState = false.obs;
   RxBool editTaskState = false.obs;
+  RxBool taskCompleteState = false.obs;
+
   addNote() {
     Get.defaultDialog(
       barrierDismissible: false,
@@ -132,6 +135,48 @@ class TaskController extends GetxController {
 
     categoryModel.value.allTaskList!.add(task);
 
+    Get.offNamed(PageName.taskListPage);
+  }
+
+  editAllTask() {
+    categoryModel.update((val) {
+      val!.allTaskList![taskIndex.value].name = taskEditingController.text;
+      val.allTaskList![taskIndex.value].alarm = alarm.value;
+      val.allTaskList![taskIndex.value].importance = importance.value;
+    });
+    Get.offNamed(PageName.taskListPage);
+  }
+
+  editCompleteTask() {
+    categoryModel.update((val) {
+      val!.completeTaskList![taskIndex.value].name = taskEditingController.text;
+      val.completeTaskList![taskIndex.value].alarm = alarm.value;
+      val.completeTaskList![taskIndex.value].importance = importance.value;
+    });
     Get.offAllNamed(PageName.categoryPage);
+  }
+
+  goToEditAllTask(int index, List<TaskModel> list) {
+    taskIndex.value = index;
+    taskCompleteState.value = false;
+    editTaskState.value = true;
+    importanceState.value = true;
+    alarmState.value = true;
+    alarm.value = list[index].alarm!;
+    importance.value = list[index].importance!;
+    taskEditingController.text = list[index].name!;
+    Get.toNamed(PageName.addEditTaskPage);
+  }
+
+  goToEditCompleteTask(int index, List<TaskModel> list) {
+    taskIndex.value = index;
+    taskCompleteState.value = true;
+    editTaskState.value = true;
+    importanceState.value = true;
+    alarmState.value = true;
+    alarm.value = list[index].alarm!;
+    importance.value = list[index].importance!;
+    taskEditingController.text = list[index].name!;
+    Get.toNamed(PageName.addEditTaskPage);
   }
 }
