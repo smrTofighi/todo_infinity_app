@@ -6,6 +6,7 @@ import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
+import 'package:todo_infinity_app/models/task_model.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 import '../../../controllers/category_controller.dart';
@@ -19,25 +20,32 @@ class TaskListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: taskController.categoryModel.value.color,
-        body: Stack(
-          children: [
-            TopSection(
-              taskController: taskController,
-              categoryController: categoryController,
-            ),
-            BottomSection(
-              taskController: taskController,
-              categoryController: categoryController,
-            )
-          ],
-        ),
-        floatingActionButton: MyFloatingActionButton(
-          onPressed: () {
-            Get.toNamed(PageName.addEditTaskPage);
-          },
-          color: taskController.categoryModel.value.color!,
+      child: WillPopScope(
+        onWillPop: () async {
+          categoryController.countAllItemsCategories();
+          Get.offAllNamed(PageName.categoryPage);
+          return true;
+        },
+        child: Scaffold(
+          backgroundColor: taskController.categoryModel.value.color,
+          body: Stack(
+            children: [
+              TopSection(
+                taskController: taskController,
+                categoryController: categoryController,
+              ),
+              BottomSection(
+                taskController: taskController,
+                categoryController: categoryController,
+              )
+            ],
+          ),
+          floatingActionButton: MyFloatingActionButton(
+            onPressed: () {
+              Get.toNamed(PageName.addEditTaskPage);
+            },
+            color: taskController.categoryModel.value.color!,
+          ),
         ),
       ),
     );
@@ -235,8 +243,9 @@ class AllTaskList extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        taskController.editTaskState.value = true;
-                        Get.toNamed(PageName.addEditTaskPage);
+                        List<TaskModel> list =
+                            taskController.categoryModel.value.allTaskList!;
+                        taskController.goToEditAllTask(index, list);
                       },
                       child: Container(
                         height: 85,
@@ -266,7 +275,6 @@ class AllTaskList extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            
                             Column(
                               children: [
                                 Obx(
