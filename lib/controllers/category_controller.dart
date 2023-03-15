@@ -20,10 +20,10 @@ class CategoryController extends GetxController {
   RxInt completeCountItemsCategories = 0.obs;
   //? static variables
   List<ImageProvider> iconList = [
-    MyIcons.airplan,
-    MyIcons.noteBook,
-    MyIcons.book,
     MyIcons.home,
+    MyIcons.airplan,
+    MyIcons.dream,
+    MyIcons.book,
     MyIcons.music,
     MyIcons.school,
     MyIcons.shop,
@@ -35,7 +35,12 @@ class CategoryController extends GetxController {
     Colors.green,
     Colors.brown,
     Colors.orange,
-    Colors.purple
+    Colors.purple,
+    Colors.amber,
+    Colors.cyan,
+    Colors.lime,
+    Colors.pink,
+    Colors.teal
   ];
   @override
   void onInit() {
@@ -74,17 +79,12 @@ class CategoryController extends GetxController {
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12.0),
-              height: 150,
-              child: GridView.builder(
+              height: 45,
+              child: ListView.builder(
                 physics: const ClampingScrollPhysics(),
                 itemCount: iconList.length,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.7,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 25),
                 itemBuilder: (context, index) {
                   return Obx(
                     () => GestureDetector(
@@ -92,12 +92,12 @@ class CategoryController extends GetxController {
                         iconIndex.value = index;
                       },
                       child: AnimatedContainer(
-                        width: 20,
-                        height: 20,
+                        width: 30,
+                        height: 30,
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         duration: const Duration(seconds: 1),
                         child: ImageIcon(
-                          size: 20,
+                          size: 35,
                           iconList[index],
                           color: index == iconIndex.value
                               ? colorList[colorIndex.value]
@@ -109,60 +109,24 @@ class CategoryController extends GetxController {
                 },
               ),
             ),
-            Obx(
-              () => Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ColorWidget(
-                    color: colorIndex.value == 0
-                        ? SolidColors.primary
-                        : SolidColors.primary.withOpacity(0.35),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 4.0),
+              width: Dimens.width,
+              height: 24,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: colorList.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => Obx(
+                  () => ColorWidget(
+                    color: index == colorIndex.value
+                        ? colorList[index]
+                        : colorList[index].withOpacity(0.6),
                     onTap: () {
-                      colorIndex.value = 0;
+                      colorIndex.value = index;
                     },
                   ),
-                  ColorWidget(
-                    color: colorIndex.value == 1
-                        ? Colors.red
-                        : Colors.red.withOpacity(0.35),
-                    onTap: () {
-                      colorIndex.value = 1;
-                    },
-                  ),
-                  ColorWidget(
-                    color: colorIndex.value == 2
-                        ? Colors.green
-                        : Colors.green.withOpacity(0.35),
-                    onTap: () {
-                      colorIndex.value = 2;
-                    },
-                  ),
-                  ColorWidget(
-                    color: colorIndex.value == 3
-                        ? Colors.brown
-                        : Colors.brown.withOpacity(0.35),
-                    onTap: () {
-                      colorIndex.value = 3;
-                    },
-                  ),
-                  ColorWidget(
-                    color: colorIndex.value == 4
-                        ? Colors.orange
-                        : Colors.orange.withOpacity(0.35),
-                    onTap: () {
-                      colorIndex.value = 4;
-                    },
-                  ),
-                  ColorWidget(
-                    color: colorIndex.value == 5
-                        ? Colors.purple
-                        : Colors.purple.withOpacity(0.35),
-                    onTap: () {
-                      colorIndex.value = 5;
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
             const SizedBox(
@@ -176,6 +140,7 @@ class CategoryController extends GetxController {
                   width: Dimens.width / 3,
                   child: ElevatedButton(
                     onPressed: () {
+                      Get.back();
                       categoryList.add(
                         CategoryModel(
                           name: textEditingCategory.text,
@@ -189,7 +154,7 @@ class CategoryController extends GetxController {
                       textEditingCategory.text = '';
                       iconIndex.value = 0;
                       colorIndex.value = 0;
-                      Get.back();
+                      
                     },
                     child: const Text('افزودن'),
                   ),
