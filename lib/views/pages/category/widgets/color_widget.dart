@@ -10,7 +10,7 @@ class ColorWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 500),
         width: 23,
         height: 23,
         decoration: BoxDecoration(
@@ -23,4 +23,4 @@ class ColorWidget extends StatelessWidget {
   }
 }
 
-//? This widget is used on the main page where the user selects the color of the category icon 
+//? This widget is used on the main page where the user selects the color of the category icon
