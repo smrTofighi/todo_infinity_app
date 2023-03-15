@@ -10,6 +10,7 @@ class MyIcons {
   static ImageProvider school = Image.asset(Assets.icons.school.path).image;
   static ImageProvider shop = Image.asset(Assets.icons.shop.path).image;
   static ImageProvider work = Image.asset(Assets.icons.work.path).image;
+  static ImageProvider dream = Image.asset(Assets.icons.dream.path).image;
   static ImageProvider menuVertical =
       Image.asset(Assets.icons.menuDotVertical.path).image;
   static ImageProvider arrowRight =
