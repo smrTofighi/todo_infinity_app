@@ -50,6 +50,7 @@ dependencies:
   percent_indicator: ^4.2.2
   expandable: ^5.0.1
   persian_datetime_picker: ^2.5.0
+  dropdown_button2: ^2.0.0
 
 dev_dependencies:
   flutter_test:
