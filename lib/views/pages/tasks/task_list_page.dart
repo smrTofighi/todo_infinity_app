@@ -8,14 +8,16 @@ import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/models/task_model.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
+import 'package:todo_infinity_app/views/pages/tasks/widgets/dropdown_task_list_widget.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 import '../../../controllers/category_controller.dart';
+import '../../../core/values/strings.dart';
 
 // ignore: must_be_immutable
 class TaskListPage extends StatelessWidget {
   TaskListPage({super.key});
-  var taskController = Get.find<TaskController>();
-  var categoryController = Get.find<CategoryController>();
+  TaskController taskController = Get.find<TaskController>();
+  CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +31,7 @@ class TaskListPage extends StatelessWidget {
         child: Scaffold(
           backgroundColor: taskController.categoryModel.value.color,
           body: Stack(
-            children: [
-              TopSection(
-                taskController: taskController,
-                categoryController: categoryController,
-              ),
-              BottomSection(
-                taskController: taskController,
-                categoryController: categoryController,
-              )
-            ],
+            children: [TopSection(), BottomSection()],
           ),
           floatingActionButton: MyFloatingActionButton(
             onPressed: () {
@@ -52,14 +45,13 @@ class TaskListPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class BottomSection extends StatelessWidget {
-  const BottomSection({
+  BottomSection({
     super.key,
-    required this.taskController,
-    required this.categoryController,
   });
-  final CategoryController categoryController;
-  final TaskController taskController;
+  TaskController taskController = Get.find<TaskController>();
+  CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +75,9 @@ class BottomSection extends StatelessWidget {
             children: [
               // PastTaskList(taskController: taskController),
               // const Divider(),
-              AllTaskList(
-                  taskController: taskController,
-                  categoryController: categoryController),
+              AllTaskList(),
               const Divider(),
-              CompleteTaskList(taskController: taskController),
+              CompleteTaskList(),
             ],
           ),
         ),
@@ -96,13 +86,13 @@ class BottomSection extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CompleteTaskList extends StatelessWidget {
-  const CompleteTaskList({
+  CompleteTaskList({
     super.key,
-    required this.taskController,
   });
 
-  final TaskController taskController;
+  TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +109,21 @@ class CompleteTaskList extends StatelessWidget {
         ),
         collapsed: const SizedBox(),
         expanded: taskController.categoryModel.value.completeTaskList!.isEmpty
-            ? const SizedBox()
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    MyStrings.noTaskComplete,
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ),
+              )
             : SizedBox(
                 width: Dimens.width,
                 height: taskController
                         .categoryModel.value.completeTaskList!.length *
-                    85,
+                    100,
                 child: ListView.separated(
                   itemCount: taskController
                       .categoryModel.value.completeTaskList!.length,
@@ -207,21 +206,18 @@ class CompleteTaskList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class AllTaskList extends StatelessWidget {
-  const AllTaskList({
+  AllTaskList({
     super.key,
-    required this.taskController,
-    required this.categoryController,
   });
-  final CategoryController categoryController;
-  final TaskController taskController;
+  CategoryController categoryController = Get.find<CategoryController>();
+  TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => ExpandablePanel(
-        // controller:
-        //     ExpandableController(initialExpanded: false),
         header: const Text(
           'همه',
           style: TextStyle(
@@ -231,15 +227,25 @@ class AllTaskList extends StatelessWidget {
         ),
         collapsed: const SizedBox(),
         expanded: taskController.categoryModel.value.allTaskList!.isEmpty
-            ? const SizedBox()
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    MyStrings.noTaskHere,
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ),
+              )
             : SizedBox(
                 width: Dimens.width,
-                height:
-                    taskController.categoryModel.value.allTaskList!.length * 85,
+                height: taskController.categoryModel.value.allTaskList!.length *
+                    100,
                 child: ListView.separated(
                   itemCount:
                       taskController.categoryModel.value.allTaskList!.length,
                   scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
@@ -388,20 +394,19 @@ class PastTaskList extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TopSection extends StatelessWidget {
-  const TopSection({
+  TopSection({
     super.key,
-    required this.taskController,
-    required this.categoryController,
   });
-  final CategoryController categoryController;
-  final TaskController taskController;
+  CategoryController categoryController = Get.find<CategoryController>();
+  TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyAppBar(categoryController: categoryController),
+        MyAppBar(),
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 40, 24),
           child: SizedBox(
@@ -444,12 +449,12 @@ class TopSection extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class MyAppBar extends StatelessWidget {
-  const MyAppBar({
+  MyAppBar({
     super.key,
-    required this.categoryController,
   });
-  final CategoryController categoryController;
+  CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -468,13 +473,7 @@ class MyAppBar extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: ImageIcon(
-              MyIcons.menuVertical,
-              color: Colors.white,
-            ),
-          ),
+          DropdownTaskList()
         ],
       ),
     );

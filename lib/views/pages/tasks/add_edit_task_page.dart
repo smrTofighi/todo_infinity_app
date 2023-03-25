@@ -1,9 +1,5 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/button_style.dart';
@@ -12,8 +8,7 @@ import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/models/task_model.dart';
-import 'package:todo_infinity_app/routes/pages.dart';
+
 
 // ignore: must_be_immutable
 class AddEditTaskPage extends StatefulWidget {
@@ -216,6 +211,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
                   ? taskController.editCompleteTask()
                   : taskController.editAllTask()
               : taskController.addTask();
+          taskController.clearInputs();
           categoryController.countAllItemsCategories();
         },
         style: ButtonStyle(
