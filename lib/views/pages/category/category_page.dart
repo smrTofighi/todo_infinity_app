@@ -5,6 +5,7 @@ import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
+import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
@@ -225,7 +226,8 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 12.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(right: 12.0, top: 8.0, bottom: 8.0, left: 12.0),
       child: Row(
         children: [
           IconButton(
@@ -235,6 +237,10 @@ class MyAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          IconButton(
+            onPressed: () {},
+            icon: ImageIcon(MyIcons.search),
+          ),
         ],
       ),
     );
