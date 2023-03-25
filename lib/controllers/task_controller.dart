@@ -113,11 +113,11 @@ class TaskController extends GetxController {
     Jalali? picked = await showPersianDatePicker(
       context: context,
       initialDate: Jalali.now(),
-      firstDate: Jalali(1385, 8),
+      firstDate: Jalali(1400, 8),
       lastDate: Jalali(1450, 9),
     );
 
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked.toString() != selectedDate) {
       alarm.value = picked.formatFullDate();
       alarmState.value = true;
     }
@@ -154,6 +154,15 @@ class TaskController extends GetxController {
       val.completeTaskList![taskIndex.value].importance = importance.value;
     });
     Get.offAllNamed(PageName.categoryPage);
+  }
+
+  clearInputs() {
+    alarmState.value = false;
+    alarm.value = MyStrings.addAlarm;
+    editTaskState.value = false;
+    importance.value = MyStrings.importance;
+    importanceState.value = false;
+    taskEditingController.text = '';
   }
 
   goToEditAllTask(int index, List<TaskModel> list) {
