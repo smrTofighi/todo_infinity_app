@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import '../../../../../core/values/icons.dart';
 
@@ -106,19 +107,14 @@ class MenuItems {
   }
 
   static onChanged(BuildContext context, MenuItem item) {
-    // switch (item.text) {
-    //   case MenuItems.editCategoryTheme.text:
-    //     //Do something
-    //     break;
-    //   case MenuItems.settings:
-    //     //Do something
-    //     break;
-    //   case MenuItems.share:
-    //     //Do something
-    //     break;
-    //   case MenuItems.logout:
-    //     //Do something
-    //     break;
-    // }
+    CategoryController categoryController = Get.find<CategoryController>();
+    TaskController taskController  = Get.find<TaskController>();
+    if (item.icon == MyIcons.pallete) {
+      categoryController.changeThemeCategory();
+    } else if (item.icon == MyIcons.edit) {
+      categoryController.editCategory();
+    } else if (item.icon == MyIcons.trash) {
+      taskController.deleteTasks();
+    }
   }
 }
