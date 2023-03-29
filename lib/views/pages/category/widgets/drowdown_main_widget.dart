@@ -1,8 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/values/colors.dart';
-import '../../../../../core/values/icons.dart';
+import '../../../../core/values/colors.dart';
+import '../../../../core/values/icons.dart';
 
 class DropdownMainCategory extends StatelessWidget {
   const DropdownMainCategory({

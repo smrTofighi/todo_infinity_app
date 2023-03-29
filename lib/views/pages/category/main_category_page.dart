@@ -8,8 +8,8 @@ import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/main/widgets/drowdown_main_widget.dart';
-import '../../../../controllers/category_controller.dart';
+import 'package:todo_infinity_app/views/pages/category/widgets/drowdown_main_widget.dart';
+import '../../../controllers/category_controller.dart';
 
 // ignore: must_be_immutable
 class MainCategoryPage extends StatelessWidget {
