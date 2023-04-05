@@ -34,6 +34,7 @@ class MyIcons {
   static ImageProvider trash = Image.asset(Assets.icons.trash.path).image;
   static ImageProvider user = Image.asset(Assets.icons.user.path).image;
   static ImageProvider world = Image.asset(Assets.icons.world.path).image;
+  static ImageProvider clock = Image.asset(Assets.icons.clock.path).image;
   //! icons for category logo
   static ImageProvider ballot = Image.asset(Assets.icons.ballot.path).image;
   static ImageProvider tree = Image.asset(Assets.icons.tree.path).image;
