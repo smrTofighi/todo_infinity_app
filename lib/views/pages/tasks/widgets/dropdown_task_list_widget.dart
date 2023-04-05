@@ -108,11 +108,11 @@ class MenuItems {
 
   static onChanged(BuildContext context, MenuItem item) {
     CategoryController categoryController = Get.find<CategoryController>();
-    TaskController taskController  = Get.find<TaskController>();
+    TaskController taskController = Get.find<TaskController>();
     if (item.icon == MyIcons.pallete) {
-      categoryController.changeThemeCategory();
+      categoryController.changeThemeCategory(context);
     } else if (item.icon == MyIcons.edit) {
-      categoryController.editCategory();
+      categoryController.editCategory(context);
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks();
     }

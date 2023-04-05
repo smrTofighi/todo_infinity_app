@@ -22,16 +22,45 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   var categoryController = Get.find<CategoryController>();
   var taskController = Get.find<TaskController>();
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _key,
+        drawer: const Drawer(),
         backgroundColor: SolidColors.backGround,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const MyAppBar(),
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 12.0, top: 8.0, bottom: 8.0, left: 12.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _key.currentState!.openDrawer();
+                      },
+                      icon: ImageIcon(
+                        Image.asset(Assets.icons.menu.path).image,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        Get.toNamed(PageName.searchPage);
+                      },
+                      icon: ImageIcon(MyIcons.search),
+                    ),
+                  ],
+                ),
+              ),
               const CategoriesText(),
               CategoryList(
                 categoryController: categoryController,
@@ -42,7 +71,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {
-            categoryController.addCategory();
+            categoryController.addCategory(context);
           },
           color: SolidColors.primary,
         ),
@@ -81,7 +110,7 @@ class CategoryList extends StatelessWidget {
                   onTapCategory(index);
                 },
                 onLongPress: () {
-                  onLognPressCategory(index);
+                  categoryController.deleteCateogry(index, context);
                 },
                 child: Container(
                   width: Get.width / 2.2,
@@ -100,6 +129,9 @@ class CategoryList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 24.0, right: 12),
                         child: ImageIcon(
@@ -179,12 +211,6 @@ class CategoryList extends StatelessWidget {
     );
   }
 
-  onLognPressCategory(int index) {
-    if (index != 0) {
-      categoryController.categoryList.removeAt(index);
-    }
-  }
-
   onTapCategory(int index) {
     if (index == 0) {
       categoryController.countAllItemsCategories();
@@ -193,6 +219,7 @@ class CategoryList extends StatelessWidget {
       taskController.categoryModel.value =
           categoryController.categoryList[index];
       taskController.categoryIndex.value = index;
+
       Get.toNamed(PageName.taskListPage);
     }
   }
@@ -213,35 +240,6 @@ class CategoriesText extends StatelessWidget {
           MyStrings.categories,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
         ),
-      ),
-    );
-  }
-}
-
-class MyAppBar extends StatelessWidget {
-  const MyAppBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          const EdgeInsets.only(right: 12.0, top: 8.0, bottom: 8.0, left: 12.0),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: ImageIcon(
-              Image.asset(Assets.icons.menu.path).image,
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {},
-            icon: ImageIcon(MyIcons.search),
-          ),
-        ],
       ),
     );
   }

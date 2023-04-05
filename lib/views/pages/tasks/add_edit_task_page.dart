@@ -9,7 +9,6 @@ import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 
-
 // ignore: must_be_immutable
 class AddEditTaskPage extends StatefulWidget {
   const AddEditTaskPage({Key? key}) : super(key: key);
@@ -100,7 +99,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        taskController.addNote();
+                        taskController.addNote(context);
                       },
                       style: MyButtonStyle.textButtonAddEditTaskPage,
                       child: Obx(

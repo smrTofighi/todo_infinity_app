@@ -4,4 +4,5 @@ class PageName {
   static const String addEditTaskPage = '/AddEditTaskPage';
   static const String splashPage = '/SplashPage';
   static const String mainCategoryPage = '/MainCategoryPage';
+  static const String searchPage = '/SearchPage';
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/models/category_model.dart';
 
+import '../core/values/colors.dart';
 import '../core/values/dimens.dart';
 import '../core/values/strings.dart';
 import '../models/task_model.dart';
@@ -24,83 +26,180 @@ class TaskController extends GetxController {
   RxBool editTaskState = false.obs;
   RxBool taskCompleteState = false.obs;
 
-  addNote() {
+  deleteTasks() {
+    CategoryController categoryController = Get.find<CategoryController>();
+    categoryModel.value.allTaskList!.clear();
+    categoryModel.value.completeTaskList!.clear();
+    categoryController.countAllItemsCategories();
+    Get.offAllNamed(PageName.categoryPage);
+  }
+
+  deleteAllTask(int index, BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    Get.defaultDialog(
+      barrierDismissible: false,
+      backgroundColor: SolidColors.card,
+      confirm: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            categoryModel.update((val) {
+              val!.allTaskList!.removeAt(index);
+            });
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+          ),
+          child: const Text('حذف'),
+        ),
+      ),
+      cancel: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.green),
+          ),
+          child: const Text('لغو'),
+        ),
+      ),
+      title: '',
+      titlePadding: const EdgeInsets.all(0),
+      middleText:
+          'ماموریت ${categoryModel.value.allTaskList![index].name} حذف شود؟',
+      radius: Dimens.radius,
+    );
+  }
+
+  deleteCompleteTask(int index, BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+   var height = MediaQuery.of(context).size.height;
+    Get.defaultDialog(
+      barrierDismissible: false,
+      backgroundColor: SolidColors.card,
+      confirm: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            categoryModel.update((val) {
+              val!.completeTaskList!.removeAt(index);
+            });
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+          ),
+          child: const Text('حذف'),
+        ),
+      ),
+      cancel: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.green),
+          ),
+          child: const Text('لغو'),
+        ),
+      ),
+      title: '',
+      titlePadding: const EdgeInsets.all(0),
+      middleText:
+          'ماموریت ${categoryModel.value.completeTaskList![index].name} حذف شود؟',
+      radius: Dimens.radius,
+    );
+  }
+
+  addNote(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     Get.defaultDialog(
       barrierDismissible: false,
       title: MyStrings.importance,
       titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      content: SizedBox(
-        width: Dimens.width,
-        child: Column(
-          children: [
-            Obx(
-              () => RadioListTile(
-                  title: const Text("کم"),
-                  value: "کم",
-                  groupValue: importance.value,
-                  onChanged: (value) {
-                    importance.value = value.toString();
+      content: Column(
+        children: [
+          Obx(
+            () => RadioListTile(
+                title: const Text("کم"),
+                value: "کم",
+                groupValue: importance.value,
+                onChanged: (value) {
+                  importance.value = value.toString();
+                },
+                activeColor: categoryModel.value.color),
+          ),
+          Obx(
+            () => RadioListTile(
+                title: const Text("متوسط"),
+                value: "متوسط",
+                groupValue: importance.value,
+                onChanged: (value) {
+                  importance.value = value.toString();
+                },
+                activeColor: categoryModel.value.color),
+          ),
+          Obx(
+            () => RadioListTile(
+                title: const Text("زیاد"),
+                value: "زیاد",
+                groupValue: importance.value,
+                onChanged: (value) {
+                  importance.value = value.toString();
+                },
+                activeColor: categoryModel.value.color),
+          ),
+          const SizedBox(
+            height: 25.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height: 35,
+                width: width / 3.3,
+                child: ElevatedButton(
+                  onPressed: () {
+                    importanceState.value = true;
+                    Get.back();
                   },
-                  activeColor: categoryModel.value.color),
-            ),
-            Obx(
-              () => RadioListTile(
-                  title: const Text("متوسط"),
-                  value: "متوسط",
-                  groupValue: importance.value,
-                  onChanged: (value) {
-                    importance.value = value.toString();
-                  },
-                  activeColor: categoryModel.value.color),
-            ),
-            Obx(
-              () => RadioListTile(
-                  title: const Text("زیاد"),
-                  value: "زیاد",
-                  groupValue: importance.value,
-                  onChanged: (value) {
-                    importance.value = value.toString();
-                  },
-                  activeColor: categoryModel.value.color),
-            ),
-            const SizedBox(
-              height: 25.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 35,
-                  width: Dimens.width / 3,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      importanceState.value = true;
-                      Get.back();
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            categoryModel.value.color)),
-                    child: const Text('تایید'),
-                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(categoryModel.value.color)),
+                  child: const Text('تایید'),
                 ),
-                SizedBox(
-                  height: 35,
-                  width: Dimens.width / 3,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // importance.value = MyStrings.importance;
-                      Get.back();
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            categoryModel.value.color)),
-                    child: const Text('لغو'),
-                  ),
+              ),
+              SizedBox(
+                height: 35,
+                width: width / 3.3,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // importance.value = MyStrings.importance;
+                    Get.back();
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(categoryModel.value.color)),
+                  child: const Text('لغو'),
                 ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ],
+          )
+        ],
       ),
       radius: 6,
       backgroundColor: Colors.white,
@@ -156,6 +255,7 @@ class TaskController extends GetxController {
     Get.offAllNamed(PageName.categoryPage);
   }
 
+  //? clear all inputs in add edit task page
   clearInputs() {
     alarmState.value = false;
     alarm.value = MyStrings.addAlarm;
@@ -165,6 +265,7 @@ class TaskController extends GetxController {
     taskEditingController.text = '';
   }
 
+  //? go to edit task page for all task
   goToEditAllTask(int index, List<TaskModel> list) {
     taskIndex.value = index;
     taskCompleteState.value = false;
@@ -177,6 +278,7 @@ class TaskController extends GetxController {
     Get.toNamed(PageName.addEditTaskPage);
   }
 
+  //? go to edit task page for complete task
   goToEditCompleteTask(int index, List<TaskModel> list) {
     taskIndex.value = index;
     taskCompleteState.value = true;

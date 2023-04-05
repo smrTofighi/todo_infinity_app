@@ -1,6 +1,7 @@
-import 'package:get/get.dart';
+
 
 class Dimens {
-  static double width = Get.width;
-  static double height = Get.height;
+  static double width = double.infinity;
+  static double height = double.infinity;
+  static double radius = 8;
 }

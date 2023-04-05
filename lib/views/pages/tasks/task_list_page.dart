@@ -129,72 +129,84 @@ class CompleteTaskList extends StatelessWidget {
                       .categoryModel.value.completeTaskList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 85,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                taskController.categoryModel.value
-                                    .completeTaskList![index].name!,
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.grey,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                              Text(
-                                taskController.categoryModel.value
-                                    .completeTaskList![index].alarm!,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12),
-                              ),
-                              Text(
-                                "اولویت : ${taskController.categoryModel.value.completeTaskList![index].importance!}",
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Obx(
-                                () => Checkbox(
-                                  value: taskController.categoryModel.value
-                                      .completeTaskList![index].isComplete,
-                                  onChanged: (value) {
-                                    if (taskController
-                                            .categoryModel
-                                            .value
-                                            .completeTaskList![index]
-                                            .isComplete ==
-                                        true) {
-                                      taskController.categoryModel
-                                          .update((val) {
-                                        val!.completeTaskList![index]
-                                            .isComplete = false;
-                                      });
-                                      taskController
-                                          .categoryModel.value.allTaskList!
-                                          .add(taskController.categoryModel
-                                              .value.completeTaskList![index]);
-                                      taskController
-                                          .categoryModel.value.completeTaskList!
-                                          .removeAt(index);
-                                    }
-                                  },
-                                  activeColor:
-                                      taskController.categoryModel.value.color,
+                    return GestureDetector(
+                      onTap: () {
+                        var list = taskController
+                            .categoryModel.value.completeTaskList!;
+                        taskController.goToEditCompleteTask(index, list);
+                      },
+                      onLongPress: () {
+                        taskController.deleteCompleteTask(index, context);
+                      },
+                      child: Container(
+                        height: 85,
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  taskController.categoryModel.value
+                                      .completeTaskList![index].name!,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough),
                                 ),
-                              ),
-                              const Spacer()
-                            ],
-                          )
-                        ],
+                                Text(
+                                  taskController.categoryModel.value
+                                      .completeTaskList![index].alarm!,
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                ),
+                                Text(
+                                  "اولویت : ${taskController.categoryModel.value.completeTaskList![index].importance!}",
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Obx(
+                                  () => Checkbox(
+                                    value: taskController.categoryModel.value
+                                        .completeTaskList![index].isComplete,
+                                    onChanged: (value) {
+                                      if (taskController
+                                              .categoryModel
+                                              .value
+                                              .completeTaskList![index]
+                                              .isComplete ==
+                                          true) {
+                                        taskController.categoryModel
+                                            .update((val) {
+                                          val!.completeTaskList![index]
+                                              .isComplete = false;
+                                        });
+                                        taskController
+                                            .categoryModel.value.allTaskList!
+                                            .add(taskController
+                                                .categoryModel
+                                                .value
+                                                .completeTaskList![index]);
+                                        taskController.categoryModel.value
+                                            .completeTaskList!
+                                            .removeAt(index);
+                                      }
+                                    },
+                                    activeColor: taskController
+                                        .categoryModel.value.color,
+                                  ),
+                                ),
+                                const Spacer()
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -252,6 +264,9 @@ class AllTaskList extends StatelessWidget {
                         List<TaskModel> list =
                             taskController.categoryModel.value.allTaskList!;
                         taskController.goToEditAllTask(index, list);
+                      },
+                      onLongPress: () {
+                        taskController.deleteAllTask(index, context);
                       },
                       child: Container(
                         height: 85,
@@ -436,7 +451,7 @@ class TopSection extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    '${taskController.categoryModel.value.allTaskList!.length} یادداشت',
+                    '${taskController.categoryModel.value.allTaskList!.length} ماموریت',
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),

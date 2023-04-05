@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
@@ -11,15 +12,18 @@ import '../core/values/colors.dart';
 import '../core/values/storages.dart';
 
 class CategoryController extends GetxController {
+  //? A list of categories
   RxList<CategoryModel> categoryList = RxList();
+  //? text editing controller for category name
   TextEditingController textEditingCategory = TextEditingController();
   RxInt colorIndex = 0.obs;
   RxInt iconIndex = 0.obs;
   RxInt allCountItemsCategories = 0.obs;
   RxInt completeCountItemsCategories = 0.obs;
+  RxBool isEditing = false.obs;
+
   //? static variables
   List<ImageProvider> iconList = [
-    MyIcons.ballot,
     MyIcons.tree,
     MyIcons.bed,
     MyIcons.book,
@@ -61,10 +65,393 @@ class CategoryController extends GetxController {
     Colors.indigo,
     Colors.lightGreen
   ];
+
+  //? onInit function
   @override
   void onInit() {
     super.onInit();
     countAllItemsCategories();
+  }
+
+  deleteCateogry(int index, BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    if (index != 0) {
+      Get.defaultDialog(
+        barrierDismissible: false,
+        backgroundColor: SolidColors.card,
+        buttonColor: SolidColors.primary,
+        confirm: Container(
+          margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+          height: 30,
+          width: width / 4,
+          child: ElevatedButton(
+            onPressed: () {
+              Get.back();
+              categoryList.removeAt(index);
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+            ),
+            child: const Text('حذف'),
+          ),
+        ),
+        cancel: Container(
+          margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+          height: 30,
+          width: width / 4,
+          child: ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green),
+            ),
+            child: const Text('لغو'),
+          ),
+        ),
+        onConfirm: () {
+          categoryList.removeAt(index);
+        },
+        title: '',
+        titlePadding: const EdgeInsets.all(0),
+        middleText: 'دسته بندی ${categoryList[index].name} حذف شود؟',
+        radius: Dimens.radius,
+      );
+    }
+  }
+
+  editCategory(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    Get.bottomSheet(
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 6.0),
+          width: width,
+          height: height / 2.4,
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              color: SolidColors.card),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'ویرایش دسته بندی',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: TextField(
+                  controller: textEditingCategory,
+                  cursorColor: SolidColors.primary,
+                  maxLength: 20,
+                  style: const TextStyle(fontSize: 14),
+                  decoration: const InputDecoration(
+                    hintText: 'نام دسته بندی',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 6.0),
+                height: 45,
+                child: ListView.builder(
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: iconList.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Obx(
+                      () => GestureDetector(
+                        onTap: () {
+                          iconIndex.value = index;
+                        },
+                        child: AnimatedContainer(
+                          width: 30,
+                          height: 30,
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                          duration: const Duration(seconds: 1),
+                          child: ImageIcon(
+                            size: 35,
+                            iconList[index],
+                            color: index == iconIndex.value
+                                ? colorList[colorIndex.value]
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                height: 34,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: colorList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => Obx(
+                    () => ColorWidget(
+                      color: index == colorIndex.value
+                          ? colorList[index]
+                          : colorList[index].withOpacity(0.45),
+                      onTap: () {
+                        colorIndex.value = index;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 35,
+                    width: width / 3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        TaskController taskController =
+                            Get.find<TaskController>();
+                        taskController.categoryModel.update((val) {
+                          val!.name = textEditingCategory.text;
+                          val.color = colorList[colorIndex.value];
+                          val.icon = iconList[iconIndex.value];
+                        });
+                        Get.offAllNamed(PageName.categoryPage);
+
+                        clearInputs();
+                      },
+                      child: const Text('ویرایش'),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    height: 35,
+                    width: width / 3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.back();
+                        clearInputs();
+                      },
+                      child: const Text('لغو'),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        isDismissible: false);
+  }
+
+  changeThemeCategory(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+   var height = MediaQuery.of(context).size.height;
+    Get.bottomSheet(
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 6.0),
+          width: width,
+          height: height / 3.8,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+            color: SolidColors.card,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'تغییر رنگ دسته بندی',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                height: 34,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: colorList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => Obx(
+                    () => ColorWidget(
+                      color: index == colorIndex.value
+                          ? colorList[index]
+                          : colorList[index].withOpacity(0.45),
+                      onTap: () {
+                        colorIndex.value = index;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 35,
+                    width: Dimens.width / 3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        TaskController taskController =
+                            Get.find<TaskController>();
+                        taskController.categoryModel.value.color =
+                            colorList[colorIndex.value];
+                        Get.offAllNamed(PageName.categoryPage);
+                        colorIndex.value = 0;
+                      },
+                      child: const Text('تایید'),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox(
+                    height: 35,
+                    width: Dimens.width / 3,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        colorIndex.value = 0;
+                        Get.back();
+                      },
+                      child: const Text('لغو'),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        isDismissible: false);
+  }
+
+  deleteAllTaskCategories() {
+    for (var category in categoryList) {
+      category.allTaskList!.clear();
+    }
+    countAllItemsCategories();
+    Get.offAllNamed(PageName.categoryPage);
+  }
+
+  clearInputs() {
+    isEditing.value = false;
+    colorIndex.value = 0;
+    iconIndex.value = 0;
+    textEditingCategory.text = '';
+  }
+
+  changeThemeMainCategory(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
+        width: width,
+        height: height / 3.8,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+          color: SolidColors.card,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'تغییر رنگ دسته بندی',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              height: 34,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: colorList.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => Obx(
+                  () => ColorWidget(
+                    color: index == colorIndex.value
+                        ? colorList[index]
+                        : colorList[index].withOpacity(0.45),
+                    onTap: () {
+                      colorIndex.value = index;
+                    },
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: 35,
+                  width: width / 3,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      categoryList[0].color = colorList[colorIndex.value];
+                      Get.offAllNamed(PageName.categoryPage);
+                      clearInputs();
+                    },
+                    child: const Text('تایید'),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                SizedBox(
+                  height: 35,
+                  width: width / 3,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      clearInputs();
+                      Get.back();
+                    },
+                    child: const Text('لغو'),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   countAllItemsCategories() {
@@ -76,12 +463,14 @@ class CategoryController extends GetxController {
     }
   }
 
-  addCategory() {
+  addCategory(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.symmetric(vertical: 6.0),
-          width: Dimens.width,
-          height: Dimens.height / 2.0,
+          width: width,
+          height: height / 2.4,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
@@ -147,9 +536,8 @@ class CategoryController extends GetxController {
                 height: 15,
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 4.0),
-                width: Dimens.width,
-                height: 24,
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                height: 34,
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: colorList.length,
@@ -174,7 +562,7 @@ class CategoryController extends GetxController {
                 children: [
                   SizedBox(
                     height: 35,
-                    width: Dimens.width / 3,
+                    width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
                         Get.back();
@@ -200,7 +588,7 @@ class CategoryController extends GetxController {
                   ),
                   SizedBox(
                     height: 35,
-                    width: Dimens.width / 3,
+                    width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
                         Get.back();
@@ -218,131 +606,6 @@ class CategoryController extends GetxController {
         ),
         backgroundColor: Colors.transparent,
         isDismissible: false);
-
-    // TODO: It is better to put it this way
-    // Get.defaultDialog(
-    //   barrierDismissible: false,
-    //   title: 'لیست جدید',
-    //   titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    //   content: SizedBox(
-    //     width: Dimens.width,
-    //     height: Dimens.height / 3.2,
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         TextField(
-    //           controller: textEditingCategory,
-    //           cursorColor: SolidColors.primary,
-    //           maxLength: 20,
-    //           style: const TextStyle(fontSize: 14),
-    //           decoration: const InputDecoration(
-    //             hintText: 'نام لیست',
-    //           ),
-    //         ),
-    //         Container(
-    //           margin: const EdgeInsets.symmetric(vertical: 12.0),
-    //           height: 45,
-    //           child: ListView.builder(
-    //             physics: const ClampingScrollPhysics(),
-    //             itemCount: iconList.length,
-    //             shrinkWrap: true,
-    //             scrollDirection: Axis.horizontal,
-    //             itemBuilder: (context, index) {
-    //               return Obx(
-    //                 () => GestureDetector(
-    //                   onTap: () {
-    //                     iconIndex.value = index;
-    //                   },
-    //                   child: AnimatedContainer(
-    //                     width: 30,
-    //                     height: 30,
-    //                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
-    //                     duration: const Duration(seconds: 1),
-    //                     child: ImageIcon(
-    //                       size: 35,
-    //                       iconList[index],
-    //                       color: index == iconIndex.value
-    //                           ? colorList[colorIndex.value]
-    //                           : Colors.grey,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               );
-    //             },
-    //           ),
-    //         ),
-    //         Container(
-    //           margin: const EdgeInsets.symmetric(vertical: 4.0),
-    //           width: Dimens.width,
-    //           height: 24,
-    //           child: ListView.builder(
-    //             shrinkWrap: true,
-    //             itemCount: colorList.length,
-    //             scrollDirection: Axis.horizontal,
-    //             itemBuilder: (context, index) => Obx(
-    //               () => ColorWidget(
-    //                 color: index == colorIndex.value
-    //                     ? colorList[index]
-    //                     : colorList[index].withOpacity(0.6),
-    //                 onTap: () {
-    //                   colorIndex.value = index;
-    //                 },
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //         const SizedBox(
-    //           height: 25.0,
-    //         ),
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //           children: [
-    //             SizedBox(
-    //               height: 35,
-    //               width: Dimens.width / 3,
-    //               child: ElevatedButton(
-    //                 onPressed: () {
-    //                   Get.back();
-    //                   categoryList.add(
-    //                     CategoryModel(
-    //                       name: textEditingCategory.text,
-    //                       icon: iconList[iconIndex.value],
-    //                       color: colorList[colorIndex.value],
-    //                       allTaskList: [],
-    //                       completeTaskList: [],
-    //                       lastTaskList: [],
-    //                     ),
-    //                   );
-    //                   textEditingCategory.text = '';
-    //                   iconIndex.value = 0;
-    //                   colorIndex.value = 0;
-    //                 },
-    //                 child: const Text('افزودن'),
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               height: 35,
-    //               width: Dimens.width / 3,
-    //               child: ElevatedButton(
-    //                 onPressed: () {
-    //                   Get.back();
-    //                   colorIndex.value = 0;
-    //                   iconIndex.value = 0;
-    //                   textEditingCategory.text = '';
-    //                 },
-    //                 child: const Text('لغو'),
-    //               ),
-    //             ),
-    //           ],
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    //   radius: 6,
-    //   backgroundColor: Colors.white,
-    //   contentPadding: const EdgeInsets.all(8.0),
-    // );
   }
 
   Future firstSeen() async {

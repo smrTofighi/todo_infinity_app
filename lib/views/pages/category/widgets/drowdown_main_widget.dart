@@ -1,13 +1,16 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/values/colors.dart';
+import 'package:get/get.dart';
+import 'package:todo_infinity_app/controllers/category_controller.dart';
 import '../../../../core/values/icons.dart';
 
+// ignore: must_be_immutable
 class DropdownMainCategory extends StatelessWidget {
-  const DropdownMainCategory({
+  DropdownMainCategory({
     super.key,
   });
+
+  CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class DropdownMainCategory extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: SolidColors.primary,
+            color: categoryController.categoryList[0].color,
           ),
           elevation: 8,
           offset: const Offset(0, 8),
@@ -72,13 +75,16 @@ class MenuItem {
 }
 
 class MenuItems {
-  static List<MenuItem> firstItems = [editCategoryTheme,search, trashAllCategory];
+  static List<MenuItem> firstItems = [
+    editCategoryTheme,
+    search,
+    trashAllCategory
+  ];
   static List<MenuItem> secondItems = [logout];
 
   static final editCategoryTheme =
       MenuItem(text: 'تغییر رنگ', icon: MyIcons.pallete);
-  static final search =
-      MenuItem(text: 'جستجو', icon: MyIcons.search);
+  static final search = MenuItem(text: 'جستجو', icon: MyIcons.search);
   static final trashAllCategory =
       MenuItem(text: 'حذف همه', icon: MyIcons.trash);
   static final logout = MenuItem(text: 'خروج', icon: MyIcons.power);
@@ -101,19 +107,9 @@ class MenuItems {
   }
 
   static onChanged(BuildContext context, MenuItem item) {
-    // switch (item.text) {
-    //   case MenuItems.editCategoryTheme.text:
-    //     //Do something
-    //     break;
-    //   case MenuItems.settings:
-    //     //Do something
-    //     break;
-    //   case MenuItems.share:
-    //     //Do something
-    //     break;
-    //   case MenuItems.logout:
-    //     //Do something
-    //     break;
-    // }
+    CategoryController categoryController = Get.find<CategoryController>();
+    if (item.icon == MyIcons.pallete) {
+      categoryController.changeThemeMainCategory(context);
+    }
   }
 }

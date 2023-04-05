@@ -11,11 +11,11 @@ class ColorWidget extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
-        width: 23,
-        height: 23,
+        width: 26,
+        height: 26,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(15.0),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 6.0),
       ),
