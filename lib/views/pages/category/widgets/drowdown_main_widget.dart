@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
 import '../../../../core/values/icons.dart';
+import '../../../../routes/pages.dart';
 
 // ignore: must_be_immutable
 class DropdownMainCategory extends StatelessWidget {
@@ -110,6 +111,10 @@ class MenuItems {
     CategoryController categoryController = Get.find<CategoryController>();
     if (item.icon == MyIcons.pallete) {
       categoryController.changeThemeMainCategory(context);
+    } else if (item.icon == MyIcons.search) {
+      Get.toNamed(PageName.searchPage);
+    } else if (item.icon == MyIcons.trash) {
+      categoryController.deleteAllTaskCategories();
     }
   }
 }
