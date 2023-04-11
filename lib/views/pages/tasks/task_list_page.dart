@@ -9,6 +9,7 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/models/task_model.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/pages/tasks/widgets/dropdown_task_list_widget.dart';
+import 'package:todo_infinity_app/views/pages/tasks/widgets/task_widget.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 import '../../../controllers/category_controller.dart';
 import '../../../core/values/strings.dart';
@@ -123,8 +124,8 @@ class CompleteTaskList extends StatelessWidget {
                 width: Dimens.width,
                 height: taskController
                         .categoryModel.value.completeTaskList!.length *
-                    100,
-                child: ListView.separated(
+                    75,
+                child: ListView.builder(
                   itemCount: taskController
                       .categoryModel.value.completeTaskList!.length,
                   scrollDirection: Axis.vertical,
@@ -139,78 +140,96 @@ class CompleteTaskList extends StatelessWidget {
                         taskController.deleteCompleteTask(index, context);
                       },
                       child: Container(
-                        height: 85,
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 4),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   taskController.categoryModel.value
-                                      .completeTaskList![index].name!,
+                                      .completeTaskList![index].time!,
                                   style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey,
-                                      decoration: TextDecoration.lineThrough),
+                                      fontSize: 14, color: Colors.grey),
                                 ),
                                 Text(
                                   taskController.categoryModel.value
-                                      .completeTaskList![index].alarm!,
+                                      .completeTaskList![index].date!,
                                   style: const TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                ),
-                                Text(
-                                  "اولویت : ${taskController.categoryModel.value.completeTaskList![index].importance!}",
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 12),
+                                      fontSize: 10, color: Colors.grey),
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Checkbox(
-                                    value: taskController.categoryModel.value
-                                        .completeTaskList![index].isComplete,
-                                    onChanged: (value) {
-                                      if (taskController
-                                              .categoryModel
-                                              .value
-                                              .completeTaskList![index]
-                                              .isComplete ==
-                                          true) {
-                                        taskController.categoryModel
-                                            .update((val) {
-                                          val!.completeTaskList![index]
-                                              .isComplete = false;
-                                        });
-                                        taskController
-                                            .categoryModel.value.allTaskList!
-                                            .add(taskController
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 2.0),
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 1.55,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.radius),
+                                color: SolidColors.card,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 5,
+                                      spreadRadius: 0.2)
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    taskController.categoryModel.value
+                                        .completeTaskList![index].name!,
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.grey,
+                                        decoration: TextDecoration.lineThrough),
+                                  ),
+                                  Obx(
+                                    () => Checkbox(
+                                      value: taskController.categoryModel.value
+                                          .completeTaskList![index].isComplete,
+                                      onChanged: (value) {
+                                        if (taskController
                                                 .categoryModel
                                                 .value
-                                                .completeTaskList![index]);
-                                        taskController.categoryModel.value
-                                            .completeTaskList!
-                                            .removeAt(index);
-                                      }
-                                    },
-                                    activeColor: taskController
-                                        .categoryModel.value.color,
+                                                .completeTaskList![index]
+                                                .isComplete ==
+                                            true) {
+                                          taskController.categoryModel
+                                              .update((val) {
+                                            val!.completeTaskList![index]
+                                                .isComplete = false;
+                                          });
+                                          taskController
+                                              .categoryModel.value.allTaskList!
+                                              .add(taskController
+                                                  .categoryModel
+                                                  .value
+                                                  .completeTaskList![index]);
+                                          taskController.categoryModel.value
+                                              .completeTaskList!
+                                              .removeAt(index);
+                                        }
+                                      },
+                                      activeColor: taskController
+                                          .categoryModel.value.color,
+                                    ),
                                   ),
-                                ),
-                                const Spacer()
-                              ],
+                                ],
+                              ),
                             )
                           ],
                         ),
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const Divider(),
                 ),
               ),
       ),
@@ -251,9 +270,9 @@ class AllTaskList extends StatelessWidget {
               )
             : SizedBox(
                 width: Dimens.width,
-                height: taskController.categoryModel.value.allTaskList!.length *
-                    100,
-                child: ListView.separated(
+                height:
+                    taskController.categoryModel.value.allTaskList!.length * 75,
+                child: ListView.builder(
                   itemCount:
                       taskController.categoryModel.value.allTaskList!.length,
                   scrollDirection: Axis.vertical,
@@ -269,69 +288,91 @@ class AllTaskList extends StatelessWidget {
                         taskController.deleteAllTask(index, context);
                       },
                       child: Container(
-                        height: 85,
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 4),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   taskController.categoryModel.value
-                                      .allTaskList![index].name!,
-                                  style: const TextStyle(fontSize: 15),
+                                      .allTaskList![index].time!,
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.grey),
                                 ),
                                 Text(
                                   taskController.categoryModel.value
-                                      .allTaskList![index].alarm!,
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                                Text(
-                                  "اولویت : ${taskController.categoryModel.value.allTaskList![index].importance!}",
-                                  style: MyTextStyles
-                                      .importanceTextTaskListPageAll,
+                                      .allTaskList![index].date!,
+                                  style: const TextStyle(
+                                      fontSize: 10, color: Colors.grey),
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Checkbox(
-                                    value: taskController.categoryModel.value
-                                        .allTaskList![index].isComplete,
-                                    onChanged: (value) {
-                                      if (taskController.categoryModel.value
-                                              .allTaskList![index].isComplete ==
-                                          false) {
-                                        taskController.categoryModel
-                                            .update((val) {
-                                          val!.allTaskList![index].isComplete =
-                                              true;
-                                        });
-                                        taskController.categoryModel.value
-                                            .completeTaskList!
-                                            .add(taskController.categoryModel
-                                                .value.allTaskList![index]);
-                                        taskController
-                                            .categoryModel.value.allTaskList!
-                                            .removeAt(index);
-                                      }
-                                    },
-                                    activeColor: taskController
-                                        .categoryModel.value.color,
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 2.0),
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 1.55,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.radius),
+                                color: SolidColors.card,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 5,
+                                      spreadRadius: 0.2)
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    taskController.categoryModel.value
+                                        .allTaskList![index].name!,
+                                    style: const TextStyle(fontSize: 13),
                                   ),
-                                ),
-                              ],
+                                  Obx(
+                                    () => Checkbox(
+                                      value: taskController.categoryModel.value
+                                          .allTaskList![index].isComplete,
+                                      onChanged: (value) {
+                                        if (taskController
+                                                .categoryModel
+                                                .value
+                                                .allTaskList![index]
+                                                .isComplete ==
+                                            false) {
+                                          taskController.categoryModel
+                                              .update((val) {
+                                            val!.allTaskList![index]
+                                                .isComplete = true;
+                                          });
+                                          taskController.categoryModel.value
+                                              .completeTaskList!
+                                              .add(taskController.categoryModel
+                                                  .value.allTaskList![index]);
+                                          taskController
+                                              .categoryModel.value.allTaskList!
+                                              .removeAt(index);
+                                        }
+                                      },
+                                      activeColor: taskController
+                                          .categoryModel.value.color,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         ),
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const Divider(),
                 ),
               ),
       ),
