@@ -19,17 +19,37 @@ class TaskController extends GetxController {
   RxInt importanceIndex = RxInt(0);
   RxInt taskIndex = 0.obs;
   RxString category = 'دسته بندی'.obs;
-  RxString alarm = 'افزودن هشدار'.obs;
-  RxString importance = 'میزان اهمیت'.obs;
-  RxBool importanceState = false.obs;
-  RxBool alarmState = false.obs;
+  RxString date = 'افزودن تاریخ'.obs;
+  RxString time = 'افزودن ساعت'.obs;
+  RxBool timeState = false.obs;
+  RxBool dateState = false.obs;
   RxBool editTaskState = false.obs;
   RxBool taskCompleteState = false.obs;
 
+  snackBarMessage(String title, String message) {
+    Get.snackbar(
+      title,
+      message,
+      backgroundColor: categoryModel.value.color,
+      borderRadius: Dimens.radius,
+      colorText: Colors.white,
+    );
+  }
+
   deleteTasks() {
     CategoryController categoryController = Get.find<CategoryController>();
-    categoryModel.value.allTaskList!.clear();
-    categoryModel.value.completeTaskList!.clear();
+    if (categoryModel.value.allTaskList!.isNotEmpty &
+        categoryModel.value.completeTaskList!.isNotEmpty) {
+      categoryModel.value.allTaskList!.clear();
+      categoryModel.value.completeTaskList!.clear();
+    } else if (categoryModel.value.allTaskList!.isNotEmpty) {
+      categoryModel.value.allTaskList!.clear();
+    } else if (categoryModel.value.completeTaskList!.isNotEmpty) {
+      categoryModel.value.completeTaskList!.clear();
+    }
+    snackBarMessage('موفقیت آمیز بود',
+        'تمامی ماموریت های دسته بندی ${categoryModel.value.name} حذف شدند');
+
     categoryController.countAllItemsCategories();
     Get.offAllNamed(PageName.categoryPage);
   }
@@ -81,7 +101,7 @@ class TaskController extends GetxController {
 
   deleteCompleteTask(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-   var height = MediaQuery.of(context).size.height;
+    var height = MediaQuery.of(context).size.height;
     Get.defaultDialog(
       barrierDismissible: false,
       backgroundColor: SolidColors.card,
@@ -124,90 +144,99 @@ class TaskController extends GetxController {
     );
   }
 
-  addNote(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    Get.defaultDialog(
-      barrierDismissible: false,
-      title: MyStrings.importance,
-      titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      content: Column(
-        children: [
-          Obx(
-            () => RadioListTile(
-                title: const Text("کم"),
-                value: "کم",
-                groupValue: importance.value,
-                onChanged: (value) {
-                  importance.value = value.toString();
-                },
-                activeColor: categoryModel.value.color),
-          ),
-          Obx(
-            () => RadioListTile(
-                title: const Text("متوسط"),
-                value: "متوسط",
-                groupValue: importance.value,
-                onChanged: (value) {
-                  importance.value = value.toString();
-                },
-                activeColor: categoryModel.value.color),
-          ),
-          Obx(
-            () => RadioListTile(
-                title: const Text("زیاد"),
-                value: "زیاد",
-                groupValue: importance.value,
-                onChanged: (value) {
-                  importance.value = value.toString();
-                },
-                activeColor: categoryModel.value.color),
-          ),
-          const SizedBox(
-            height: 25.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                height: 35,
-                width: width / 3.3,
-                child: ElevatedButton(
-                  onPressed: () {
-                    importanceState.value = true;
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(categoryModel.value.color)),
-                  child: const Text('تایید'),
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                width: width / 3.3,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // importance.value = MyStrings.importance;
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(categoryModel.value.color)),
-                  child: const Text('لغو'),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-      radius: 6,
-      backgroundColor: Colors.white,
-      contentPadding: const EdgeInsets.all(8.0),
+  addTime(BuildContext context) async {
+    //var width = MediaQuery.of(context).size.width;
+    // var height = MediaQuery.of(context).size.height;
+    // Get.defaultDialog(
+    //   barrierDismissible: false,
+    //   title: MyStrings.importance,
+    //   titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    //   content: Column(
+    //     children: [
+    //       Obx(
+    //         () => RadioListTile(
+    //             title: const Text("کم"),
+    //             value: "کم",
+    //             groupValue: time.value,
+    //             onChanged: (value) {
+    //               time.value = value.toString();
+    //             },
+    //             activeColor: categoryModel.value.color),
+    //       ),
+    //       Obx(
+    //         () => RadioListTile(
+    //             title: const Text("متوسط"),
+    //             value: "متوسط",
+    //             groupValue: time.value,
+    //             onChanged: (value) {
+    //               time.value = value.toString();
+    //             },
+    //             activeColor: categoryModel.value.color),
+    //       ),
+    //       Obx(
+    //         () => RadioListTile(
+    //             title: const Text("زیاد"),
+    //             value: "زیاد",
+    //             groupValue: time.value,
+    //             onChanged: (value) {
+    //               time.value = value.toString();
+    //             },
+    //             activeColor: categoryModel.value.color),
+    //       ),
+    //       const SizedBox(
+    //         height: 25.0,
+    //       ),
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //         children: [
+    //           SizedBox(
+    //             height: 35,
+    //             width: width / 3.3,
+    //             child: ElevatedButton(
+    //               onPressed: () {
+    //                 timeState.value = true;
+    //                 Get.back();
+    //               },
+    //               style: ButtonStyle(
+    //                   backgroundColor:
+    //                       MaterialStateProperty.all(categoryModel.value.color)),
+    //               child: const Text('تایید'),
+    //             ),
+    //           ),
+    //           SizedBox(
+    //             height: 35,
+    //             width: width / 3.3,
+    //             child: ElevatedButton(
+    //               onPressed: () {
+    //                 // importance.value = MyStrings.importance;
+    //                 Get.back();
+    //               },
+    //               style: ButtonStyle(
+    //                   backgroundColor:
+    //                       MaterialStateProperty.all(categoryModel.value.color)),
+    //               child: const Text('لغو'),
+    //             ),
+    //           ),
+    //         ],
+    //       )
+    //     ],
+    //   ),
+    //   radius: 6,
+    //   backgroundColor: Colors.white,
+    //   contentPadding: const EdgeInsets.all(8.0),
+    // );
+
+    var picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
     );
+    if (picked != null) {
+      time.value = '${picked.hour.toString()}:${picked.minute.toString()}';
+      timeState.value = true;
+    }
   }
 
-  addAlarm(BuildContext context) async {
+  addDate(BuildContext context) async {
     String selectedDate = Jalali.now().toJalaliDateTime();
     Jalali? picked = await showPersianDatePicker(
       context: context,
@@ -217,17 +246,16 @@ class TaskController extends GetxController {
     );
 
     if (picked != null && picked.toString() != selectedDate) {
-      alarm.value = picked.formatFullDate();
-      alarmState.value = true;
+      date.value = picked.formatCompactDate();
+      dateState.value = true;
     }
   }
 
-  editCategory() {}
   addTask() {
     TaskModel task = TaskModel(
       name: taskEditingController.text,
-      importance: importance.value,
-      alarm: alarm.value,
+      time: time.value,
+      date: date.value,
       category: category.value,
       isComplete: false,
     );
@@ -240,8 +268,8 @@ class TaskController extends GetxController {
   editAllTask() {
     categoryModel.update((val) {
       val!.allTaskList![taskIndex.value].name = taskEditingController.text;
-      val.allTaskList![taskIndex.value].alarm = alarm.value;
-      val.allTaskList![taskIndex.value].importance = importance.value;
+      val.allTaskList![taskIndex.value].date = date.value;
+      val.allTaskList![taskIndex.value].time = time.value;
     });
     Get.offNamed(PageName.taskListPage);
   }
@@ -249,19 +277,19 @@ class TaskController extends GetxController {
   editCompleteTask() {
     categoryModel.update((val) {
       val!.completeTaskList![taskIndex.value].name = taskEditingController.text;
-      val.completeTaskList![taskIndex.value].alarm = alarm.value;
-      val.completeTaskList![taskIndex.value].importance = importance.value;
+      val.completeTaskList![taskIndex.value].date = date.value;
+      val.completeTaskList![taskIndex.value].time = time.value;
     });
     Get.offAllNamed(PageName.categoryPage);
   }
 
   //? clear all inputs in add edit task page
   clearInputs() {
-    alarmState.value = false;
-    alarm.value = MyStrings.addAlarm;
+    dateState.value = false;
+    date.value = MyStrings.addAlarm;
     editTaskState.value = false;
-    importance.value = MyStrings.importance;
-    importanceState.value = false;
+    time.value = MyStrings.importance;
+    timeState.value = false;
     taskEditingController.text = '';
   }
 
@@ -270,10 +298,10 @@ class TaskController extends GetxController {
     taskIndex.value = index;
     taskCompleteState.value = false;
     editTaskState.value = true;
-    importanceState.value = true;
-    alarmState.value = true;
-    alarm.value = list[index].alarm!;
-    importance.value = list[index].importance!;
+    timeState.value = true;
+    dateState.value = true;
+    date.value = list[index].date!;
+    time.value = list[index].time!;
     taskEditingController.text = list[index].name!;
     Get.toNamed(PageName.addEditTaskPage);
   }
@@ -283,10 +311,10 @@ class TaskController extends GetxController {
     taskIndex.value = index;
     taskCompleteState.value = true;
     editTaskState.value = true;
-    importanceState.value = true;
-    alarmState.value = true;
-    alarm.value = list[index].alarm!;
-    importance.value = list[index].importance!;
+    timeState.value = true;
+    dateState.value = true;
+    date.value = list[index].date!;
+    time.value = list[index].time!;
     taskEditingController.text = list[index].name!;
     Get.toNamed(PageName.addEditTaskPage);
   }
