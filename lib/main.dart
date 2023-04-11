@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo_infinity_app/bindings/binding.dart';
 import 'package:todo_infinity_app/routes/routes.dart';
-import 'package:todo_infinity_app/views/pages/splash_page.dart';
+import 'package:todo_infinity_app/views/pages/splash/splash_page.dart';
 import 'core/themes/light_theme.dart';
 
 void main() async {
