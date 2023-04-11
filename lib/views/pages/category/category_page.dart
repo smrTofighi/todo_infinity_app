@@ -9,7 +9,10 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
+import 'package:todo_infinity_app/views/pages/category/widgets/mydrawer_widget.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
+
+import '../../../core/values/dimens.dart';
 
 // ignore: must_be_immutable
 class CategoryPage extends StatefulWidget {
@@ -33,7 +36,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return SafeArea(
       child: Scaffold(
         key: _key,
-        drawer: const Drawer(),
+        drawer: MyDrawer(),
         backgroundColor: SolidColors.backGround,
         body: SingleChildScrollView(
           child: Column(
@@ -79,6 +82,7 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 }
+
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
