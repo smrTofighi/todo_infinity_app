@@ -49,6 +49,8 @@ dependencies:
   expandable: ^5.0.1
   persian_datetime_picker: ^2.5.0
   dropdown_button2: ^2.0.0
+  flutter_screenutil: ^5.7.0
+  flutter_slidable: ^2.0.0
 
 dev_dependencies:
   flutter_test:
