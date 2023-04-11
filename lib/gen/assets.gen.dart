@@ -53,6 +53,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/car-side.png
   AssetGenImage get carSide => const AssetGenImage('assets/icons/car-side.png');
 
+  /// File path: assets/icons/clock.png
+  AssetGenImage get clock => const AssetGenImage('assets/icons/clock.png');
+
   /// File path: assets/icons/comment-info.png
   AssetGenImage get commentInfo =>
       const AssetGenImage('assets/icons/comment-info.png');
@@ -213,6 +216,7 @@ class $AssetsIconsGen {
         cakeBirthday,
         carAlt,
         carSide,
+        clock,
         commentInfo,
         dollar,
         dream,
