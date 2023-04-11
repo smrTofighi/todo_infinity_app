@@ -9,6 +9,7 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/pages/category/widgets/drowdown_main_widget.dart';
 import '../../../controllers/category_controller.dart';
+import '../../../core/values/strings.dart';
 
 // ignore: must_be_immutable
 class MainCategoryPage extends StatelessWidget {
@@ -62,126 +63,17 @@ class BottomSection extends StatelessWidget {
           ),
           color: SolidColors.card,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListView.separated(
+        child: categoryController.categoryList.length == 1
+            ? const Center(
+                child: Text('هیچ دسته بندی وجود ندارد'),
+              )
+            : ListView.separated(
                 shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
                 itemCount: categoryController.categoryList.length - 1,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) => AllTaskList(index: index),
                 separatorBuilder: (context, index) => const Divider(),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CompleteTaskList extends StatelessWidget {
-  const CompleteTaskList({
-    super.key,
-    required this.taskController,
-  });
-
-  final TaskController taskController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => ExpandablePanel(
-        // controller:
-        //     ExpandableController(initialExpanded: false),
-        header: const Text(
-          'انجام شده',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 14,
-          ),
-        ),
-        collapsed: const SizedBox(),
-        expanded: taskController.categoryModel.value.completeTaskList!.isEmpty
-            ? const SizedBox()
-            : SizedBox(
-                width: Dimens.width,
-                height: taskController
-                        .categoryModel.value.completeTaskList!.length *
-                    65,
-                child: ListView.separated(
-                  itemCount: taskController
-                      .categoryModel.value.completeTaskList!.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 65,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                taskController.categoryModel.value
-                                    .completeTaskList![index].name!,
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                              const SizedBox(
-                                height: 4.0,
-                              ),
-                              const Text(
-                                '',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 12),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Obx(
-                                () => Checkbox(
-                                  value: taskController.categoryModel.value
-                                      .completeTaskList![index].isComplete,
-                                  onChanged: (value) {
-                                    if (taskController
-                                            .categoryModel
-                                            .value
-                                            .completeTaskList![index]
-                                            .isComplete ==
-                                        true) {
-                                      taskController.categoryModel
-                                          .update((val) {
-                                        val!.completeTaskList![index]
-                                            .isComplete = false;
-                                      });
-                                      taskController
-                                          .categoryModel.value.allTaskList!
-                                          .add(taskController.categoryModel
-                                              .value.completeTaskList![index]);
-                                      taskController
-                                          .categoryModel.value.completeTaskList!
-                                          .removeAt(index);
-                                    }
-                                  },
-                                  activeColor:
-                                      taskController.categoryModel.value.color,
-                                ),
-                              ),
-                              const Spacer()
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const Divider(),
-                ),
               ),
       ),
     );
@@ -204,27 +96,36 @@ class AllTaskList extends StatelessWidget {
       () => ExpandablePanel(
         header: Text(
           categoryController.categoryList[index + 1].name!,
-          style: const TextStyle(
-            color: Colors.grey,
+          style: TextStyle(
+            color: categoryController.categoryList[index + 1].color,
             fontSize: 14,
           ),
         ),
         collapsed: const SizedBox(),
         expanded: categoryController
                 .categoryList[index + 1].allTaskList!.isEmpty
-            ? const SizedBox()
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    MyStrings.noTaskHere,
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                ),
+              )
             : SizedBox(
                 width: Dimens.width,
                 height: categoryController
                         .categoryList[index + 1].allTaskList!.length *
-                    65,
+                    85,
                 child: ListView.separated(
                   itemCount: categoryController
                       .categoryList[index + 1].allTaskList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return Container(
-                      height: 65,
+                      height: 85,
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,11 +141,11 @@ class AllTaskList extends StatelessWidget {
                               ),
                               Text(
                                 categoryController.categoryList[index + 1]
-                                    .allTaskList![index].alarm!,
+                                    .allTaskList![index].date!,
                                 style: const TextStyle(fontSize: 12),
                               ),
                               Text(
-                                "اولویت : ${categoryController.categoryList[index + 1].allTaskList![index].importance!}",
+                                "اولویت : ${categoryController.categoryList[index + 1].allTaskList![index].time!}",
                                 style:
                                     MyTextStyles.importanceTextTaskListPageAll,
                               ),
@@ -261,76 +162,6 @@ class AllTaskList extends StatelessWidget {
                 ),
               ),
       ),
-    );
-  }
-}
-
-class PastTaskList extends StatelessWidget {
-  const PastTaskList({
-    super.key,
-    required this.taskController,
-  });
-
-  final TaskController taskController;
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpandablePanel(
-      // controller:
-      //     ExpandableController(initialExpanded: false),
-      header: const Text(
-        'گذشته',
-        style: TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-        ),
-      ),
-      collapsed: const SizedBox(),
-      expanded: taskController.categoryModel.value.lastTaskList!.isEmpty
-          ? const SizedBox()
-          : SizedBox(
-              width: Dimens.width,
-              height:
-                  taskController.categoryModel.value.lastTaskList!.length * 65,
-              child: ListView.builder(
-                itemCount:
-                    taskController.categoryModel.value.lastTaskList!.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 65,
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              taskController.categoryModel.value
-                                  .lastTaskList![index].name!,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                            const SizedBox(
-                              height: 4.0,
-                            ),
-                            const Text(
-                              '',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            )
-                          ],
-                        ),
-                        Radio(
-                          value: 0,
-                          groupValue: 1,
-                          onChanged: (value) {},
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
     );
   }
 }
@@ -425,5 +256,3 @@ class MyAppBar extends StatelessWidget {
     );
   }
 }
-
-
