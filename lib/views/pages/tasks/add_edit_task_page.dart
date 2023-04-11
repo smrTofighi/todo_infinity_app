@@ -26,11 +26,11 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          taskController.alarmState.value = false;
-          taskController.alarm.value = MyStrings.addAlarm;
+          taskController.dateState.value = false;
+          taskController.date.value = MyStrings.addAlarm;
           taskController.editTaskState.value = false;
-          taskController.importance.value = MyStrings.importance;
-          taskController.importanceState.value = false;
+          taskController.time.value = MyStrings.importance;
+          taskController.timeState.value = false;
           taskController.taskEditingController.text = '';
 
           return true;
@@ -53,11 +53,11 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
             leading: IconButton(
               onPressed: () {
                 Get.back();
-                taskController.alarmState.value = false;
-                taskController.alarm.value = MyStrings.addAlarm;
+                taskController.dateState.value = false;
+                taskController.date.value = MyStrings.addAlarm;
                 taskController.editTaskState.value = false;
-                taskController.importance.value = MyStrings.importance;
-                taskController.importanceState.value = false;
+                taskController.time.value = MyStrings.importance;
+                taskController.timeState.value = false;
                 taskController.taskEditingController.text = '';
               },
               color: Colors.black,
@@ -90,7 +90,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 Row(
                   children: [
                     ImageIcon(
-                      MyIcons.note,
+                      MyIcons.clock,
                       size: 18,
                       color: Colors.grey,
                     ),
@@ -99,14 +99,14 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        taskController.addNote(context);
+                        taskController.addTime(context);
                       },
                       style: MyButtonStyle.textButtonAddEditTaskPage,
                       child: Obx(
                         () => Text(
-                          taskController.importance.value,
+                          taskController.time.value,
                           style: TextStyle(
-                              color: taskController.importanceState.value
+                              color: taskController.timeState.value
                                   ? taskController.categoryModel.value.color
                                   : Colors.grey,
                               fontSize: 13),
@@ -171,14 +171,14 @@ class TaskAlarm extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            taskController.addAlarm(context);
+            taskController.addDate(context);
           },
           style: MyButtonStyle.textButtonAddEditTaskPage,
           child: Obx(
             () => Text(
-              taskController.alarm.value,
+              taskController.date.value,
               style: TextStyle(
-                  color: taskController.alarmState.value
+                  color: taskController.dateState.value
                       ? taskController.categoryModel.value.color
                       : Colors.grey,
                   fontSize: 13),
