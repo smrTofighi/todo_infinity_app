@@ -75,7 +75,7 @@ class CategoryController extends GetxController {
 
   deleteCateogry(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    // var height = MediaQuery.of(context).size.height;
     if (index != 0) {
       Get.defaultDialog(
         barrierDismissible: false,
@@ -121,6 +121,16 @@ class CategoryController extends GetxController {
     }
   }
 
+  snackBarMessage(String title, String message) {
+    Get.snackbar(
+      title,
+      message,
+      backgroundColor: categoryList[0].color,
+      borderRadius: Dimens.radius,
+      colorText: Colors.white,
+    );
+  }
+
   editCategory(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -128,7 +138,7 @@ class CategoryController extends GetxController {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 6.0),
           width: width,
-          height: height / 2.4,
+          height: height / 2.2,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
@@ -262,7 +272,7 @@ class CategoryController extends GetxController {
 
   changeThemeCategory(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-   var height = MediaQuery.of(context).size.height;
+    var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
         Container(
           padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -316,7 +326,7 @@ class CategoryController extends GetxController {
                 children: [
                   SizedBox(
                     height: 35,
-                    width: Dimens.width / 3,
+                    width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
                         TaskController taskController =
@@ -334,7 +344,7 @@ class CategoryController extends GetxController {
                   ),
                   SizedBox(
                     height: 35,
-                    width: Dimens.width / 3,
+                    width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
                         colorIndex.value = 0;
@@ -354,8 +364,12 @@ class CategoryController extends GetxController {
 
   deleteAllTaskCategories() {
     for (var category in categoryList) {
-      category.allTaskList!.clear();
+      if (category.allTaskList!.isNotEmpty) {
+        category.allTaskList!.clear();
+      }
     }
+    snackBarMessage(
+        'موفقیت آمیز بود', 'تمامی ماموریت های تمام دسته بندی ها حذف شدند');
     countAllItemsCategories();
     Get.offAllNamed(PageName.categoryPage);
   }
@@ -470,7 +484,7 @@ class CategoryController extends GetxController {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 6.0),
           width: width,
-          height: height / 2.4,
+          height: height / 2.2,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
@@ -517,6 +531,7 @@ class CategoryController extends GetxController {
                         child: AnimatedContainer(
                           width: 30,
                           height: 30,
+                          curve: Curves.easeInOutQuint,
                           margin: const EdgeInsets.symmetric(horizontal: 8.0),
                           duration: const Duration(seconds: 1),
                           child: ImageIcon(
