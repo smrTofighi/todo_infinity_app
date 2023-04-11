@@ -10,6 +10,7 @@ class ColorWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        curve: Curves.easeInOutQuint,
         duration: const Duration(milliseconds: 500),
         width: 26,
         height: 26,
