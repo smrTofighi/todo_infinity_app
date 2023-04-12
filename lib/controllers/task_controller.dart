@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/models/category_model.dart';
 
@@ -26,17 +27,15 @@ class TaskController extends GetxController {
   RxBool editTaskState = false.obs;
   RxBool taskCompleteState = false.obs;
 
-  snackBarMessage(String title, String message) {
-    Get.snackbar(
-      title,
-      message,
-      backgroundColor: categoryModel.value.color,
-      borderRadius: Dimens.radius,
-      colorText: Colors.white,
+  toastMessage(String message, BuildContext context) {
+    toastification.showSuccess(
+      context: context,
+      title: message,
+      autoCloseDuration: const Duration(seconds: 5),
     );
   }
 
-  deleteTasks() {
+  deleteTasks(BuildContext context) {
     CategoryController categoryController = Get.find<CategoryController>();
     if (categoryModel.value.allTaskList!.isNotEmpty &
         categoryModel.value.completeTaskList!.isNotEmpty) {
@@ -47,8 +46,7 @@ class TaskController extends GetxController {
     } else if (categoryModel.value.completeTaskList!.isNotEmpty) {
       categoryModel.value.completeTaskList!.clear();
     }
-    snackBarMessage('موفقیت آمیز بود',
-        'تمامی ماموریت های دسته بندی ${categoryModel.value.name} حذف شدند');
+    toastMessage('موفقیت آمیز بود', context);
 
     categoryController.countAllItemsCategories();
     Get.offAllNamed(PageName.categoryPage);
@@ -56,7 +54,6 @@ class TaskController extends GetxController {
 
   deleteAllTask(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     Get.defaultDialog(
       barrierDismissible: false,
       backgroundColor: SolidColors.card,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
@@ -121,13 +122,11 @@ class CategoryController extends GetxController {
     }
   }
 
-  snackBarMessage(String title, String message) {
-    Get.snackbar(
-      title,
-      message,
-      backgroundColor: categoryList[0].color,
-      borderRadius: Dimens.radius,
-      colorText: Colors.white,
+  snackBarMessage(String message, BuildContext context) {
+    toastification.showSuccess(
+      context: context,
+      title: message,
+      autoCloseDuration: const Duration(seconds: 5),
     );
   }
 
@@ -362,14 +361,14 @@ class CategoryController extends GetxController {
         isDismissible: false);
   }
 
-  deleteAllTaskCategories() {
+  deleteAllTaskCategories(BuildContext context) {
     for (var category in categoryList) {
       if (category.allTaskList!.isNotEmpty) {
         category.allTaskList!.clear();
       }
     }
     snackBarMessage(
-        'موفقیت آمیز بود', 'تمامی ماموریت های تمام دسته بندی ها حذف شدند');
+        'موفقیت آمیز بود', context);
     countAllItemsCategories();
     Get.offAllNamed(PageName.categoryPage);
   }

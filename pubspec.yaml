@@ -51,6 +51,7 @@ dependencies:
   dropdown_button2: ^2.0.0
   flutter_screenutil: ^5.7.0
   flutter_slidable: ^2.0.0
+  toastification: ^0.0.3
 
 dev_dependencies:
   flutter_test:
