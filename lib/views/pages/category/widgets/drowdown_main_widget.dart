@@ -114,7 +114,7 @@ class MenuItems {
     } else if (item.icon == MyIcons.search) {
       Get.toNamed(PageName.searchPage);
     } else if (item.icon == MyIcons.trash) {
-      categoryController.deleteAllTaskCategories();
+      categoryController.deleteAllTaskCategories(context);
     }
   }
 }
