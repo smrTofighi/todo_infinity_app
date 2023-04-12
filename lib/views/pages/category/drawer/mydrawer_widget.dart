@@ -1,10 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../controllers/category_controller.dart';
+import '../../../../controllers/task_controller.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../core/values/icons.dart';
+import 'widgets/dropdown_drawer_widget.dart';
 
 // ignore: must_be_immutable
 class MyDrawer extends StatelessWidget {
@@ -29,6 +31,31 @@ class MyDrawer extends StatelessWidget {
             ),
             const Divider(
               color: SolidColors.grey,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12.0),
+              width: Dimens.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      ImageIcon(
+                        MyIcons.setting,
+                        size: 19,
+                        color: SolidColors.primary,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const Text(
+                        'تنظیمات',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12.0),
@@ -99,7 +126,7 @@ class ListTileCategory extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 18,
                   height: 18,
                   child: CircleAvatar(
@@ -127,10 +154,9 @@ class ListTileCategory extends StatelessWidget {
                 const SizedBox(
                   width: 12,
                 ),
-                ImageIcon(
-                  MyIcons.menuVertical,
-                  size: 16,
-                ),
+                index == 0
+                    ? DropDownMainCategoryDrawer()
+                    : DropDownDrawer(index: index)
               ],
             ),
           ],

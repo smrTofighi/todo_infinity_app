@@ -9,7 +9,7 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/widgets/mydrawer_widget.dart';
+import 'package:todo_infinity_app/views/pages/category/drawer/mydrawer_widget.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
 import '../../../core/values/dimens.dart';
