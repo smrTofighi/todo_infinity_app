@@ -114,7 +114,7 @@ class MenuItems {
     } else if (item.icon == MyIcons.edit) {
       categoryController.editCategory(context);
     } else if (item.icon == MyIcons.trash) {
-      taskController.deleteTasks();
+      taskController.deleteTasks(context);
     }
   }
 }
