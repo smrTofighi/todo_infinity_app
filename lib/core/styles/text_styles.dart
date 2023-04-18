@@ -11,4 +11,10 @@ class MyTextStyles {
       TextStyle(fontSize: 11, color: SolidColors.grey);
   static const TextStyle importanceTextTaskListPageAll =
       TextStyle(fontSize: 11, color: SolidColors.black);
+
+  static const TextStyle titleOfAppBar = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
 }
