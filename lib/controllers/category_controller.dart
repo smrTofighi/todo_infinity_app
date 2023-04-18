@@ -74,6 +74,7 @@ class CategoryController extends GetxController {
     countAllItemsCategories();
   }
 
+  //? this method delete your category
   deleteCateogry(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     // var height = MediaQuery.of(context).size.height;
@@ -94,7 +95,7 @@ class CategoryController extends GetxController {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.redAccent),
             ),
-            child: const Text('حذف'),
+            child: const Text(MyStrings.delete),
           ),
         ),
         cancel: Container(
@@ -108,13 +109,14 @@ class CategoryController extends GetxController {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
-            child: const Text('لغو'),
+            child: const Text(MyStrings.cancel),
           ),
         ),
         onConfirm: () {
           categoryList.removeAt(index);
         },
         title: '',
+        titleStyle: const TextStyle(fontSize: 10),
         titlePadding: const EdgeInsets.all(0),
         middleText: 'دسته بندی ${categoryList[index].name} حذف شود؟',
         radius: Dimens.radius,
@@ -122,7 +124,8 @@ class CategoryController extends GetxController {
     }
   }
 
-  snackBarMessage(String message, BuildContext context) {
+  //? Toast Message
+  toastMessage(String message, BuildContext context) {
     toastification.showSuccess(
       context: context,
       title: message,
@@ -130,7 +133,8 @@ class CategoryController extends GetxController {
     );
   }
 
-  editCategory(BuildContext context) {
+  //? we can edit name, logo and color of our category
+  editCategoryWidget(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
@@ -151,7 +155,7 @@ class CategoryController extends GetxController {
               const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'ویرایش دسته بندی',
+                  MyStrings.editCategory,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
@@ -163,7 +167,7 @@ class CategoryController extends GetxController {
                   maxLength: 20,
                   style: const TextStyle(fontSize: 14),
                   decoration: const InputDecoration(
-                    hintText: 'نام دسته بندی',
+                    hintText: MyStrings.nameOfCategory,
                   ),
                 ),
               ),
@@ -232,18 +236,10 @@ class CategoryController extends GetxController {
                     width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
-                        TaskController taskController =
-                            Get.find<TaskController>();
-                        taskController.categoryModel.update((val) {
-                          val!.name = textEditingCategory.text;
-                          val.color = colorList[colorIndex.value];
-                          val.icon = iconList[iconIndex.value];
-                        });
-                        Get.offAllNamed(PageName.categoryPage);
-
-                        clearInputs();
+                        checkInputsForCategory(
+                            context, 'نام دسته بندی خالی است!');
                       },
-                      child: const Text('ویرایش'),
+                      child: const Text(MyStrings.edit),
                     ),
                   ),
                   const SizedBox(
@@ -257,7 +253,7 @@ class CategoryController extends GetxController {
                         Get.back();
                         clearInputs();
                       },
-                      child: const Text('لغو'),
+                      child: const Text(MyStrings.cancel),
                     ),
                   ),
                 ],
@@ -290,7 +286,7 @@ class CategoryController extends GetxController {
               const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'تغییر رنگ دسته بندی',
+                  MyStrings.changeColorOfCategory,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
@@ -335,7 +331,7 @@ class CategoryController extends GetxController {
                         Get.offAllNamed(PageName.categoryPage);
                         colorIndex.value = 0;
                       },
-                      child: const Text('تایید'),
+                      child: const Text(MyStrings.edit),
                     ),
                   ),
                   const SizedBox(
@@ -349,7 +345,7 @@ class CategoryController extends GetxController {
                         colorIndex.value = 0;
                         Get.back();
                       },
-                      child: const Text('لغو'),
+                      child: const Text(MyStrings.edit),
                     ),
                   ),
                 ],
@@ -361,14 +357,26 @@ class CategoryController extends GetxController {
         isDismissible: false);
   }
 
+  checkInputsForCategory(BuildContext context, String title) {
+    if (textEditingCategory.text == '') {
+      toastification.showError(
+        context: context,
+        title: title,
+        autoCloseDuration: const Duration(seconds: 5),
+      );
+    } else {
+      isEditing.value ? editCategory() : addCategory();
+      
+    }
+  }
+
   deleteAllTaskCategories(BuildContext context) {
     for (var category in categoryList) {
       if (category.allTaskList!.isNotEmpty) {
         category.allTaskList!.clear();
       }
     }
-    snackBarMessage(
-        'موفقیت آمیز بود', context);
+    toastMessage('موفقیت آمیز بود', context);
     countAllItemsCategories();
     Get.offAllNamed(PageName.categoryPage);
   }
@@ -378,6 +386,18 @@ class CategoryController extends GetxController {
     colorIndex.value = 0;
     iconIndex.value = 0;
     textEditingCategory.text = '';
+  }
+
+  editCategory() {
+    TaskController taskController = Get.find<TaskController>();
+    taskController.categoryModel.update((val) {
+      val!.name = textEditingCategory.text;
+      val.color = colorList[colorIndex.value];
+      val.icon = iconList[iconIndex.value];
+    });
+    Get.offAllNamed(PageName.categoryPage);
+
+    clearInputs();
   }
 
   changeThemeMainCategory(BuildContext context) {
@@ -401,7 +421,7 @@ class CategoryController extends GetxController {
             const Align(
               alignment: Alignment.center,
               child: Text(
-                'تغییر رنگ دسته بندی',
+                MyStrings.changeColorOfCategory,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
@@ -442,7 +462,7 @@ class CategoryController extends GetxController {
                       Get.offAllNamed(PageName.categoryPage);
                       clearInputs();
                     },
-                    child: const Text('تایید'),
+                    child: const Text(MyStrings.edit),
                   ),
                 ),
                 const SizedBox(
@@ -456,7 +476,7 @@ class CategoryController extends GetxController {
                       clearInputs();
                       Get.back();
                     },
-                    child: const Text('لغو'),
+                    child: const Text(MyStrings.cancel),
                   ),
                 ),
               ],
@@ -476,7 +496,23 @@ class CategoryController extends GetxController {
     }
   }
 
-  addCategory(BuildContext context) {
+  addCategory() {
+    Get.back();
+    categoryList.add(
+      CategoryModel(
+        name: textEditingCategory.text,
+        icon: iconList[iconIndex.value],
+        color: colorList[colorIndex.value],
+        allTaskList: [],
+        completeTaskList: [],
+        lastTaskList: [],
+      ),
+    );
+
+    clearInputs();
+  }
+
+  addCategoryWidget(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
@@ -497,7 +533,7 @@ class CategoryController extends GetxController {
               const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'دسته بندی جدید',
+                  MyStrings.newCategory,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
@@ -579,22 +615,9 @@ class CategoryController extends GetxController {
                     width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.back();
-                        categoryList.add(
-                          CategoryModel(
-                            name: textEditingCategory.text,
-                            icon: iconList[iconIndex.value],
-                            color: colorList[colorIndex.value],
-                            allTaskList: [],
-                            completeTaskList: [],
-                            lastTaskList: [],
-                          ),
-                        );
-                        textEditingCategory.text = '';
-                        iconIndex.value = 0;
-                        colorIndex.value = 0;
+                        addCategory();
                       },
-                      child: const Text('افزودن'),
+                      child: const Text(MyStrings.add),
                     ),
                   ),
                   const SizedBox(
@@ -610,7 +633,7 @@ class CategoryController extends GetxController {
                         iconIndex.value = 0;
                         textEditingCategory.text = '';
                       },
-                      child: const Text('لغو'),
+                      child: const Text(MyStrings.cancel),
                     ),
                   ),
                 ],
