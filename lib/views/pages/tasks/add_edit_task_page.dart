@@ -9,6 +9,8 @@ import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 
+import '../../../core/styles/text_styles.dart';
+
 // ignore: must_be_immutable
 class AddEditTaskPage extends StatefulWidget {
   const AddEditTaskPage({Key? key}) : super(key: key);
@@ -26,27 +28,17 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          taskController.dateState.value = false;
-          taskController.date.value = MyStrings.addAlarm;
-          taskController.editTaskState.value = false;
-          taskController.time.value = MyStrings.importance;
-          taskController.timeState.value = false;
-          taskController.taskEditingController.text = '';
-
+          taskController.clearInputs();
           return true;
         },
         child: Scaffold(
           backgroundColor: SolidColors.backGround,
           appBar: AppBar(
             title: Text(
-              taskController.editTaskState.value
-                  ? MyStrings.editTask
-                  : MyStrings.newTask,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
+                taskController.editTaskState.value
+                    ? MyStrings.editTask
+                    : MyStrings.newTask,
+                style: MyTextStyles.titleOfAppBar),
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -205,12 +197,8 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          taskController.editTaskState.value
-              ? taskController.taskCompleteState.value
-                  ? taskController.editCompleteTask()
-                  : taskController.editAllTask()
-              : taskController.addTask();
-          taskController.clearInputs();
+          taskController.checkInputsForTask(
+              context, 'تمامی مقادیر باید پر باشند');
           categoryController.countAllItemsCategories();
         },
         style: ButtonStyle(

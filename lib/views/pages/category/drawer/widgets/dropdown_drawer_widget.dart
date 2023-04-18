@@ -6,7 +6,6 @@ import '../../../../../controllers/category_controller.dart';
 import '../../../../../controllers/task_controller.dart';
 import '../../../../../core/values/icons.dart';
 
-
 // ignore: must_be_immutable
 class DropDownDrawer extends StatelessWidget {
   DropDownDrawer({Key? key, required this.index}) : super(key: key);
@@ -168,7 +167,7 @@ class MenuItems {
       if (item.icon == MyIcons.edit) {
         taskController.categoryModel.value =
             categoryController.categoryList[index];
-        categoryController.editCategory(context);
+        categoryController.editCategoryWidget(context);
       } else if (item.icon == MyIcons.pallete) {
         categoryController.changeThemeCategory(context);
       } else if (item.icon == MyIcons.trash) {
