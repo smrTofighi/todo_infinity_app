@@ -248,6 +248,25 @@ class TaskController extends GetxController {
     }
   }
 
+  checkInputsForTask(BuildContext context, String title) {
+    if (!dateState.value |
+        !timeState.value |
+        (taskEditingController.text == '')) {
+      toastification.showError(
+        context: context,
+        title: title,
+        autoCloseDuration: const Duration(seconds: 5),
+      );
+    } else {
+      editTaskState.value
+          ? taskCompleteState.value
+              ? editCompleteTask()
+              : editAllTask()
+          : addTask();
+      clearInputs();
+    }
+  }
+
   addTask() {
     TaskModel task = TaskModel(
       name: taskEditingController.text,
