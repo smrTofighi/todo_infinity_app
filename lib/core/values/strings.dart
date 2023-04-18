@@ -1,4 +1,11 @@
 class MyStrings {
+  static const String delete = 'حذف';
+  static const String cancel = 'لغو';
+  static const String editCategory = 'ویرایش دسته بندی';
+  static const String nameOfCategory = 'نام دسته بندی';
+  static const String changeColorOfCategory = 'تغییر رنگ دسته بندی';
+  static const String newCategory = 'دسته بندی جدید';
+
   static const String noTaskHere = 'هیچ ماموریتی اضافه نشده است';
   static const String noTaskComplete = 'هیچ ماموریتی انجام نشده است';
 
