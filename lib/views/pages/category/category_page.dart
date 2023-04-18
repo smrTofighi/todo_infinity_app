@@ -74,7 +74,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {
-            categoryController.addCategory(context);
+            categoryController.addCategoryWidget(context);
           },
           color: SolidColors.primary,
         ),
@@ -82,7 +82,6 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 }
-
 
 class CategoryList extends StatelessWidget {
   const CategoryList({

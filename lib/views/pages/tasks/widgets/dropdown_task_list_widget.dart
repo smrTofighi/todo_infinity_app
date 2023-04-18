@@ -112,7 +112,7 @@ class MenuItems {
     if (item.icon == MyIcons.pallete) {
       categoryController.changeThemeCategory(context);
     } else if (item.icon == MyIcons.edit) {
-      categoryController.editCategory(context);
+      categoryController.editCategoryWidget(context);
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks(context);
     }
