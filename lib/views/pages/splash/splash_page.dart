@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
       child: Scaffold(
         backgroundColor: SolidColors.primary,
         body: SizedBox(
-          width: Dimens.width,
+          width: Dimens.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
