@@ -236,6 +236,7 @@ class CategoryController extends GetxController {
                     width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
+                        isEditing.value = true;
                         checkInputsForCategory(
                             context, 'نام دسته بندی خالی است!');
                       },
@@ -366,7 +367,6 @@ class CategoryController extends GetxController {
       );
     } else {
       isEditing.value ? editCategory() : addCategory();
-      
     }
   }
 
