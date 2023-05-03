@@ -47,6 +47,10 @@ class $AssetsIconsGen {
   AssetGenImage get cakeBirthday =>
       const AssetGenImage('assets/icons/cake-birthday.png');
 
+  /// File path: assets/icons/calendar.png
+  AssetGenImage get calendar =>
+      const AssetGenImage('assets/icons/calendar.png');
+
   /// File path: assets/icons/car-alt.png
   AssetGenImage get carAlt => const AssetGenImage('assets/icons/car-alt.png');
 
@@ -214,6 +218,7 @@ class $AssetsIconsGen {
         books,
         bulb,
         cakeBirthday,
+        calendar,
         carAlt,
         carSide,
         clock,
