@@ -121,7 +121,7 @@ class CompleteTaskList extends StatelessWidget {
                 ),
               )
             : SizedBox(
-                width: Dimens.width,
+                width: Dimens.infinity,
                 height: taskController
                         .categoryModel.value.completeTaskList!.length *
                     75,
@@ -171,7 +171,7 @@ class AllTaskList extends StatelessWidget {
                 ),
               )
             : SizedBox(
-                width: Dimens.width,
+                width: Dimens.infinity,
                 height:
                     taskController.categoryModel.value.allTaskList!.length * 75,
                 child: ListView.builder(
