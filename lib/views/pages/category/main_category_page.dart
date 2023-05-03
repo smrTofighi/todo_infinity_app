@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
@@ -115,7 +116,7 @@ class AllTaskList extends StatelessWidget {
                 ),
               )
             : SizedBox(
-                width: Dimens.width,
+                width: Dimens.infinity,
                 height: categoryController
                         .categoryList[index + 1].allTaskList!.length *
                     85,
@@ -124,39 +125,131 @@ class AllTaskList extends StatelessWidget {
                       .categoryList[index + 1].allTaskList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 85,
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    return Slidable(
+                      startActionPane: ActionPane(
+                        motion: const ScrollMotion(),
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                categoryController.categoryList[index + 1]
-                                    .allTaskList![index].name!,
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                              Text(
-                                categoryController.categoryList[index + 1]
-                                    .allTaskList![index].date!,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Text(
-                                "اولویت : ${categoryController.categoryList[index + 1].allTaskList![index].time!}",
-                                style:
-                                    MyTextStyles.importanceTextTaskListPageAll,
-                              ),
-                            ],
+                          SlidableAction(
+                            onPressed: (context) {},
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(Dimens.radius),
+                              bottomRight: Radius.circular(Dimens.radius),
+                            ),
+                            backgroundColor: Colors.redAccent,
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            //label: 'حذف',
                           ),
-                          Column(
-                            children: const [],
-                          )
+                          SlidableAction(
+                            onPressed: (context) {},
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(Dimens.radius),
+                              bottomLeft: Radius.circular(Dimens.radius),
+                            ),
+                            backgroundColor: SolidColors.primary,
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            //label: 'انجام شد',
+                          ),
                         ],
                       ),
+                      child: GestureDetector(
+                        onTap: () {
+                          taskController.categoryModel.value =
+                              categoryController.categoryList[index + 1];
+                          Get.toNamed(PageName.taskListPage);
+                        },
+                        onLongPress: () {},
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    categoryController.categoryList[index + 1]
+                                        .allTaskList![index].time!,
+                                    style: const TextStyle(
+                                        fontSize: 14, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    categoryController.categoryList[index + 1]
+                                        .allTaskList![index].date!,
+                                    style: const TextStyle(
+                                        fontSize: 10, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 2.0, horizontal: 2.0),
+                                height: 45,
+                                width: MediaQuery.of(context).size.width / 1.55,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(Dimens.radius),
+                                  color: SolidColors.card,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 5,
+                                        spreadRadius: 0.2)
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      categoryController.categoryList[index + 1]
+                                          .allTaskList![index].name!,
+                                      style: const TextStyle(fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     );
+
+                    //  return Container(
+                    //   height: 85,
+                    //   padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           Text(
+                    //             categoryController.categoryList[index + 1]
+                    //                 .allTaskList![index].name!,
+                    //             style: const TextStyle(fontSize: 15),
+                    //           ),
+                    //           Text(
+                    //             categoryController.categoryList[index + 1]
+                    //                 .allTaskList![index].date!,
+                    //             style: const TextStyle(fontSize: 12),
+                    //           ),
+                    //           Text(
+                    //             "اولویت : ${categoryController.categoryList[index + 1].allTaskList![index].time!}",
+                    //             style:
+                    //                 MyTextStyles.importanceTextTaskListPageAll,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       Column(
+                    //         children: const [],
+                    //       )
+                    //     ],
+                    //   ),
+                    // );
                   },
                   separatorBuilder: (context, index) => const Divider(),
                 ),
