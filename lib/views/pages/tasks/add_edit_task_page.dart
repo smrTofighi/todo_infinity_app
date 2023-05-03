@@ -193,7 +193,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Dimens.width,
+      width: Dimens.infinity,
       height: 55,
       child: ElevatedButton(
         onPressed: () {
