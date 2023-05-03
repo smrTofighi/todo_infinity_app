@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../controllers/category_controller.dart';
@@ -34,14 +33,14 @@ class MyDrawer extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12.0),
-              width: Dimens.width,
+              width: Dimens.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       ImageIcon(
-                        MyIcons.setting,
+                        MyIcons.moon,
                         size: 19,
                         color: SolidColors.primary,
                       ),
@@ -49,7 +48,41 @@ class MyDrawer extends StatelessWidget {
                         width: 12,
                       ),
                       const Text(
-                        'تنظیمات',
+                        'پس زمینه شب',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Switch(
+                    value: false,
+                    onChanged: (value) {},
+                    activeColor: SolidColors.primary,
+                    
+                  )
+                ],
+              ),
+            ),
+            const Divider(
+              color: SolidColors.grey,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12.0),
+              width: Dimens.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      ImageIcon(
+                        MyIcons.share,
+                        size: 19,
+                        color: SolidColors.primary,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const Text(
+                        'معرفی به دوستان',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -59,7 +92,32 @@ class MyDrawer extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12.0),
-              width: Dimens.width,
+              width: Dimens.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      ImageIcon(
+                        MyIcons.questionSquare,
+                        size: 19,
+                        color: SolidColors.primary,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const Text(
+                        'درباره ما',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12.0),
+              width: Dimens.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -104,7 +162,7 @@ class ListTileCategory extends StatelessWidget {
     return Obx(
       () => Container(
         margin: const EdgeInsets.symmetric(vertical: 12.0),
-        width: Dimens.width,
+        width: Dimens.infinity,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
