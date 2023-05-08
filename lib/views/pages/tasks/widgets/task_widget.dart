@@ -121,7 +121,8 @@ class TaskAllWidget extends StatelessWidget {
                                 .removeAt(index);
                           }
                         },
-                        activeColor: taskController.categoryModel.value.color,
+                        activeColor: taskController.colorList[
+                            taskController.categoryModel.value.color!],
                       ),
                     ),
                   ],
@@ -248,7 +249,8 @@ class TaskCompleteWidget extends StatelessWidget {
                                 .removeAt(index);
                           }
                         },
-                        activeColor: taskController.categoryModel.value.color,
+                        activeColor: taskController.colorList[
+                            taskController.categoryModel.value.color!],
                       ),
                     ),
                   ],

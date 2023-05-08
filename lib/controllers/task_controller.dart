@@ -12,6 +12,22 @@ import '../models/task_model.dart';
 import '../routes/pages.dart';
 
 class TaskController extends GetxController {
+  List<Color> colorList = [
+    SolidColors.primary,
+    Colors.red,
+    Colors.green,
+    Colors.brown,
+    Colors.orange,
+    Colors.purple,
+    Colors.amber,
+    Colors.cyan,
+    Colors.lime,
+    Colors.pink,
+    Colors.teal,
+    Colors.blueGrey,
+    Colors.indigo,
+    Colors.lightGreen
+  ];
   Rx<CategoryModel> categoryModel = CategoryModel().obs;
   //? A model of the category that will be quantified
   TextEditingController taskEditingController = TextEditingController();
@@ -98,7 +114,7 @@ class TaskController extends GetxController {
 
   deleteCompleteTask(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    // var height = MediaQuery.of(context).size.height;
     Get.defaultDialog(
       barrierDismissible: false,
       backgroundColor: SolidColors.card,

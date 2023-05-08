@@ -54,7 +54,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               },
               color: Colors.black,
               icon: ImageIcon(
-                MyIcons.arrowRight,
+                Image.asset(MyIcons.arrowRight).image,
                 size: 22,
               ),
             ),
@@ -69,7 +69,8 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 TextField(
                     maxLines: 3,
                     controller: taskController.taskEditingController,
-                    cursorColor: taskController.categoryModel.value.color,
+                    cursorColor: taskController
+                        .colorList[taskController.categoryModel.value.color!],
                     decoration: MyInputDecoration.textFieldAddEditTaskPage),
                 const Divider(),
                 const SizedBox(
@@ -82,7 +83,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 Row(
                   children: [
                     ImageIcon(
-                      MyIcons.clock,
+                      Image.asset(MyIcons.clock).image,
                       size: 18,
                       color: Colors.grey,
                     ),
@@ -99,7 +100,8 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                           taskController.time.value,
                           style: TextStyle(
                               color: taskController.timeState.value
-                                  ? taskController.categoryModel.value.color
+                                  ? taskController.colorList[
+                                      taskController.categoryModel.value.color!]
                                   : Colors.grey,
                               fontSize: 13),
                         ),
@@ -113,7 +115,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 Row(
                   children: [
                     ImageIcon(
-                      MyIcons.tags,
+                      Image.asset(MyIcons.tags).image,
                       size: 18,
                       color: Colors.grey,
                     ),
@@ -126,7 +128,8 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                       child: Text(
                         taskController.categoryModel.value.name!,
                         style: TextStyle(
-                            color: taskController.categoryModel.value.color,
+                            color: taskController.colorList[
+                                taskController.categoryModel.value.color!],
                             fontSize: 13),
                       ),
                     ),
@@ -154,7 +157,7 @@ class TaskAlarm extends StatelessWidget {
     return Row(
       children: [
         ImageIcon(
-          MyIcons.notification,
+          Image.asset(MyIcons.notification).image,
           size: 18,
           color: Colors.grey,
         ),
@@ -171,7 +174,8 @@ class TaskAlarm extends StatelessWidget {
               taskController.date.value,
               style: TextStyle(
                   color: taskController.dateState.value
-                      ? taskController.categoryModel.value.color
+                      ? taskController
+                          .colorList[taskController.categoryModel.value.color!]
                       : Colors.grey,
                   fontSize: 13),
             ),
@@ -209,7 +213,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all(
-            taskController.categoryModel.value.color,
+            taskController.colorList[taskController.categoryModel.value.color!],
           ),
         ),
         child: Text(

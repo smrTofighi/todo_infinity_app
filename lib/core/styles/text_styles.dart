@@ -17,4 +17,6 @@ class MyTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle titleOfBottomSheet =
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
 }

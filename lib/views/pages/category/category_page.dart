@@ -12,8 +12,6 @@ import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/pages/category/drawer/mydrawer_widget.dart';
 import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
 
-import '../../../core/values/dimens.dart';
-
 // ignore: must_be_immutable
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -59,7 +57,9 @@ class _CategoryPageState extends State<CategoryPage> {
                       onPressed: () {
                         Get.toNamed(PageName.searchPage);
                       },
-                      icon: ImageIcon(MyIcons.search),
+                      icon: ImageIcon(
+                        Image.asset(MyIcons.search).image,
+                      ),
                     ),
                   ],
                 ),
@@ -74,7 +74,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {
-            categoryController.addCategoryWidget(context);
+            categoryController.addCategoryBottomSheet(context);
           },
           color: SolidColors.primary,
         ),
@@ -113,7 +113,7 @@ class CategoryList extends StatelessWidget {
                   onTapCategory(index);
                 },
                 onLongPress: () {
-                  categoryController.deleteCateogry(index, context);
+                  categoryController.deleteCateogryDialog(index, context);
                 },
                 child: Container(
                   width: Get.width / 2.2,
@@ -138,8 +138,11 @@ class CategoryList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 24.0, right: 12),
                         child: ImageIcon(
-                          categoryController.categoryList[index].icon,
-                          color: categoryController.categoryList[index].color,
+                          Image.asset(
+                                  categoryController.categoryList[index].icon!)
+                              .image,
+                          color: categoryController.colorList[
+                              categoryController.categoryList[index].color!],
                           size: 34,
                         ),
                       ),
@@ -172,8 +175,8 @@ class CategoryList extends StatelessWidget {
                               bottomRight: Radius.circular(8)),
                           child: LinearPercentIndicator(
                             isRTL: true,
-                            progressColor:
-                                categoryController.categoryList[index].color,
+                            progressColor: categoryController.colorList[
+                                categoryController.categoryList[index].color!],
                             percent: index == 0
                                 ? categoryController
                                             .completeCountItemsCategories
@@ -217,6 +220,7 @@ class CategoryList extends StatelessWidget {
   onTapCategory(int index) {
     if (index == 0) {
       categoryController.countAllItemsCategories();
+
       Get.toNamed(PageName.mainCategoryPage);
     } else {
       taskController.categoryModel.value =
@@ -225,6 +229,7 @@ class CategoryList extends StatelessWidget {
 
       Get.toNamed(PageName.taskListPage);
     }
+    categoryController.categoryIndex.value = index;
   }
 }
 

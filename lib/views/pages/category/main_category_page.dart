@@ -22,7 +22,8 @@ class MainCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: categoryController.categoryList[0].color,
+        backgroundColor: categoryController
+            .colorList[categoryController.categoryList[0].color!],
         body: Stack(
           children: [
             TopSection(
@@ -98,7 +99,8 @@ class AllTaskList extends StatelessWidget {
         header: Text(
           categoryController.categoryList[index + 1].name!,
           style: TextStyle(
-            color: categoryController.categoryList[index + 1].color,
+            color: categoryController
+                .colorList[categoryController.categoryList[index + 1].color!],
             fontSize: 14,
           ),
         ),
@@ -288,8 +290,9 @@ class TopSection extends StatelessWidget {
                     color: SolidColors.card,
                   ),
                   child: ImageIcon(
-                    categoryController.categoryList[0].icon,
-                    color: categoryController.categoryList[0].color,
+                    Image.asset(categoryController.categoryList[0].icon!).image,
+                    color: categoryController
+                        .colorList[categoryController.categoryList[0].color!],
                   ),
                 ),
                 const SizedBox(
@@ -331,19 +334,11 @@ class MyAppBar extends StatelessWidget {
               Get.offAllNamed(PageName.categoryPage);
             },
             icon: ImageIcon(
-              MyIcons.arrowRight,
+              Image.asset(MyIcons.arrowRight).image,
               color: Colors.white,
             ),
           ),
-
           DropdownMainCategory(),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: ImageIcon(
-          //     MyIcons.menuVertical,
-          //     color: Colors.white,
-          //   ),
-          // ),
         ],
       ),
     );

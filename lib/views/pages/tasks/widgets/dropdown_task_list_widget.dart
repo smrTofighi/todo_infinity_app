@@ -18,7 +18,7 @@ class DropdownTaskList extends StatelessWidget {
         customButton: SizedBox(
           width: 36,
           child: ImageIcon(
-            MyIcons.menuVertical,
+            Image.asset(MyIcons.menuVertical).image,
             color: Colors.white,
           ),
         ),
@@ -45,7 +45,8 @@ class DropdownTaskList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: taskController.categoryModel.value.color,
+            color: taskController
+                .colorList[taskController.categoryModel.value.color!],
           ),
           elevation: 8,
           offset: const Offset(0, 8),
@@ -65,7 +66,7 @@ class DropdownTaskList extends StatelessWidget {
 
 class MenuItem {
   final String text;
-  final ImageProvider icon;
+  final String icon;
 
   const MenuItem({
     required this.text,
@@ -92,7 +93,7 @@ class MenuItems {
   static Widget buildItem(MenuItem item) {
     return Row(
       children: [
-        ImageIcon(item.icon, color: Colors.white, size: 22),
+        ImageIcon(Image.asset(item.icon).image, color: Colors.white, size: 22),
         const SizedBox(
           width: 10,
         ),
@@ -110,9 +111,9 @@ class MenuItems {
     CategoryController categoryController = Get.find<CategoryController>();
     TaskController taskController = Get.find<TaskController>();
     if (item.icon == MyIcons.pallete) {
-      categoryController.changeThemeCategory(context);
+      categoryController.changeThemeCategoryBottomSheet(context);
     } else if (item.icon == MyIcons.edit) {
-      categoryController.editCategoryWidget(context);
+      categoryController.editCategoryBottomSheet(context);
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks(context);
     }

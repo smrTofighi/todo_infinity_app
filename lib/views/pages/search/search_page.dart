@@ -24,7 +24,7 @@ class SearchPage extends StatelessWidget {
           },
           color: Colors.black,
           icon: ImageIcon(
-            MyIcons.arrowRight,
+            Image.asset(MyIcons.arrowRight).image,
             size: 22,
           ),
         ),
@@ -40,7 +40,7 @@ class SearchPage extends StatelessWidget {
                     hintText: 'جستجو ماموریت',
                     icon: IconButton(
                       onPressed: () {},
-                      icon: ImageIcon(MyIcons.search),
+                      icon: ImageIcon(Image.asset(MyIcons.search).image),
                     ),
                   ),
                 ),
@@ -64,8 +64,8 @@ class SearchPage extends StatelessWidget {
                   width: Dimens.infinity,
                   child: ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => SearchTaskWidget(),
-                    separatorBuilder: (context, index) => Divider(),
+                    itemBuilder: (context, index) => const SearchTaskWidget(),
+                    separatorBuilder: (context, index) => const Divider(),
                     itemCount: 13,
                     shrinkWrap: true,
                   ),

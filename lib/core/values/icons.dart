@@ -1,68 +1,56 @@
-import 'package:flutter/material.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 
 class MyIcons {
-  static ImageProvider menuVertical =
-      Image.asset(Assets.icons.menuDotVertical.path).image;
-  static ImageProvider arrowRight =
-      Image.asset(Assets.icons.arrowRight.path).image;
-  static ImageProvider notification =
-      Image.asset(Assets.icons.notification.path).image;
-  static ImageProvider note = Image.asset(Assets.icons.notes.path).image;
-  static ImageProvider tags = Image.asset(Assets.icons.tags.path).image;
-  static ImageProvider bookmarkFill =
-      Image.asset(Assets.icons.bookmarkFill.path).image;
-  static ImageProvider bookmark = Image.asset(Assets.icons.bookmark.path).image;
-  static ImageProvider pallete = Image.asset(Assets.icons.palette.path).image;
-  static ImageProvider edit = Image.asset(Assets.icons.pencil.path).image;
-  static ImageProvider power = Image.asset(Assets.icons.power.path).image;
-  static ImageProvider listCheck =
-      Image.asset(Assets.icons.listCheck.path).image;
-  static ImageProvider questionSquare =
-      Image.asset(Assets.icons.questionSquare.path).image;
-  static ImageProvider search = Image.asset(Assets.icons.search.path).image;
-  static ImageProvider setting = Image.asset(Assets.icons.settings.path).image;
-  static ImageProvider share = Image.asset(Assets.icons.share.path).image;
-  static ImageProvider sheildCheck =
-      Image.asset(Assets.icons.shieldCheck.path).image;
-  static ImageProvider sheildExcalamation =
-      Image.asset(Assets.icons.shieldExclamation.path).image;
-  static ImageProvider sun = Image.asset(Assets.icons.sun.path).image;
-  static ImageProvider sunrise = Image.asset(Assets.icons.sunrise.path).image;
-  static ImageProvider telegram = Image.asset(Assets.icons.telegram.path).image;
-  static ImageProvider like = Image.asset(Assets.icons.thumbsUp.path).image;
-  static ImageProvider trash = Image.asset(Assets.icons.trash.path).image;
-  static ImageProvider user = Image.asset(Assets.icons.user.path).image;
-  static ImageProvider world = Image.asset(Assets.icons.world.path).image;
-  static ImageProvider clock = Image.asset(Assets.icons.clock.path).image;
-  static ImageProvider calendar = Image.asset(Assets.icons.calendar.path).image;
+  static String menuVertical = Assets.icons.menuDotVertical.path;
+  static String arrowRight = Assets.icons.arrowRight.path;
+  static String notification = Assets.icons.notification.path;
+  static String note = Assets.icons.notes.path;
+  static String tags = Assets.icons.tags.path;
+  static String bookmarkFill = Assets.icons.bookmarkFill.path;
+  static String bookmark = Assets.icons.bookmark.path;
+  static String pallete = Assets.icons.palette.path;
+  static String edit = Assets.icons.pencil.path;
+  static String power = Assets.icons.power.path;
+  static String listCheck = Assets.icons.listCheck.path;
+  static String questionSquare = Assets.icons.questionSquare.path;
+  static String search = Assets.icons.search.path;
+  static String setting = Assets.icons.settings.path;
+  static String share = Assets.icons.share.path;
+  static String sheildCheck = Assets.icons.shieldCheck.path;
+  static String sheildExcalamation = Assets.icons.shieldExclamation.path;
+  static String sun = Assets.icons.sun.path;
+  static String sunrise = Assets.icons.sunrise.path;
+  static String telegram = Assets.icons.telegram.path;
+  static String like = Assets.icons.thumbsUp.path;
+  static String trash = Assets.icons.trash.path;
+  static String user = Assets.icons.user.path;
+  static String world = Assets.icons.world.path;
+  static String clock = Assets.icons.clock.path;
+  static String calendar = Assets.icons.calendar.path;
   //! icons for category logo
-  static ImageProvider ballot = Image.asset(Assets.icons.ballot.path).image;
-  static ImageProvider tree = Image.asset(Assets.icons.tree.path).image;
-  static ImageProvider bed = Image.asset(Assets.icons.bedAlt.path).image;
-  static ImageProvider books = Image.asset(Assets.icons.books.path).image;
-  static ImageProvider bulb = Image.asset(Assets.icons.bulb.path).image;
-  static ImageProvider cake = Image.asset(Assets.icons.cakeBirthday.path).image;
-  static ImageProvider car = Image.asset(Assets.icons.carAlt.path).image;
-  static ImageProvider dollar = Image.asset(Assets.icons.dollar.path).image;
-  static ImageProvider football = Image.asset(Assets.icons.football.path).image;
-  static ImageProvider gift = Image.asset(Assets.icons.gift.path).image;
-  static ImageProvider glassCheers =
-      Image.asset(Assets.icons.glassCheers.path).image;
-  static ImageProvider gym = Image.asset(Assets.icons.gym.path).image;
-  static ImageProvider moon = Image.asset(Assets.icons.moonStars.path).image;
-  static ImageProvider handHoldingHeart =
-      Image.asset(Assets.icons.handHoldingHeart.path).image;
-  static ImageProvider volleyball =
-      Image.asset(Assets.icons.volleyball.path).image;
+  static String ballot = Assets.icons.ballot.path;
+  static String tree = Assets.icons.tree.path;
+  static String bed = Assets.icons.bedAlt.path;
+  static String books = Assets.icons.books.path;
+  static String bulb = Assets.icons.bulb.path;
+  static String cake = Assets.icons.cakeBirthday.path;
+  static String car = Assets.icons.carAlt.path;
+  static String dollar = Assets.icons.dollar.path;
+  static String football = Assets.icons.football.path;
+  static String gift = Assets.icons.gift.path;
+  static String glassCheers = Assets.icons.glassCheers.path;
+  static String gym = Assets.icons.gym.path;
+  static String moon = Assets.icons.moonStars.path;
+  static String handHoldingHeart = Assets.icons.handHoldingHeart.path;
+  static String volleyball = Assets.icons.volleyball.path;
 
-  static ImageProvider noteBook = Image.asset(Assets.icons.notebook.path).image;
-  static ImageProvider plane = Image.asset(Assets.icons.plane.path).image;
-  static ImageProvider book = Image.asset(Assets.icons.book.path).image;
-  static ImageProvider home = Image.asset(Assets.icons.home.path).image;
-  static ImageProvider music = Image.asset(Assets.icons.musicAlt.path).image;
-  static ImageProvider school = Image.asset(Assets.icons.school.path).image;
-  static ImageProvider shop = Image.asset(Assets.icons.shop.path).image;
-  static ImageProvider work = Image.asset(Assets.icons.work.path).image;
-  static ImageProvider dream = Image.asset(Assets.icons.dream.path).image;
+  static String noteBook = Assets.icons.notebook.path;
+  static String plane = Assets.icons.plane.path;
+  static String book = Assets.icons.book.path;
+  static String home = Assets.icons.home.path;
+  static String music = Assets.icons.musicAlt.path;
+  static String school = Assets.icons.school.path;
+  static String shop = Assets.icons.shop.path;
+  static String work = Assets.icons.work.path;
+  static String dream = Assets.icons.dream.path;
 }

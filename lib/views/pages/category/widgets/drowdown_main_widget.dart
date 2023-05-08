@@ -20,7 +20,7 @@ class DropdownMainCategory extends StatelessWidget {
         customButton: SizedBox(
           width: 36,
           child: ImageIcon(
-            MyIcons.menuVertical,
+            Image.asset(MyIcons.menuVertical).image,
             color: Colors.white,
           ),
         ),
@@ -47,7 +47,7 @@ class DropdownMainCategory extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: categoryController.categoryList[0].color,
+            color: categoryController.colorList[categoryController.categoryList[0].color!],
           ),
           elevation: 8,
           offset: const Offset(0, 8),
@@ -67,7 +67,7 @@ class DropdownMainCategory extends StatelessWidget {
 
 class MenuItem {
   final String text;
-  final ImageProvider icon;
+  final String icon;
 
   const MenuItem({
     required this.text,
@@ -93,7 +93,7 @@ class MenuItems {
   static Widget buildItem(MenuItem item) {
     return Row(
       children: [
-        ImageIcon(item.icon, color: Colors.white, size: 22),
+        ImageIcon(Image.asset(item.icon).image, color: Colors.white, size: 22),
         const SizedBox(
           width: 10,
         ),

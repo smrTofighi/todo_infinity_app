@@ -22,7 +22,7 @@ class SearchTaskWidget extends StatelessWidget {
               Column(
                 children: [
                   ImageIcon(
-                    MyIcons.car,
+                    Image.asset(MyIcons.car).image,
                     size: 26,
                     color: Colors.blueAccent,
                   ),
@@ -57,7 +57,7 @@ class SearchTaskWidget extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                        MyIcons.calendar,
+                    Image.asset(MyIcons.calendar).image,
                         size: 14,
                         color: Colors.blueAccent,
                       ),
@@ -73,7 +73,7 @@ class SearchTaskWidget extends StatelessWidget {
                         width: 24.0,
                       ),
                       ImageIcon(
-                        MyIcons.clock,
+                        Image.asset(MyIcons.clock).image,
                         size: 14,
                         color: Colors.blueAccent,
                       ),

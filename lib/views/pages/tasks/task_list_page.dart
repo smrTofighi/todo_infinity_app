@@ -6,7 +6,6 @@ import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
-import 'package:todo_infinity_app/models/task_model.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:todo_infinity_app/views/pages/tasks/widgets/dropdown_task_list_widget.dart';
 import 'package:todo_infinity_app/views/pages/tasks/widgets/task_widget.dart';
@@ -30,7 +29,8 @@ class TaskListPage extends StatelessWidget {
           return true;
         },
         child: Scaffold(
-          backgroundColor: taskController.categoryModel.value.color,
+          backgroundColor: taskController
+                .colorList[taskController.categoryModel.value.color!],
           body: Stack(
             children: [TopSection(), BottomSection()],
           ),
@@ -38,7 +38,8 @@ class TaskListPage extends StatelessWidget {
             onPressed: () {
               Get.toNamed(PageName.addEditTaskPage);
             },
-            color: taskController.categoryModel.value.color!,
+            color: taskController
+                .colorList[taskController.categoryModel.value.color!],
           ),
         ),
       ),
@@ -218,8 +219,9 @@ class TopSection extends StatelessWidget {
                     color: SolidColors.card,
                   ),
                   child: ImageIcon(
-                    taskController.categoryModel.value.icon,
-                    color: taskController.categoryModel.value.color,
+                    Image.asset(taskController.categoryModel.value.icon!).image,
+                    color: taskController
+                .colorList[taskController.categoryModel.value.color!],
                   ),
                 ),
                 const SizedBox(
@@ -264,7 +266,7 @@ class MyAppBar extends StatelessWidget {
               Get.offAllNamed(PageName.categoryPage);
             },
             icon: ImageIcon(
-              MyIcons.arrowRight,
+              Image.asset(MyIcons.arrowRight).image,
               color: Colors.white,
             ),
           ),
