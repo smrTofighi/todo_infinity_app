@@ -33,9 +33,6 @@ dependencies:
     sdk: flutter
   flutter_localizations: # Add this line
     sdk: flutter
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  path_provider: ^2.0.11
   get: ^4.6.5
   get_storage: ^2.0.3
   font_awesome_flutter: ^10.2.1
@@ -56,8 +53,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.2
-  hive_generator: ^2.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

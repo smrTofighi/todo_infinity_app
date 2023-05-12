@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -74,7 +76,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         floatingActionButton: MyFloatingActionButton(
           onPressed: () {
-            categoryController.addCategoryBottomSheet(context);
+            categoryController.bottomSheetAddEditCategory(context);
           },
           color: SolidColors.primary,
         ),
@@ -218,6 +220,8 @@ class CategoryList extends StatelessWidget {
   }
 
   onTapCategory(int index) {
+    categoryController.categoryIndex.value = index;
+    log(categoryController.categoryIndex.value.toString());
     if (index == 0) {
       categoryController.countAllItemsCategories();
 
@@ -229,7 +233,6 @@ class CategoryList extends StatelessWidget {
 
       Get.toNamed(PageName.taskListPage);
     }
-    categoryController.categoryIndex.value = index;
   }
 }
 

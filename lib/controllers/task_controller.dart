@@ -4,7 +4,6 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/models/category_model.dart';
-
 import '../core/values/colors.dart';
 import '../core/values/dimens.dart';
 import '../core/values/strings.dart';
@@ -283,7 +282,7 @@ class TaskController extends GetxController {
     }
   }
 
-  addTask() {
+  void addTask() {
     TaskModel task = TaskModel(
       name: taskEditingController.text,
       time: time.value,
@@ -291,9 +290,8 @@ class TaskController extends GetxController {
       category: category.value,
       isComplete: false,
     );
-
     categoryModel.value.allTaskList!.add(task);
-
+ 
     Get.offNamed(PageName.taskListPage);
   }
 

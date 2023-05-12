@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
@@ -77,7 +75,6 @@ class CategoryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Hive.openBox<CategoryModel>(StorageKey.categoryBox);
     countAllItemsCategories();
   }
 
@@ -140,140 +137,112 @@ class CategoryController extends GetxController {
     );
   }
 
-  //? we can edit name, logo and color of our category
-  editCategoryBottomSheet(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 6.0),
-          width: width,
-          height: height / 2.2,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              color: SolidColors.card),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  MyStrings.editCategory,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                child: TextField(
-                  controller: textEditingCategory,
-                  cursorColor: SolidColors.primary,
-                  maxLength: 20,
-                  style: const TextStyle(fontSize: 14),
-                  decoration: const InputDecoration(
-                    hintText: MyStrings.nameOfCategory,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 6.0),
-                height: 45,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: iconList.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Obx(
-                      () => GestureDetector(
-                        onTap: () {
-                          iconIndex.value = index;
-                        },
-                        child: AnimatedContainer(
-                          width: 30,
-                          height: 30,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          duration: const Duration(seconds: 1),
-                          child: ImageIcon(
-                            Image.asset(iconList[index]).image,
-                            size: 35,
-                            color: index == iconIndex.value
-                                ? colorList[colorIndex.value]
-                                : Colors.grey,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                height: 34,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: colorList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Obx(
-                    () => ColorWidget(
-                      color: index == colorIndex.value
-                          ? colorList[index]
-                          : colorList[index].withOpacity(0.45),
-                      onTap: () {
-                        colorIndex.value = index;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        isEditing.value = true;
-                        checkInputsForCategory(
-                            context, 'نام دسته بندی خالی است!');
-                      },
-                      child: const Text(MyStrings.edit),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                        clearInputs();
-                      },
-                      child: const Text(MyStrings.cancel),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        isDismissible: false);
+  checkInputsForCategory(BuildContext context, String title) {
+    if (textEditingCategory.text == '') {
+      toastification.showError(
+        context: context,
+        title: title,
+        autoCloseDuration: const Duration(seconds: 5),
+      );
+    } else {
+      isEditing.value ? editCategory() : addCategory();
+    }
   }
 
-  addCategoryBottomSheet(BuildContext context) {
+  deleteAllTaskCategories(BuildContext context) {
+    for (var category in categoryList) {
+      if (category.allTaskList!.isNotEmpty) {
+        category.allTaskList!.clear();
+      }
+    }
+    toastMessage('موفقیت آمیز بود', context);
+    countAllItemsCategories();
+    Get.offAllNamed(PageName.categoryPage);
+  }
+
+  void countAllItemsCategories() {
+    allCountItemsCategories.value = 0;
+    completeCountItemsCategories.value = 0;
+    for (var category in categoryList) {
+      allCountItemsCategories.value += category.allTaskList!.length;
+      completeCountItemsCategories.value += category.completeTaskList!.length;
+    }
+  }
+
+  void addCategory() {
+    CategoryModel myCategoryModel = CategoryModel(
+      id: Random().nextInt(9999),
+      name: textEditingCategory.text,
+      icon: iconList[iconIndex.value],
+      color: colorIndex.value,
+      allTaskList: [],
+      completeTaskList: [],
+      lastTaskList: [],
+    );
+    categoryList.add(myCategoryModel);
+    clearInputs();
+    Get.back();
+  }
+
+  void editCategory() {
+    TaskController taskController = Get.find<TaskController>();
+    taskController.categoryModel.update((val) {
+      val!.name = textEditingCategory.text;
+      val.color = colorIndex.value;
+      val.icon = iconList[iconIndex.value];
+    });
+    
+    Get.offAllNamed(PageName.categoryPage);
+    clearInputs();
+  }
+
+  void changeThemeCategory() {
+    TaskController taskController = Get.find<TaskController>();
+
+    if (categoryIndex.value == 0) {
+      categoryList[0].color = colorIndex.value;
+    } else {
+      taskController.categoryModel.value.color = colorIndex.value;
+    }
+    Get.offAllNamed(PageName.categoryPage);
+    colorIndex.value = 0;
+  }
+
+  void clearInputs() {
+    isEditing.value = false;
+    colorIndex.value = 0;
+    iconIndex.value = 0;
+    textEditingCategory.text = '';
+  }
+
+  void deleteCategory(int index) {
+    categoryList.removeAt(index);
+  }
+
+  Future firstSeen() async {
+    final box = GetStorage();
+    var seen = (box.read(StorageKey.seen) ?? false);
+    if (seen) {
+      Get.offNamed(PageName.categoryPage);
+    } else {
+      box.write(StorageKey.seen, true);
+
+      Get.offNamed(PageName.categoryPage);
+    }
+    CategoryModel myCategoryModel = CategoryModel(
+      id: 9999,
+      name: MyStrings.all,
+      icon: MyIcons.noteBook,
+      color: 0,
+      allTaskList: [],
+      completeTaskList: [],
+      lastTaskList: [],
+    );
+    categoryList.add(myCategoryModel);
+  }
+
+//? static widgets
+  void bottomSheetAddEditCategory(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
@@ -291,10 +260,12 @@ class CategoryController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Text(
-                  MyStrings.newCategory,
+                  isEditing.value
+                      ? MyStrings.editCategory
+                      : MyStrings.newCategory,
                   style: MyTextStyles.titleOfBottomSheet,
                 ),
               ),
@@ -376,7 +347,8 @@ class CategoryController extends GetxController {
                     width: width / 3,
                     child: ElevatedButton(
                       onPressed: () {
-                        addCategory();
+                        checkInputsForCategory(
+                            context, 'نام دسته بندی نباید خالی باشد!');
                       },
                       child: const Text(MyStrings.add),
                     ),
@@ -404,117 +376,10 @@ class CategoryController extends GetxController {
         isDismissible: false);
   }
 
-  changeThemeCategoryBottomSheet(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 6.0),
-          width: width,
-          height: height / 3.8,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            ),
-            color: SolidColors.card,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  MyStrings.changeColorOfCategory,
-                  style: MyTextStyles.titleOfBottomSheet,
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                height: 34,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: colorList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Obx(
-                    () => ColorWidget(
-                      color: index == colorIndex.value
-                          ? colorList[index]
-                          : colorList[index].withOpacity(0.45),
-                      onTap: () {
-                        colorIndex.value = index;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        changeThemeCategory();
-                      },
-                      child: const Text(MyStrings.edit),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        colorIndex.value = 0;
-                        Get.back();
-                      },
-                      child: const Text(MyStrings.cancel),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        isDismissible: false);
-  }
-
-  checkInputsForCategory(BuildContext context, String title) {
-    if (textEditingCategory.text == '') {
-      toastification.showError(
-        context: context,
-        title: title,
-        autoCloseDuration: const Duration(seconds: 5),
-      );
-    } else {
-      isEditing.value ? editCategory() : addCategory();
-    }
-  }
-
-  deleteAllTaskCategories(BuildContext context) {
-    for (var category in categoryList) {
-      if (category.allTaskList!.isNotEmpty) {
-        category.allTaskList!.clear();
-      }
-    }
-    toastMessage('موفقیت آمیز بود', context);
-    countAllItemsCategories();
-    Get.offAllNamed(PageName.categoryPage);
-  }
-
-  changeThemeMainCategory(BuildContext context) {
+  void bottomSheetChoiceColor(
+    BuildContext context,
+    Function() onPressed,
+  ) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     Get.bottomSheet(
@@ -571,11 +436,7 @@ class CategoryController extends GetxController {
                   height: 35,
                   width: width / 3,
                   child: ElevatedButton(
-                    onPressed: () {
-                      categoryList[0].color = colorIndex.value;
-                      Get.offAllNamed(PageName.categoryPage);
-                      clearInputs();
-                    },
+                    onPressed: onPressed,
                     child: const Text(MyStrings.edit),
                   ),
                 ),
@@ -599,97 +460,5 @@ class CategoryController extends GetxController {
         ),
       ),
     );
-  }
-
-  countAllItemsCategories() {
-    allCountItemsCategories.value = 0;
-    completeCountItemsCategories.value = 0;
-    for (var category in categoryList) {
-      allCountItemsCategories.value += category.allTaskList!.length;
-      completeCountItemsCategories.value += category.completeTaskList!.length;
-    }
-  }
-
-  addCategory() {
-    CategoryModel myCategoryModel = CategoryModel(
-      id: Random().nextInt(9999),
-      name: textEditingCategory.text,
-      icon: iconList[iconIndex.value],
-      color: colorIndex.value,
-      allTaskList: [],
-      completeTaskList: [],
-      lastTaskList: [],
-    );
-    BoxesKey.categoryBox.add(myCategoryModel);
-    getData();
-    clearInputs();
-    Get.back();
-  }
-
-  editCategory() {
-    TaskController taskController = Get.find<TaskController>();
-    taskController.categoryModel.update((val) {
-      val!.name = textEditingCategory.text;
-      val.color = colorIndex.value;
-      val.icon = iconList[iconIndex.value];
-    });
-    BoxesKey.categoryBox
-        .putAt(categoryIndex.value, taskController.categoryModel.value);
-    getData();
-    Get.offAllNamed(PageName.categoryPage);
-
-    clearInputs();
-  }
-
-  void changeThemeCategory() {
-    TaskController taskController = Get.find<TaskController>();
-    taskController.categoryModel.value.color = colorIndex.value;
-    BoxesKey.categoryBox
-        .putAt(categoryIndex.value, taskController.categoryModel.value);
-    Get.offAllNamed(PageName.categoryPage);
-    colorIndex.value = 0;
-  }
-
-  void clearInputs() {
-    isEditing.value = false;
-    colorIndex.value = 0;
-    iconIndex.value = 0;
-    textEditingCategory.text = '';
-  }
-
-  void deleteCategory(int index) {
-    BoxesKey.categoryBox.deleteAt(index);
-    getData();
-  }
-
-  void getData() {
-    categoryList.clear();
-    for (var category in BoxesKey.categoryBox.values) {
-      categoryList.add(category);
-    }
-  }
-
-  Future firstSeen() async {
-    final box = GetStorage();
-    var seen = (box.read(StorageKey.seen) ?? false);
-    if (seen) {
-      getData();
-      Get.offNamed(PageName.categoryPage);
-    } else {
-      box.write(StorageKey.seen, true);
-      CategoryModel myCategoryModel = CategoryModel(
-        id: 9999,
-        name: MyStrings.all,
-        icon: MyIcons.noteBook,
-        color: 0,
-        allTaskList: [],
-        completeTaskList: [],
-        lastTaskList: [],
-      );
-      BoxesKey.categoryBox.add(myCategoryModel);
-      getData();
-      Get.offNamed(PageName.categoryPage);
-    }
-    getData();
   }
 }

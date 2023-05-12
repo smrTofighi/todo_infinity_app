@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:todo_infinity_app/bindings/binding.dart';
 import 'package:todo_infinity_app/routes/routes.dart';
 import 'package:todo_infinity_app/views/pages/splash/splash_page.dart';
 import 'core/themes/light_theme.dart';
-import 'core/values/storages.dart';
-import 'models/category_model.dart';
+
 
 void main() async {
   await GetStorage.init();
-  await Hive.initFlutter();
-  //Hive.openBox<CategoryModel>(StorageKey.categoryBox);
-  Hive.registerAdapter(CategoryModelAdapter());
-
   runApp(const MyApp());
 }
 

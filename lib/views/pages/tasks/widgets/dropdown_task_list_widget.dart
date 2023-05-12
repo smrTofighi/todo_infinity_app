@@ -111,9 +111,11 @@ class MenuItems {
     CategoryController categoryController = Get.find<CategoryController>();
     TaskController taskController = Get.find<TaskController>();
     if (item.icon == MyIcons.pallete) {
-      categoryController.changeThemeCategoryBottomSheet(context);
+      categoryController.bottomSheetChoiceColor(context, () {
+        categoryController.changeThemeCategory();
+      });
     } else if (item.icon == MyIcons.edit) {
-      categoryController.editCategoryBottomSheet(context);
+      categoryController.bottomSheetAddEditCategory(context);
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks(context);
     }
