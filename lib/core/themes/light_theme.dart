@@ -6,6 +6,7 @@ import '../values/colors.dart';
 ThemeData lightTheme() {
   return ThemeData(
     fontFamily: FontFamily.samim,
+    
     inputDecorationTheme: inputTheme(),
     elevatedButtonTheme: elevatedButtonTheme(),
   );

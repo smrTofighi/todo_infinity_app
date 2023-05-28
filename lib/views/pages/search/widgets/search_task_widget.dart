@@ -24,12 +24,12 @@ class SearchTaskWidget extends StatelessWidget {
                   ImageIcon(
                     Image.asset(MyIcons.car).image,
                     size: 26,
-                    color: Colors.blueAccent,
+                    color: Colors.red,
                   ),
                   const Text(
                     'خودرو',
                     style: TextStyle(
-                      color: Colors.blueAccent,
+                      color: Colors.red,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -39,7 +39,7 @@ class SearchTaskWidget extends StatelessWidget {
                 width: 10,
               ),
               const VerticalDivider(
-                color: Colors.blueAccent,
+                color: Colors.red,
                 thickness: 2,
               ),
               const SizedBox(
@@ -52,14 +52,14 @@ class SearchTaskWidget extends StatelessWidget {
                   const Text(
                     'تعمیر ماشین',
                     style: TextStyle(
-                        color: Colors.blueAccent, fontSize: 14),
+                        color: Colors.red, fontSize: 14),
                   ),
                   Row(
                     children: [
                       ImageIcon(
                     Image.asset(MyIcons.calendar).image,
                         size: 14,
-                        color: Colors.blueAccent,
+                        color: Colors.red,
                       ),
                       const SizedBox(
                         width: 4.0,
@@ -67,7 +67,7 @@ class SearchTaskWidget extends StatelessWidget {
                       const Text(
                         '1401/01/01',
                         style: TextStyle(
-                            color: Colors.blueAccent, fontSize: 12),
+                            color: Colors.red, fontSize: 12),
                       ),
                       const SizedBox(
                         width: 24.0,
@@ -75,7 +75,7 @@ class SearchTaskWidget extends StatelessWidget {
                       ImageIcon(
                         Image.asset(MyIcons.clock).image,
                         size: 14,
-                        color: Colors.blueAccent,
+                        color: Colors.red,
                       ),
                       const SizedBox(
                         width: 4.0,
@@ -83,7 +83,7 @@ class SearchTaskWidget extends StatelessWidget {
                       const Text(
                         '10:30',
                         style: TextStyle(
-                            color: Colors.blueAccent, fontSize: 12),
+                            color: Colors.red, fontSize: 12),
                       ),
                     ],
                   )
