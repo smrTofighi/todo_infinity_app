@@ -1,16 +1,16 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import '../../../../../core/values/icons.dart';
+import '../../category/controller.dart';
+import '../controller.dart';
 
 // ignore: must_be_immutable
 class DropdownTaskList extends StatelessWidget {
   DropdownTaskList({
     super.key,
   });
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
@@ -109,7 +109,7 @@ class MenuItems {
 
   static onChanged(BuildContext context, MenuItem item) {
     CategoryController categoryController = Get.find<CategoryController>();
-    TaskController taskController = Get.find<TaskController>();
+    TaskListController taskController = Get.find<TaskListController>();
     if (item.icon == MyIcons.pallete) {
       categoryController.bottomSheetChoiceColor(context, () {
         categoryController.changeThemeCategory();

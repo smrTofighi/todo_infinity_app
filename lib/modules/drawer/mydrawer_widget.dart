@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/category_controller.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../core/values/icons.dart';
+import '../category/controller.dart';
 
 // ignore: must_be_immutable
 class MyDrawer extends StatelessWidget {

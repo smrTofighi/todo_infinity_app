@@ -2,20 +2,22 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
+import 'package:todo_infinity_app/core/values/strings.dart';
+import 'package:todo_infinity_app/modules/category/controller.dart';
+import 'package:todo_infinity_app/modules/category/widgets/drowdown_main_widget.dart';
+import 'package:todo_infinity_app/modules/task_list/controller.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/widgets/drowdown_main_widget.dart';
-import '../../../controllers/category_controller.dart';
-import '../../../core/values/strings.dart';
+
+
 
 // ignore: must_be_immutable
 class MainCategoryPage extends StatelessWidget {
   MainCategoryPage({super.key});
-  var taskController = Get.find<TaskController>();
+  var taskController = Get.find<TaskListController>();
   var categoryController = Get.find<CategoryController>();
 
   @override
@@ -48,7 +50,7 @@ class BottomSection extends StatelessWidget {
     required this.categoryController,
   });
   final CategoryController categoryController;
-  final TaskController taskController;
+  final TaskListController taskController;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,7 @@ class AllTaskList extends StatelessWidget {
     required this.index,
   });
   CategoryController categoryController = Get.find<CategoryController>();
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
   final int index;
 
   @override
@@ -267,7 +269,7 @@ class TopSection extends StatelessWidget {
       required this.taskController,
       required this.categoryController});
   final CategoryController categoryController;
-  final TaskController taskController;
+  final TaskListController taskController;
 
   @override
   Widget build(BuildContext context) {

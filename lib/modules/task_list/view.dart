@@ -1,22 +1,22 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
+import 'package:todo_infinity_app/modules/task_list/widgets/task_widget.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/tasks/widgets/dropdown_task_list_widget.dart';
-import 'package:todo_infinity_app/views/pages/tasks/widgets/task_widget.dart';
-import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
-import '../../../controllers/category_controller.dart';
 import '../../../core/values/strings.dart';
+import '../category/controller.dart';
+import '../widgets/floating_action_button.dart';
+import 'controller.dart';
+import 'widgets/dropdown_task_list_widget.dart';
 
 // ignore: must_be_immutable
 class TaskListPage extends StatelessWidget {
   TaskListPage({super.key});
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
   CategoryController categoryController = Get.find<CategoryController>();
 
   @override
@@ -36,7 +36,7 @@ class TaskListPage extends StatelessWidget {
           ),
           floatingActionButton: MyFloatingActionButton(
             onPressed: () {
-              Get.toNamed(PageName.addEditTaskPage);
+              Get.toNamed(PageName.taskPage);
             },
             color: taskController
                 .colorList[taskController.categoryModel.value.color!],
@@ -52,7 +52,7 @@ class BottomSection extends StatelessWidget {
   BottomSection({
     super.key,
   });
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
   CategoryController categoryController = Get.find<CategoryController>();
 
   @override
@@ -94,7 +94,7 @@ class CompleteTaskList extends StatelessWidget {
     super.key,
   });
 
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class AllTaskList extends StatelessWidget {
     super.key,
   });
   CategoryController categoryController = Get.find<CategoryController>();
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +196,7 @@ class TopSection extends StatelessWidget {
     super.key,
   });
   CategoryController categoryController = Get.find<CategoryController>();
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
 
   @override
   Widget build(BuildContext context) {

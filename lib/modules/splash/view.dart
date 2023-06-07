@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
-import 'package:todo_infinity_app/views/widgets/loading.dart';
+
+import '../category/controller.dart';
+import '../widgets/loading.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -28,10 +29,10 @@ class _SplashPageState extends State<SplashPage> {
         backgroundColor: SolidColors.primary,
         body: SizedBox(
           width: Dimens.infinity,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Loading(),
             ],
           ),

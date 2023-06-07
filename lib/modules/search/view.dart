@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/views/pages/search/widgets/search_task_widget.dart';
+import 'package:todo_infinity_app/modules/search/widgets/search_task_widget.dart';
 import '../../../core/styles/text_styles.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/dimens.dart';

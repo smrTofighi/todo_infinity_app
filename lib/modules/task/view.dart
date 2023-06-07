@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/button_style.dart';
 import 'package:todo_infinity_app/core/styles/input_decoration.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
@@ -10,17 +8,19 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 
 import '../../../core/styles/text_styles.dart';
+import '../category/controller.dart';
+import '../task_list/controller.dart';
 
 // ignore: must_be_immutable
-class AddEditTaskPage extends StatefulWidget {
-  const AddEditTaskPage({Key? key}) : super(key: key);
+class TaskPage extends StatefulWidget {
+  const TaskPage({Key? key}) : super(key: key);
 
   @override
-  State<AddEditTaskPage> createState() => _AddEditTaskPageState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _AddEditTaskPageState extends State<AddEditTaskPage> {
-  var taskController = Get.find<TaskController>();
+class _TaskPageState extends State<TaskPage> {
+  var taskController = Get.find<TaskListController>();
   var categoryController = Get.find<CategoryController>();
 
   @override
@@ -150,7 +150,7 @@ class TaskAlarm extends StatelessWidget {
   TaskAlarm({
     super.key,
   });
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +191,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
   AddEditTaskBottomNavigation({
     super.key,
   });
-  var taskController = Get.find<TaskController>();
+  var taskController = Get.find<TaskListController>();
   var categoryController = Get.find<CategoryController>();
 
   @override

@@ -1,18 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/drawer/mydrawer_widget.dart';
-import 'package:todo_infinity_app/views/widgets/floating_action_button.dart';
+
+import '../drawer/mydrawer_widget.dart';
+import '../task_list/controller.dart';
+import '../widgets/floating_action_button.dart';
+import 'controller.dart';
 
 // ignore: must_be_immutable
 class CategoryPage extends StatefulWidget {
@@ -24,7 +23,7 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   var categoryController = Get.find<CategoryController>();
-  var taskController = Get.find<TaskController>();
+  var taskController = Get.find<TaskListController>();
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -93,7 +92,7 @@ class CategoryList extends StatelessWidget {
   });
 
   final CategoryController categoryController;
-  final TaskController taskController;
+  final TaskListController taskController;
 
   @override
   Widget build(BuildContext context) {
@@ -221,18 +220,10 @@ class CategoryList extends StatelessWidget {
 
   onTapCategory(int index) {
     categoryController.categoryIndex.value = index;
-    log(categoryController.categoryIndex.value.toString());
-    if (index == 0) {
-      categoryController.countAllItemsCategories();
+    taskController.categoryModel.value = categoryController.categoryList[index];
+    taskController.categoryIndex.value = index;
 
-      Get.toNamed(PageName.mainCategoryPage);
-    } else {
-      taskController.categoryModel.value =
-          categoryController.categoryList[index];
-      taskController.categoryIndex.value = index;
-
-      Get.toNamed(PageName.taskListPage);
-    }
+    Get.toNamed(PageName.taskListPage);
   }
 }
 

@@ -1,9 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
 import '../../../../core/values/icons.dart';
 import '../../../../routes/pages.dart';
+import '../controller.dart';
 
 // ignore: must_be_immutable
 class DropdownMainCategory extends StatelessWidget {

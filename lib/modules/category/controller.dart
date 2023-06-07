@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:toastification/toastification.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/models/category_model.dart';
+import 'package:todo_infinity_app/modules/category/widgets/color_widget.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/widgets/color_widget.dart';
-import '../core/styles/text_styles.dart';
-import '../core/values/colors.dart';
-import '../core/values/storages.dart';
+import '../../core/styles/text_styles.dart';
+import '../../core/values/colors.dart';
+import '../../core/values/storages.dart';
+import '../../data/models/category_model.dart';
+import '../task_list/controller.dart';
 
 class CategoryController extends GetxController {
   //? A list of categories
@@ -185,7 +185,7 @@ class CategoryController extends GetxController {
   }
 
   void editCategory() {
-    TaskController taskController = Get.find<TaskController>();
+    TaskListController taskController = Get.find<TaskListController>();
     taskController.categoryModel.update((val) {
       val!.name = textEditingCategory.text;
       val.color = colorIndex.value;
@@ -197,7 +197,7 @@ class CategoryController extends GetxController {
   }
 
   void changeThemeCategory() {
-    TaskController taskController = Get.find<TaskController>();
+    TaskListController taskController = Get.find<TaskListController>();
 
     if (categoryIndex.value == 0) {
       categoryList[0].color = colorIndex.value;

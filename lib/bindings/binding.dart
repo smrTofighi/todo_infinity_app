@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
-import 'package:todo_infinity_app/controllers/task_controller.dart';
+
+import '../modules/category/controller.dart';
+import '../modules/task_list/controller.dart';
+
 
 class CategoryBinding implements Bindings {
   @override
@@ -12,6 +14,6 @@ class CategoryBinding implements Bindings {
 class TaskBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => TaskController());
+    Get.lazyPut(() => TaskListController());
   }
 }

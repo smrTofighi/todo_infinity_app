@@ -3,9 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo_infinity_app/bindings/binding.dart';
-import 'package:todo_infinity_app/routes/routes.dart';
-import 'package:todo_infinity_app/views/pages/splash/splash_page.dart';
-import 'core/themes/light_theme.dart';
+import 'package:todo_infinity_app/routes/routes.dart';import 'core/themes/light_theme.dart';
+import 'modules/splash/view.dart';
 
 
 void main() async {

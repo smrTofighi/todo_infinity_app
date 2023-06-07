@@ -1,4 +1,5 @@
-import 'package:todo_infinity_app/models/task_model.dart';
+
+import 'package:todo_infinity_app/data/models/task_model.dart';
 
 class CategoryModel {
 
@@ -6,7 +7,6 @@ class CategoryModel {
   String? name;
   String? icon;
   List<TaskModel>? lastTaskList;
-
   List<TaskModel>? allTaskList;
   List<TaskModel>? completeTaskList;
   int? color;

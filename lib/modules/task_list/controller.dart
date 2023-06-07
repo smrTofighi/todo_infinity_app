@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:toastification/toastification.dart';
-import 'package:todo_infinity_app/controllers/category_controller.dart';
-import 'package:todo_infinity_app/models/category_model.dart';
-import '../core/values/colors.dart';
-import '../core/values/dimens.dart';
-import '../core/values/strings.dart';
-import '../models/task_model.dart';
-import '../routes/pages.dart';
+import '../../../core/values/colors.dart';
+import '../../../core/values/dimens.dart';
+import '../../../core/values/strings.dart';
+import '../../../data/models/category_model.dart';
+import '../../../data/models/task_model.dart';
+import '../../../routes/pages.dart';
+import '../category/controller.dart';
 
-class TaskController extends GetxController {
+class TaskListController extends GetxController {
   List<Color> colorList = [
     SolidColors.primary,
     Colors.red,
@@ -333,7 +333,7 @@ class TaskController extends GetxController {
     date.value = list[index].date!;
     time.value = list[index].time!;
     taskEditingController.text = list[index].name!;
-    Get.toNamed(PageName.addEditTaskPage);
+    Get.toNamed(PageName.taskPage);
   }
 
   //? go to edit task page for complete task
@@ -346,6 +346,6 @@ class TaskController extends GetxController {
     date.value = list[index].date!;
     time.value = list[index].time!;
     taskEditingController.text = list[index].name!;
-    Get.toNamed(PageName.addEditTaskPage);
+    Get.toNamed(PageName.taskPage);
   }
 }

@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/bindings/binding.dart';
+import 'package:todo_infinity_app/modules/task/view.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/views/pages/category/category_page.dart';
-import 'package:todo_infinity_app/views/pages/category/main_category_page.dart';
-import 'package:todo_infinity_app/views/pages/search/search_page.dart';
-import 'package:todo_infinity_app/views/pages/tasks/add_edit_task_page.dart';
-import 'package:todo_infinity_app/views/pages/tasks/task_list_page.dart';
+
+import '../modules/category/view.dart';
+import '../modules/search/view.dart';
+import '../modules/task_list/view.dart';
 
 List<GetPage> routes = [
   GetPage(
@@ -18,14 +18,10 @@ List<GetPage> routes = [
     page: () => TaskListPage(),
   ),
   GetPage(
-    name: PageName.addEditTaskPage,
-    page: () => const AddEditTaskPage(),
+    name: PageName.taskPage,
+    page: () => const TaskPage(),
   ),
  
-  GetPage(
-    name: PageName.mainCategoryPage,
-    page: () => MainCategoryPage(),
-  ),
   GetPage(
     name: PageName.searchPage,
     page: () => const SearchPage(),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/task_controller.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
-import '../../../../models/task_model.dart';
+import '../../../../data/models/task_model.dart';
+import '../controller.dart';
 
 // ignore: must_be_immutable
 class TaskAllWidget extends StatelessWidget {
   TaskAllWidget({super.key, required this.index});
   final int index;
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,7 @@ class TaskAllWidget extends StatelessWidget {
 // ignore: must_be_immutable
 class TaskCompleteWidget extends StatelessWidget {
   TaskCompleteWidget({Key? key, required this.index}) : super(key: key);
-  TaskController taskController = Get.find<TaskController>();
+  TaskListController taskController = Get.find<TaskListController>();
   final int index;
   @override
   Widget build(BuildContext context) {
