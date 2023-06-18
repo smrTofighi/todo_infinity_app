@@ -24,7 +24,7 @@ class SearchPage extends StatelessWidget {
           },
           color: Colors.black,
           icon: ImageIcon(
-            Image.asset(MyIcons.arrowRight).image,
+           MyIcons.arrowRight.image,
             size: 22,
           ),
         ),
@@ -40,7 +40,7 @@ class SearchPage extends StatelessWidget {
                     hintText: 'جستجو ماموریت',
                     icon: IconButton(
                       onPressed: () {},
-                      icon: ImageIcon(Image.asset(MyIcons.search).image),
+                      icon: ImageIcon(MyIcons.search.image),
                     ),
                   ),
                 ),

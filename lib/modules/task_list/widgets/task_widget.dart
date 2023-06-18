@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../data/models/task_model.dart';
-import '../controller.dart';
+import '../task_list_controller.dart';
 
 // ignore: must_be_immutable
 class TaskAllWidget extends StatelessWidget {
@@ -14,11 +14,7 @@ class TaskAllWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String time = taskController.categoryModel.value.allTaskList![index].time!;
-    String date = taskController.categoryModel.value.allTaskList![index].date!;
-    String name = taskController.categoryModel.value.allTaskList![index].name!;
-    bool value =
-        taskController.categoryModel.value.allTaskList![index].isComplete!;
+
     //? return widget
     return Slidable(
       startActionPane: ActionPane(
@@ -40,7 +36,7 @@ class TaskAllWidget extends StatelessWidget {
           SlidableAction(
             onPressed: (context) {
               List<TaskModel> list =
-                  taskController.categoryModel.value.allTaskList!;
+                  taskController.categoryModel.value.todoList!;
               taskController.goToEditAllTask(index, list);
             },
             borderRadius: BorderRadius.only(
@@ -57,7 +53,7 @@ class TaskAllWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           List<TaskModel> list =
-              taskController.categoryModel.value.allTaskList!;
+              taskController.categoryModel.value.todoList!;
           taskController.goToEditAllTask(index, list);
         },
         onLongPress: () {
@@ -68,16 +64,16 @@ class TaskAllWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    time,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    'time',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   Text(
-                    date,
-                    style: const TextStyle(fontSize: 10, color: Colors.grey),
+                    'date',
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
                 ],
               ),
@@ -100,26 +96,15 @@ class TaskAllWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      name,
-                      style: const TextStyle(fontSize: 13),
+                    const Text(
+                      'name',
+                      style: TextStyle(fontSize: 13),
                     ),
                     Obx(
                       () => Checkbox(
-                        value: value,
+                        value: true,
                         onChanged: (value) {
-                          if (taskController.categoryModel.value
-                                  .allTaskList![index].isComplete ==
-                              false) {
-                            taskController.categoryModel.update((val) {
-                              val!.allTaskList![index].isComplete = true;
-                            });
-                            taskController.categoryModel.value.completeTaskList!
-                                .add(taskController
-                                    .categoryModel.value.allTaskList![index]);
-                            taskController.categoryModel.value.allTaskList!
-                                .removeAt(index);
-                          }
+                        
                         },
                         activeColor: taskController.colorList[
                             taskController.categoryModel.value.color!],
@@ -162,8 +147,7 @@ class TaskCompleteWidget extends StatelessWidget {
           ),
           SlidableAction(
             onPressed: (context) {
-              var list = taskController.categoryModel.value.completeTaskList!;
-              taskController.goToEditCompleteTask(index, list);
+              taskController.goToEditCompleteTask(index, []);
             },
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Dimens.radius),
@@ -178,8 +162,8 @@ class TaskCompleteWidget extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          var list = taskController.categoryModel.value.completeTaskList!;
-          taskController.goToEditCompleteTask(index, list);
+   
+          taskController.goToEditCompleteTask(index, []);
         },
         onLongPress: () {
           taskController.deleteCompleteTask(index, context);
@@ -194,12 +178,12 @@ class TaskCompleteWidget extends StatelessWidget {
                 children: [
                   Text(
                     taskController
-                        .categoryModel.value.completeTaskList![index].time!,
+                        .categoryModel.value.todoList![index].time!,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   Text(
                     taskController
-                        .categoryModel.value.completeTaskList![index].date!,
+                        .categoryModel.value.todoList![index].date!,
                     style: const TextStyle(fontSize: 10, color: Colors.grey),
                   ),
                 ],
@@ -225,7 +209,7 @@ class TaskCompleteWidget extends StatelessWidget {
                   children: [
                     Text(
                       taskController
-                          .categoryModel.value.completeTaskList![index].name!,
+                          .categoryModel.value.todoList![index].name!,
                       style: const TextStyle(
                           fontSize: 13,
                           color: Colors.grey,
@@ -233,21 +217,9 @@ class TaskCompleteWidget extends StatelessWidget {
                     ),
                     Obx(
                       () => Checkbox(
-                        value: taskController.categoryModel.value
-                            .completeTaskList![index].isComplete,
+                        value: true,
                         onChanged: (value) {
-                          if (taskController.categoryModel.value
-                                  .completeTaskList![index].isComplete ==
-                              true) {
-                            taskController.categoryModel.update((val) {
-                              val!.completeTaskList![index].isComplete = false;
-                            });
-                            taskController.categoryModel.value.allTaskList!.add(
-                                taskController.categoryModel.value
-                                    .completeTaskList![index]);
-                            taskController.categoryModel.value.completeTaskList!
-                                .removeAt(index);
-                          }
+                      
                         },
                         activeColor: taskController.colorList[
                             taskController.categoryModel.value.color!],

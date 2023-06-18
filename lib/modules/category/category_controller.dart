@@ -1,18 +1,18 @@
-import 'dart:math';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
+import 'package:todo_infinity_app/data/services/dio_service.dart';
 import 'package:todo_infinity_app/modules/category/widgets/color_widget.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import '../../core/styles/text_styles.dart';
 import '../../core/values/colors.dart';
-import '../../core/values/storages.dart';
 import '../../data/models/category_model.dart';
-import '../task_list/controller.dart';
+import '../task_list/task_list_controller.dart';
 
 class CategoryController extends GetxController {
   //? A list of categories
@@ -27,7 +27,7 @@ class CategoryController extends GetxController {
   RxBool isEditing = false.obs;
 
   //? static variables
-  List<String> iconList = [
+  List<Image> iconList = [
     MyIcons.tree,
     MyIcons.bed,
     MyIcons.book,
@@ -70,13 +70,6 @@ class CategoryController extends GetxController {
     Colors.indigo,
     Colors.lightGreen
   ];
-
-  //? onInit function
-  @override
-  void onInit() {
-    super.onInit();
-    countAllItemsCategories();
-  }
 
   //? this method delete your category
   deleteCateogryDialog(int index, BuildContext context) {
@@ -149,49 +142,12 @@ class CategoryController extends GetxController {
     }
   }
 
-  deleteAllTaskCategories(BuildContext context) {
-    for (var category in categoryList) {
-      if (category.allTaskList!.isNotEmpty) {
-        category.allTaskList!.clear();
-      }
-    }
-    toastMessage('موفقیت آمیز بود', context);
-    countAllItemsCategories();
-    Get.offAllNamed(PageName.categoryPage);
-  }
-
-  void countAllItemsCategories() {
-    allCountItemsCategories.value = 0;
-    completeCountItemsCategories.value = 0;
-    for (var category in categoryList) {
-      allCountItemsCategories.value += category.allTaskList!.length;
-      completeCountItemsCategories.value += category.completeTaskList!.length;
-    }
-  }
-
   void addCategory() {
-    CategoryModel myCategoryModel = CategoryModel(
-      id: Random().nextInt(9999),
-      name: textEditingCategory.text,
-      icon: iconList[iconIndex.value],
-      color: colorIndex.value,
-      allTaskList: [],
-      completeTaskList: [],
-      lastTaskList: [],
-    );
-    categoryList.add(myCategoryModel);
     clearInputs();
     Get.back();
   }
 
   void editCategory() {
-    TaskListController taskController = Get.find<TaskListController>();
-    taskController.categoryModel.update((val) {
-      val!.name = textEditingCategory.text;
-      val.color = colorIndex.value;
-      val.icon = iconList[iconIndex.value];
-    });
-    
     Get.offAllNamed(PageName.categoryPage);
     clearInputs();
   }
@@ -219,26 +175,22 @@ class CategoryController extends GetxController {
     categoryList.removeAt(index);
   }
 
-  Future firstSeen() async {
-    final box = GetStorage();
-    var seen = (box.read(StorageKey.seen) ?? false);
-    if (seen) {
-      Get.offNamed(PageName.categoryPage);
+  getCategoryList() async {
+    var response =
+        await DioService().getMethod('http://127.0.0.1:8000/cat-list');
+    if (response.data['status'] == 200) {
+      response.data['list'].forEach((element) {
+        categoryList.add(CategoryModel.fromJson(element));
+      });
+      Get.offNamed(PageName.mainPage);
     } else {
-      box.write(StorageKey.seen, true);
-
-      Get.offNamed(PageName.categoryPage);
+      log('false');
     }
-    CategoryModel myCategoryModel = CategoryModel(
-      id: 9999,
-      name: MyStrings.all,
-      icon: MyIcons.noteBook,
-      color: 0,
-      allTaskList: [],
-      completeTaskList: [],
-      lastTaskList: [],
-    );
-    categoryList.add(myCategoryModel);
+  }
+
+  Future firstSeen() async {
+    //final box = GetStorage();
+    //var seen = (box.read(StorageKey.seen) ?? false);
   }
 
 //? static widgets
@@ -302,7 +254,7 @@ class CategoryController extends GetxController {
                           margin: const EdgeInsets.symmetric(horizontal: 8.0),
                           duration: const Duration(seconds: 1),
                           child: ImageIcon(
-                            Image.asset(iconList[index]).image,
+                            iconList[index].image,
                             size: 35,
                             color: index == iconIndex.value
                                 ? colorList[colorIndex.value]

@@ -2,8 +2,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../core/values/icons.dart';
-import '../../category/controller.dart';
-import '../controller.dart';
+import '../../category/category_controller.dart';
+import '../task_list_controller.dart';
 
 // ignore: must_be_immutable
 class DropdownTaskList extends StatelessWidget {
@@ -18,7 +18,7 @@ class DropdownTaskList extends StatelessWidget {
         customButton: SizedBox(
           width: 36,
           child: ImageIcon(
-            Image.asset(MyIcons.menuVertical).image,
+           MyIcons.menuVertical.image,
             color: Colors.white,
           ),
         ),
@@ -66,7 +66,7 @@ class DropdownTaskList extends StatelessWidget {
 
 class MenuItem {
   final String text;
-  final String icon;
+  final Image icon;
 
   const MenuItem({
     required this.text,
@@ -93,7 +93,7 @@ class MenuItems {
   static Widget buildItem(MenuItem item) {
     return Row(
       children: [
-        ImageIcon(Image.asset(item.icon).image, color: Colors.white, size: 22),
+        ImageIcon(item.icon.image, color: Colors.white, size: 22),
         const SizedBox(
           width: 10,
         ),

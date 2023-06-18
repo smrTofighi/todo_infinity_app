@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/category/controller.dart';
-import '../modules/task_list/controller.dart';
+import '../modules/category/category_controller.dart';
+import '../modules/task_list/task_list_controller.dart';
 
 
 class CategoryBinding implements Bindings {

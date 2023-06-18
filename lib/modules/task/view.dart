@@ -8,8 +8,8 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 
 import '../../../core/styles/text_styles.dart';
-import '../category/controller.dart';
-import '../task_list/controller.dart';
+import '../category/category_controller.dart';
+import '../task_list/task_list_controller.dart';
 
 // ignore: must_be_immutable
 class TaskPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _TaskPageState extends State<TaskPage> {
               },
               color: Colors.black,
               icon: ImageIcon(
-                Image.asset(MyIcons.arrowRight).image,
+                MyIcons.arrowRight.image,
                 size: 22,
               ),
             ),
@@ -83,7 +83,7 @@ class _TaskPageState extends State<TaskPage> {
                 Row(
                   children: [
                     ImageIcon(
-                      Image.asset(MyIcons.clock).image,
+                      MyIcons.clock.image,
                       size: 18,
                       color: Colors.grey,
                     ),
@@ -115,7 +115,7 @@ class _TaskPageState extends State<TaskPage> {
                 Row(
                   children: [
                     ImageIcon(
-                      Image.asset(MyIcons.tags).image,
+                      MyIcons.tags.image,
                       size: 18,
                       color: Colors.grey,
                     ),
@@ -157,7 +157,7 @@ class TaskAlarm extends StatelessWidget {
     return Row(
       children: [
         ImageIcon(
-          Image.asset(MyIcons.notification).image,
+          MyIcons.notification.image,
           size: 18,
           color: Colors.grey,
         ),
@@ -203,7 +203,6 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
         onPressed: () {
           taskController.checkInputsForTask(
               context, 'تمامی مقادیر باید پر باشند');
-          categoryController.countAllItemsCategories();
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

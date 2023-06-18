@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../core/values/icons.dart';
-import '../category/controller.dart';
+import '../category/category_controller.dart';
 
 // ignore: must_be_immutable
 class MyDrawer extends StatelessWidget {
@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                        Image.asset(MyIcons.moon).image,
+                       MyIcons.moon.image,
                         size: 19,
                         color: SolidColors.primary,
                       ),
@@ -62,7 +62,7 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                        Image.asset(MyIcons.share).image,
+                        MyIcons.share.image,
                         size: 19,
                         color: SolidColors.primary,
                       ),
@@ -87,7 +87,7 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                        Image.asset(MyIcons.questionSquare).image,
+                       MyIcons.questionSquare.image,
                         size: 19,
                         color: SolidColors.primary,
                       ),
@@ -112,7 +112,7 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                        Image.asset(MyIcons.power).image,
+                     MyIcons.power.image,
                         size: 19,
                         color: SolidColors.primary,
                       ),

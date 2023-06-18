@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/values/icons.dart';
 import '../../../../routes/pages.dart';
-import '../controller.dart';
+import '../category_controller.dart';
 
 // ignore: must_be_immutable
 class DropdownMainCategory extends StatelessWidget {
@@ -20,7 +20,7 @@ class DropdownMainCategory extends StatelessWidget {
         customButton: SizedBox(
           width: 36,
           child: ImageIcon(
-            Image.asset(MyIcons.menuVertical).image,
+            MyIcons.menuVertical.image,
             color: Colors.white,
           ),
         ),
@@ -68,7 +68,7 @@ class DropdownMainCategory extends StatelessWidget {
 
 class MenuItem {
   final String text;
-  final String icon;
+  final Image icon;
 
   const MenuItem({
     required this.text,
@@ -94,7 +94,7 @@ class MenuItems {
   static Widget buildItem(MenuItem item) {
     return Row(
       children: [
-        ImageIcon(Image.asset(item.icon).image, color: Colors.white, size: 22),
+        ImageIcon((item.icon).image, color: Colors.white, size: 22),
         const SizedBox(
           width: 10,
         ),
@@ -117,7 +117,7 @@ class MenuItems {
     } else if (item.icon == MyIcons.search) {
       Get.toNamed(PageName.searchPage);
     } else if (item.icon == MyIcons.trash) {
-      categoryController.deleteAllTaskCategories(context);
+      
     }
   }
 }

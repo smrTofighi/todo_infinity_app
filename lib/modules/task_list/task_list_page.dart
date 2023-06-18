@@ -8,9 +8,9 @@ import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/modules/task_list/widgets/task_widget.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import '../../../core/values/strings.dart';
-import '../category/controller.dart';
+import '../category/category_controller.dart';
 import '../widgets/floating_action_button.dart';
-import 'controller.dart';
+import 'task_list_controller.dart';
 import 'widgets/dropdown_task_list_widget.dart';
 
 // ignore: must_be_immutable
@@ -24,7 +24,7 @@ class TaskListPage extends StatelessWidget {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          categoryController.countAllItemsCategories();
+
           Get.offAllNamed(PageName.categoryPage);
           return true;
         },
@@ -110,7 +110,7 @@ class CompleteTaskList extends StatelessWidget {
           ),
         ),
         collapsed: const SizedBox(),
-        expanded: taskController.categoryModel.value.completeTaskList!.isEmpty
+        expanded: taskController.categoryModel.value.todoList!.isEmpty
             ? const Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Align(
@@ -124,15 +124,16 @@ class CompleteTaskList extends StatelessWidget {
             : SizedBox(
                 width: Dimens.infinity,
                 height: taskController
-                        .categoryModel.value.completeTaskList!.length *
+                        .categoryModel.value.todoList!.length *
                     75,
                 child: ListView.builder(
                   itemCount: taskController
-                      .categoryModel.value.completeTaskList!.length,
+                      .categoryModel.value.todoList!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return TaskCompleteWidget(index: index);
                   },
+                  shrinkWrap: true,
                 ),
               ),
       ),
@@ -160,7 +161,7 @@ class AllTaskList extends StatelessWidget {
           ),
         ),
         collapsed: const SizedBox(),
-        expanded: taskController.categoryModel.value.allTaskList!.isEmpty
+        expanded: taskController.categoryModel.value.todoList!.isEmpty
             ? const Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Align(
@@ -174,15 +175,16 @@ class AllTaskList extends StatelessWidget {
             : SizedBox(
                 width: Dimens.infinity,
                 height:
-                    taskController.categoryModel.value.allTaskList!.length * 75,
+                    taskController.categoryModel.value.todoList!.length * 75,
                 child: ListView.builder(
                   itemCount:
-                      taskController.categoryModel.value.allTaskList!.length,
+                      taskController.categoryModel.value.todoList!.length,
                   scrollDirection: Axis.vertical,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return TaskAllWidget(index: index);
                   },
+                  shrinkWrap: true,
                 ),
               ),
       ),
@@ -219,7 +221,7 @@ class TopSection extends StatelessWidget {
                     color: SolidColors.card,
                   ),
                   child: ImageIcon(
-                    Image.asset(taskController.categoryModel.value.icon!).image,
+                    Image.asset('taskController.categoryModel.value.icon!').image,
                     color: taskController
                 .colorList[taskController.categoryModel.value.color!],
                   ),
@@ -233,7 +235,7 @@ class TopSection extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    '${taskController.categoryModel.value.allTaskList!.length} ماموریت',
+                    '${taskController.categoryModel.value.todoList!.length} ماموریت',
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -262,11 +264,10 @@ class MyAppBar extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              categoryController.countAllItemsCategories();
               Get.offAllNamed(PageName.categoryPage);
             },
             icon: ImageIcon(
-              Image.asset(MyIcons.arrowRight).image,
+              MyIcons.arrowRight.image,
               color: Colors.white,
             ),
           ),

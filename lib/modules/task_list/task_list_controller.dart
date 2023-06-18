@@ -8,7 +8,6 @@ import '../../../core/values/strings.dart';
 import '../../../data/models/category_model.dart';
 import '../../../data/models/task_model.dart';
 import '../../../routes/pages.dart';
-import '../category/controller.dart';
 
 class TaskListController extends GetxController {
   List<Color> colorList = [
@@ -51,19 +50,12 @@ class TaskListController extends GetxController {
   }
 
   deleteTasks(BuildContext context) {
-    CategoryController categoryController = Get.find<CategoryController>();
-    if (categoryModel.value.allTaskList!.isNotEmpty &
-        categoryModel.value.completeTaskList!.isNotEmpty) {
-      categoryModel.value.allTaskList!.clear();
-      categoryModel.value.completeTaskList!.clear();
-    } else if (categoryModel.value.allTaskList!.isNotEmpty) {
-      categoryModel.value.allTaskList!.clear();
-    } else if (categoryModel.value.completeTaskList!.isNotEmpty) {
-      categoryModel.value.completeTaskList!.clear();
-    }
+
+    
+
     toastMessage('موفقیت آمیز بود', context);
 
-    categoryController.countAllItemsCategories();
+
     Get.offAllNamed(PageName.categoryPage);
   }
 
@@ -78,9 +70,7 @@ class TaskListController extends GetxController {
         width: width / 4,
         child: ElevatedButton(
           onPressed: () {
-            categoryModel.update((val) {
-              val!.allTaskList!.removeAt(index);
-            });
+
             Get.back();
           },
           style: ButtonStyle(
@@ -106,7 +96,7 @@ class TaskListController extends GetxController {
       title: '',
       titlePadding: const EdgeInsets.all(0),
       middleText:
-          'ماموریت ${categoryModel.value.allTaskList![index].name} حذف شود؟',
+          'ماموریت ${categoryModel.value.todoList![index].name} حذف شود؟',
       radius: Dimens.radius,
     );
   }
@@ -123,9 +113,7 @@ class TaskListController extends GetxController {
         width: width / 4,
         child: ElevatedButton(
           onPressed: () {
-            categoryModel.update((val) {
-              val!.completeTaskList!.removeAt(index);
-            });
+          
             Get.back();
           },
           style: ButtonStyle(
@@ -151,7 +139,7 @@ class TaskListController extends GetxController {
       title: '',
       titlePadding: const EdgeInsets.all(0),
       middleText:
-          'ماموریت ${categoryModel.value.completeTaskList![index].name} حذف شود؟',
+          'ماموریت ${categoryModel.value.todoList![index].name} حذف شود؟',
       radius: Dimens.radius,
     );
   }
@@ -283,32 +271,21 @@ class TaskListController extends GetxController {
   }
 
   void addTask() {
-    TaskModel task = TaskModel(
-      name: taskEditingController.text,
-      time: time.value,
-      date: date.value,
-      category: category.value,
-      isComplete: false,
-    );
-    categoryModel.value.allTaskList!.add(task);
+
  
     Get.offNamed(PageName.taskListPage);
   }
 
   editAllTask() {
     categoryModel.update((val) {
-      val!.allTaskList![taskIndex.value].name = taskEditingController.text;
-      val.allTaskList![taskIndex.value].date = date.value;
-      val.allTaskList![taskIndex.value].time = time.value;
+
     });
     Get.offNamed(PageName.taskListPage);
   }
 
   editCompleteTask() {
     categoryModel.update((val) {
-      val!.completeTaskList![taskIndex.value].name = taskEditingController.text;
-      val.completeTaskList![taskIndex.value].date = date.value;
-      val.completeTaskList![taskIndex.value].time = time.value;
+
     });
     Get.offAllNamed(PageName.categoryPage);
   }

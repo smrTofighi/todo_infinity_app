@@ -3,15 +3,11 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
-import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/gen/assets.gen.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
-
 import '../drawer/mydrawer_widget.dart';
-import '../task_list/controller.dart';
-import '../widgets/floating_action_button.dart';
-import 'controller.dart';
+import '../task_list/task_list_controller.dart';
+import 'category_controller.dart';
 
 // ignore: must_be_immutable
 class CategoryPage extends StatefulWidget {
@@ -40,31 +36,7 @@ class _CategoryPageState extends State<CategoryPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 12.0, top: 8.0, bottom: 8.0, left: 12.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        _key.currentState!.openDrawer();
-                      },
-                      icon: ImageIcon(
-                        Image.asset(Assets.icons.menu.path).image,
-                      ),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        Get.toNamed(PageName.searchPage);
-                      },
-                      icon: ImageIcon(
-                        Image.asset(MyIcons.search).image,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              
               const CategoriesText(),
               CategoryList(
                 categoryController: categoryController,
@@ -73,12 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
             ],
           ),
         ),
-        floatingActionButton: MyFloatingActionButton(
-          onPressed: () {
-            categoryController.bottomSheetAddEditCategory(context);
-          },
-          color: SolidColors.primary,
-        ),
+        
       ),
     );
   }
@@ -96,6 +63,7 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List iconList = categoryController.iconList;
     return Obx(
       () => SizedBox(
         width: Get.width,
@@ -139,8 +107,8 @@ class CategoryList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 24.0, right: 12),
                         child: ImageIcon(
-                          Image.asset(
-                                  categoryController.categoryList[index].icon!)
+                          iconList[
+                                  categoryController.categoryList[index].icon!]
                               .image,
                           color: categoryController.colorList[
                               categoryController.categoryList[index].color!],
@@ -160,10 +128,8 @@ class CategoryList extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: MyTextStyles.categoryTitleBlack,
                             ),
-                            Text(
-                              index == 0
-                                  ? '${categoryController.allCountItemsCategories.value} مأموریت'
-                                  : '${categoryController.categoryList[index].allTaskList!.length} مأموریت',
+                            const Text(
+                              '0 ماموریت',
                             ),
                           ],
                         ),
@@ -178,31 +144,7 @@ class CategoryList extends StatelessWidget {
                             isRTL: true,
                             progressColor: categoryController.colorList[
                                 categoryController.categoryList[index].color!],
-                            percent: index == 0
-                                ? categoryController
-                                            .completeCountItemsCategories
-                                            .value ==
-                                        0
-                                    ? 0
-                                    : categoryController
-                                            .completeCountItemsCategories
-                                            .value /
-                                        (categoryController
-                                                .allCountItemsCategories.value +
-                                            categoryController
-                                                .completeCountItemsCategories
-                                                .value)
-                                : categoryController.categoryList[index]
-                                        .completeTaskList!.isEmpty
-                                    ? 0.0
-                                    : categoryController.categoryList[index]
-                                            .completeTaskList!.length /
-                                        (categoryController.categoryList[index]
-                                                .completeTaskList!.length +
-                                            categoryController
-                                                .categoryList[index]
-                                                .allTaskList!
-                                                .length),
+                            percent: 0.5,
                             padding: const EdgeInsets.all(0),
                           ),
                         ),

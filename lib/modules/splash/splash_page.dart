@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 
-import '../category/controller.dart';
+import '../category/category_controller.dart';
 import '../widgets/loading.dart';
 
 class SplashPage extends StatefulWidget {
@@ -18,8 +18,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     
-    Future.delayed(const Duration(seconds: 3))
-        .then((value) => Get.find<CategoryController>().firstSeen());
+     Get.find<CategoryController>().getCategoryList();
   }
 
   @override
