@@ -115,7 +115,7 @@ class MenuItems {
         categoryController.changeThemeCategory();
       });
     } else if (item.icon == MyIcons.edit) {
-      categoryController.bottomSheetAddEditCategory(context);
+      
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks(context);
     }

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
+import 'package:todo_infinity_app/core/utils/api_constant.dart';
+import 'package:todo_infinity_app/core/utils/api_key.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
@@ -75,50 +77,49 @@ class CategoryController extends GetxController {
   deleteCateogryDialog(int index, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     // var height = MediaQuery.of(context).size.height;
-    if (index != 0) {
-      Get.defaultDialog(
-        barrierDismissible: false,
-        backgroundColor: SolidColors.card,
-        buttonColor: SolidColors.primary,
-        confirm: Container(
-          margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-          height: 30,
-          width: width / 4,
-          child: ElevatedButton(
-            onPressed: () {
-              Get.back();
-              categoryList.removeAt(index);
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.redAccent),
-            ),
-            child: const Text(MyStrings.delete),
+
+    Get.defaultDialog(
+      barrierDismissible: false,
+      backgroundColor: SolidColors.card,
+      buttonColor: SolidColors.primary,
+      confirm: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            deleteCategory(index);
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.redAccent),
           ),
+          child: const Text(MyStrings.delete),
         ),
-        cancel: Container(
-          margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-          height: 30,
-          width: width / 4,
-          child: ElevatedButton(
-            onPressed: () {
-              Get.back();
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.green),
-            ),
-            child: const Text(MyStrings.cancel),
+      ),
+      cancel: Container(
+        margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        height: 30,
+        width: width / 4,
+        child: ElevatedButton(
+          onPressed: () {
+            Get.back();
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.green),
           ),
+          child: const Text(MyStrings.cancel),
         ),
-        onConfirm: () {
-          deleteCategory(index);
-        },
-        title: '',
-        titleStyle: const TextStyle(fontSize: 10),
-        titlePadding: const EdgeInsets.all(0),
-        middleText: 'دسته بندی ${categoryList[index].name} حذف شود؟',
-        radius: Dimens.radius,
-      );
-    }
+      ),
+      onConfirm: () {
+        deleteCategory(index);
+      },
+      title: '',
+      titleStyle: const TextStyle(fontSize: 10),
+      titlePadding: const EdgeInsets.all(0),
+      middleText: 'دسته بندی ${categoryList[index].name} حذف شود؟',
+      radius: Dimens.radius,
+    );
   }
 
   //? Toast Message
@@ -142,7 +143,25 @@ class CategoryController extends GetxController {
     }
   }
 
-  void addCategory() {
+  addCategory() async {
+    String title = textEditingCategory.text;
+    String icon = iconIndex.value.toString();
+    String color = colorIndex.value.toString();
+    String url = ApiConstant.newCategory(title, color, icon);
+    var response = await DioService().getMethod(ApiConstant.host + url);
+    try {
+      if (response.data[ApiKey.status] == 200) {
+        var id = response.data[ApiKey.data]['id'];
+        CategoryModel model = CategoryModel(
+            id: id,
+            name: title,
+            color: colorIndex.value,
+            icon: iconIndex.value);
+        categoryList.add(model);
+      }
+    } catch (error) {
+      log(error.toString());
+    }
     clearInputs();
     Get.back();
   }
@@ -171,13 +190,18 @@ class CategoryController extends GetxController {
     textEditingCategory.text = '';
   }
 
-  void deleteCategory(int index) {
-    categoryList.removeAt(index);
+  void deleteCategory(int index) async {
+    var id = categoryList[index].id;
+    var response = await DioService()
+        .getMethod(ApiConstant.host + ApiConstant.deleteCat + id.toString());
+    if (response.data[ApiKey.status] == 200) {
+      categoryList.removeAt(index);
+    }
   }
 
   getCategoryList() async {
     var response =
-        await DioService().getMethod('http://127.0.0.1:8000/cat-list');
+        await DioService().getMethod(ApiConstant.host + ApiConstant.getCatList);
     if (response.data['status'] == 200) {
       response.data['list'].forEach((element) {
         categoryList.add(CategoryModel.fromJson(element));
@@ -194,139 +218,6 @@ class CategoryController extends GetxController {
   }
 
 //? static widgets
-  void bottomSheetAddEditCategory(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 6.0),
-          width: width,
-          height: height / 2.2,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              color: SolidColors.card),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  isEditing.value
-                      ? MyStrings.editCategory
-                      : MyStrings.newCategory,
-                  style: MyTextStyles.titleOfBottomSheet,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                child: TextField(
-                  controller: textEditingCategory,
-                  cursorColor: SolidColors.primary,
-                  maxLength: 20,
-                  style: const TextStyle(fontSize: 14),
-                  decoration: const InputDecoration(
-                    hintText: 'نام دسته بندی',
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 6.0),
-                height: 45,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: iconList.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Obx(
-                      () => GestureDetector(
-                        onTap: () {
-                          iconIndex.value = index;
-                        },
-                        child: AnimatedContainer(
-                          width: 30,
-                          height: 30,
-                          curve: Curves.easeInOutQuint,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          duration: const Duration(seconds: 1),
-                          child: ImageIcon(
-                            iconList[index].image,
-                            size: 35,
-                            color: index == iconIndex.value
-                                ? colorList[colorIndex.value]
-                                : Colors.grey,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                height: 34,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: colorList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Obx(
-                    () => ColorWidget(
-                      color: index == colorIndex.value
-                          ? colorList[index]
-                          : colorList[index].withOpacity(0.45),
-                      onTap: () {
-                        colorIndex.value = index;
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        checkInputsForCategory(
-                            context, 'نام دسته بندی نباید خالی باشد!');
-                      },
-                      child: const Text(MyStrings.add),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    height: 35,
-                    width: width / 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                        clearInputs();
-                      },
-                      child: const Text(MyStrings.cancel),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        isDismissible: false);
-  }
 
   void bottomSheetChoiceColor(
     BuildContext context,

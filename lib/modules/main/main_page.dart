@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
+import 'package:todo_infinity_app/modules/category/category_controller.dart';
 import 'package:todo_infinity_app/modules/category/category_page.dart';
 import 'package:todo_infinity_app/modules/drawer/mydrawer_widget.dart';
 import 'package:todo_infinity_app/modules/report/report_page.dart';
 import '../../core/values/icons.dart';
 import '../../gen/assets.gen.dart';
 import '../../routes/pages.dart';
+import '../category/widgets/bottom_sheet_category.dart';
 import '../widgets/floating_action_button.dart';
 
 // ignore: must_be_immutable
@@ -16,6 +18,7 @@ class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _ourKey = GlobalKey<ScaffoldState>();
   RxInt activeIndex = 0.obs;
+  CategoryController categoryController = Get.find<CategoryController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +69,7 @@ class MainPage extends StatelessWidget {
       ),
       floatingActionButton: MyFloatingActionButton(
         onPressed: () {
-          //categoryController.bottomSheetAddEditCategory(context);
+          bottomSheetCategory(context);
         },
         color: SolidColors.primary,
       ),
