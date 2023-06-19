@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
@@ -36,7 +37,6 @@ class _CategoryPageState extends State<CategoryPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              
               const CategoriesText(),
               CategoryList(
                 categoryController: categoryController,
@@ -45,7 +45,6 @@ class _CategoryPageState extends State<CategoryPage> {
             ],
           ),
         ),
-        
       ),
     );
   }
@@ -64,6 +63,8 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List iconList = categoryController.iconList;
+    List colorList = categoryController.colorList;
+
     return Obx(
       () => SizedBox(
         width: Get.width,
@@ -75,6 +76,7 @@ class CategoryList extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, childAspectRatio: 0.9),
           itemBuilder: (context, index) {
+                int colorIndex = categoryController.categoryList[index].color!;
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
@@ -107,8 +109,7 @@ class CategoryList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 24.0, right: 12),
                         child: ImageIcon(
-                          iconList[
-                                  categoryController.categoryList[index].icon!]
+                          iconList[categoryController.categoryList[index].icon!]
                               .image,
                           color: categoryController.colorList[
                               categoryController.categoryList[index].color!],
@@ -135,18 +136,24 @@ class CategoryList extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Obx(
-                        () => ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                              bottomRight: Radius.circular(8)),
-                          child: LinearPercentIndicator(
-                            isRTL: true,
-                            progressColor: categoryController.colorList[
-                                categoryController.categoryList[index].color!],
-                            percent: 0.5,
-                            padding: const EdgeInsets.all(0),
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(8),
+                            bottomRight: Radius.circular(8)),
+                        child: StepProgressIndicator(
+                          totalSteps: 100,
+                          currentStep: 50,
+                          size: 5,
+                          padding: 0,
+                          selectedGradientColor: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              colorList[colorIndex],
+                              colorList[colorIndex].withOpacity(0.5)
+                            ],
                           ),
+                          unselectedColor: Colors.transparent,
                         ),
                       )
                     ],

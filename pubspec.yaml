@@ -42,7 +42,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  percent_indicator: ^4.2.2
   expandable: ^5.0.1
   persian_datetime_picker: ^2.6.0
   dropdown_button2: ^2.0.0
@@ -51,6 +50,7 @@ dependencies:
   toastification: ^0.0.3
   animated_bottom_navigation_bar: ^1.2.0
   dio: ^5.2.0+1
+  step_progress_indicator: ^1.0.2
 
 dev_dependencies:
   flutter_test:
