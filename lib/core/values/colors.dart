@@ -13,3 +13,20 @@ class SolidColors {
 class ShadowColor {
   static Color black = Colors.black.withOpacity(0.1);
 }
+
+  List<Color> colorList = [
+    SolidColors.primary,
+    Colors.red,
+    Colors.green,
+    Colors.brown,
+    Colors.orange,
+    Colors.purple,
+    Colors.amber,
+    Colors.cyan,
+    Colors.lime,
+    Colors.pink,
+    Colors.teal,
+    Colors.blueGrey,
+    Colors.indigo,
+    Colors.lightGreen
+  ];
