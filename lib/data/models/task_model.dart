@@ -1,15 +1,29 @@
 class TaskModel {
-  String? name;
+  int? id;
+  String? subject;
+  String? description;
   String? date;
   String? time;
-  String? category;
-  bool? isComplete;
+  int? category;
+  String? status;
 
   TaskModel({
-    required this.name,
-    required this.time,
-    required this.date,
-    required this.category,
-    required this.isComplete,
+    this.id,
+    this.subject,
+    this.description,
+    this.time,
+    this.date,
+    this.category,
+    this.status,
   });
+
+  TaskModel.fromJson(Map<String, dynamic> element) {
+    id = element['id'];
+    subject = element['subject'];
+    description = element['description'];
+    category = element['category'];
+    date = element['dueDate'];
+    status = element['status'];
+    time = '';
+  }
 }
