@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
-import '../../../../data/models/task_model.dart';
 import '../task_list_controller.dart';
 
 // ignore: must_be_immutable
@@ -14,7 +13,6 @@ class TaskAllWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //? return widget
     return Slidable(
       startActionPane: ActionPane(
@@ -34,11 +32,7 @@ class TaskAllWidget extends StatelessWidget {
             //label: 'حذف',
           ),
           SlidableAction(
-            onPressed: (context) {
-              List<TaskModel> list =
-                  taskController.categoryModel.value.todoList!;
-              taskController.goToEditAllTask(index, list);
-            },
+            onPressed: (context) {},
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Dimens.radius),
               bottomLeft: Radius.circular(Dimens.radius),
@@ -51,11 +45,7 @@ class TaskAllWidget extends StatelessWidget {
         ],
       ),
       child: GestureDetector(
-        onTap: () {
-          List<TaskModel> list =
-              taskController.categoryModel.value.todoList!;
-          taskController.goToEditAllTask(index, list);
-        },
+        onTap: () {},
         onLongPress: () {
           taskController.deleteAllTask(index, context);
         },
@@ -103,10 +93,8 @@ class TaskAllWidget extends StatelessWidget {
                     Obx(
                       () => Checkbox(
                         value: true,
-                        onChanged: (value) {
-                        
-                        },
-                        activeColor: taskController.colorList[
+                        onChanged: (value) {},
+                        activeColor: colorList[
                             taskController.categoryModel.value.color!],
                       ),
                     ),
@@ -162,7 +150,6 @@ class TaskCompleteWidget extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-   
           taskController.goToEditCompleteTask(index, []);
         },
         onLongPress: () {
@@ -178,12 +165,12 @@ class TaskCompleteWidget extends StatelessWidget {
                 children: [
                   Text(
                     taskController
-                        .categoryModel.value.todoList![index].time!,
+                        .categoryModel.value.todoListOff![index].time!,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   Text(
                     taskController
-                        .categoryModel.value.todoList![index].date!,
+                        .categoryModel.value.todoListOff![index].date!,
                     style: const TextStyle(fontSize: 10, color: Colors.grey),
                   ),
                 ],
@@ -209,7 +196,7 @@ class TaskCompleteWidget extends StatelessWidget {
                   children: [
                     Text(
                       taskController
-                          .categoryModel.value.todoList![index].name!,
+                          .categoryModel.value.todoListOff![index].subject!,
                       style: const TextStyle(
                           fontSize: 13,
                           color: Colors.grey,
@@ -218,10 +205,8 @@ class TaskCompleteWidget extends StatelessWidget {
                     Obx(
                       () => Checkbox(
                         value: true,
-                        onChanged: (value) {
-                      
-                        },
-                        activeColor: taskController.colorList[
+                        onChanged: (value) {},
+                        activeColor: colorList[
                             taskController.categoryModel.value.color!],
                       ),
                     ),
