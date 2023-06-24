@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
@@ -24,13 +25,11 @@ class TaskListPage extends StatelessWidget {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-
           Get.offAllNamed(PageName.categoryPage);
           return true;
         },
         child: Scaffold(
-          backgroundColor: taskController
-                .colorList[taskController.categoryModel.value.color!],
+          backgroundColor: colorList[taskController.categoryModel.value.color!],
           body: Stack(
             children: [TopSection(), BottomSection()],
           ),
@@ -38,8 +37,8 @@ class TaskListPage extends StatelessWidget {
             onPressed: () {
               Get.toNamed(PageName.taskPage);
             },
-            color: taskController
-                .colorList[taskController.categoryModel.value.color!],
+            icon: FontAwesomeIcons.plus,
+            color: colorList[taskController.categoryModel.value.color!],
           ),
         ),
       ),
@@ -110,7 +109,7 @@ class CompleteTaskList extends StatelessWidget {
           ),
         ),
         collapsed: const SizedBox(),
-        expanded: taskController.categoryModel.value.todoList!.isEmpty
+        expanded: taskController.categoryModel.value.todoListOff!.isEmpty
             ? const Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Align(
@@ -123,12 +122,11 @@ class CompleteTaskList extends StatelessWidget {
               )
             : SizedBox(
                 width: Dimens.infinity,
-                height: taskController
-                        .categoryModel.value.todoList!.length *
-                    75,
+                height:
+                    taskController.categoryModel.value.todoListOff!.length * 75,
                 child: ListView.builder(
-                  itemCount: taskController
-                      .categoryModel.value.todoList!.length,
+                  itemCount:
+                      taskController.categoryModel.value.todoListOff!.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return TaskCompleteWidget(index: index);
@@ -161,7 +159,7 @@ class AllTaskList extends StatelessWidget {
           ),
         ),
         collapsed: const SizedBox(),
-        expanded: taskController.categoryModel.value.todoList!.isEmpty
+        expanded: taskController.categoryModel.value.todoListOn!.isEmpty
             ? const Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
                 child: Align(
@@ -175,10 +173,10 @@ class AllTaskList extends StatelessWidget {
             : SizedBox(
                 width: Dimens.infinity,
                 height:
-                    taskController.categoryModel.value.todoList!.length * 75,
+                    taskController.categoryModel.value.todoListOn!.length * 75,
                 child: ListView.builder(
                   itemCount:
-                      taskController.categoryModel.value.todoList!.length,
+                      taskController.categoryModel.value.todoListOn!.length,
                   scrollDirection: Axis.vertical,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -199,6 +197,7 @@ class TopSection extends StatelessWidget {
   });
   CategoryController categoryController = Get.find<CategoryController>();
   TaskListController taskController = Get.find<TaskListController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -221,9 +220,9 @@ class TopSection extends StatelessWidget {
                     color: SolidColors.card,
                   ),
                   child: ImageIcon(
-                    Image.asset('taskController.categoryModel.value.icon!').image,
-                    color: taskController
-                .colorList[taskController.categoryModel.value.color!],
+                    iconList[taskController.categoryModel.value.icon!]
+                        .image,
+                    color: colorList[taskController.categoryModel.value.color!],
                   ),
                 ),
                 const SizedBox(
@@ -235,7 +234,7 @@ class TopSection extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    '${taskController.categoryModel.value.todoList!.length} ماموریت',
+                    '${taskController.categoryModel.value.todoListOn!.length} ماموریت',
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
