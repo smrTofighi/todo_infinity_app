@@ -14,6 +14,7 @@ class CategoryBinding implements Bindings {
 class TaskBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => TaskListController());
+    Get.put(TaskListController());
+    //Get.put(TaskListController());
   }
 }
