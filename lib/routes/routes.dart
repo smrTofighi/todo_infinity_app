@@ -24,14 +24,13 @@ List<GetPage> routes = [
     bindings: [CategoryBinding(), TaskBinding()],
   ),
   GetPage(
-    name: PageName.taskListPage,
-    page: () => TaskListPage(),
-  ),
+      name: PageName.taskListPage,
+      page: () => TaskListPage(),
+      binding: TaskBinding()),
   GetPage(
     name: PageName.taskPage,
     page: () => const TaskPage(),
   ),
- 
   GetPage(
     name: PageName.searchPage,
     page: () => const SearchPage(),
