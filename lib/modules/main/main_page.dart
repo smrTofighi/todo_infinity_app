@@ -18,10 +18,11 @@ class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _ourKey = GlobalKey<ScaffoldState>();
   RxInt activeIndex = 0.obs;
-  CategoryController categoryController = Get.find<CategoryController>();
+  CategoryController controller = Get.find<CategoryController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _ourKey,
       backgroundColor: SolidColors.backGround,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -67,22 +68,37 @@ class MainPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: MyFloatingActionButton(
-        onPressed: () {
-          bottomSheetCategory(context);
+      floatingActionButton: DragTarget<int>(
+        builder: (_, __, ___) => Obx(
+          () => MyFloatingActionButton(
+            onPressed: () {
+              bottomSheetCategory(context);
+            },
+            icon: controller.deleting.value
+                ? FontAwesomeIcons.trash
+                : FontAwesomeIcons.plus,
+            color: controller.deleting.value ? Colors.red : SolidColors.primary,
+          ),
+        ),
+        onAccept: (index) {
+          controller.deleteCategory(index);
+          
         },
-        color: SolidColors.primary,
       ),
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: const [
-          FontAwesomeIcons.house,
-          FontAwesomeIcons.chartColumn,
-        ],
-        activeColor: SolidColors.primary,
-        backgroundColor: Colors.white,
-        activeIndex: 0,
-        onTap: (index) {},
-        gapLocation: GapLocation.center,
+      bottomNavigationBar: Obx(
+        () => AnimatedBottomNavigationBar(
+          icons: const [
+            FontAwesomeIcons.house,
+            FontAwesomeIcons.chartColumn,
+          ],
+          activeColor: SolidColors.primary,
+          backgroundColor: Colors.white,
+          activeIndex: activeIndex.value,
+          onTap: (index) {
+            activeIndex.value = index;
+          },
+          gapLocation: GapLocation.center,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
