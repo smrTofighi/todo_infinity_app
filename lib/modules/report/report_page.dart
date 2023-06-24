@@ -5,11 +5,8 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [ReportText()],
-      )),
+    return const Column(
+      children: [ReportText()],
     );
   }
 }
