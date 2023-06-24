@@ -4,7 +4,8 @@ class CategoryModel {
   int? id;
   String? name;
   int? icon;
-  List<TaskModel>? todoList;
+  List<TaskModel>? todoListOn;
+  List<TaskModel>? todoListOff;
   int? color;
 
   CategoryModel({
@@ -12,14 +13,16 @@ class CategoryModel {
     this.name,
     this.icon,
     this.color,
-    this.todoList,
+    this.todoListOn,
+    this.todoListOff,
   });
 
   CategoryModel.fromJson(Map<String, dynamic> element) {
     id = element["id"];
     name = element["title"];
     icon = element['icon'];
-    todoList = [];
+    todoListOn = [];
+    todoListOff = [];
     color = element["color"];
   }
 }
