@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/values/icons.dart';
 import '../../../../routes/pages.dart';
+import '../../../core/values/colors.dart';
 import '../category_controller.dart';
 
 // ignore: must_be_immutable
@@ -47,8 +48,7 @@ class DropdownMainCategory extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: categoryController
-                .colorList[categoryController.categoryList[0].color!],
+            color: colorList[categoryController.categoryList[0].color!],
           ),
           elevation: 8,
           offset: const Offset(0, 8),
@@ -109,15 +109,9 @@ class MenuItems {
   }
 
   static onChanged(BuildContext context, MenuItem item) {
-    CategoryController categoryController = Get.find<CategoryController>();
     if (item.icon == MyIcons.pallete) {
-      categoryController.bottomSheetChoiceColor(context, () {
-        categoryController.changeThemeCategory();
-      });
     } else if (item.icon == MyIcons.search) {
       Get.toNamed(PageName.searchPage);
-    } else if (item.icon == MyIcons.trash) {
-      
-    }
+    } else if (item.icon == MyIcons.trash) {}
   }
 }

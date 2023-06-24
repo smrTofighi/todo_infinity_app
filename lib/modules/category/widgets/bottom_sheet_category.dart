@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/modules/category/category_controller.dart';
-
 import '../../../core/styles/text_styles.dart';
 import '../../../core/values/colors.dart';
+import '../../../core/values/icons.dart';
 import '../../../core/values/strings.dart';
 import 'color_widget.dart';
 
@@ -52,7 +52,7 @@ void bottomSheetCategory(BuildContext context) {
               height: 45,
               child: ListView.builder(
                 physics: const ClampingScrollPhysics(),
-                itemCount: controller.iconList.length,
+                itemCount: iconList.length,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
@@ -68,11 +68,10 @@ void bottomSheetCategory(BuildContext context) {
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         duration: const Duration(seconds: 1),
                         child: ImageIcon(
-                          controller.iconList[index].image,
+                          iconList[index].image,
                           size: 35,
                           color: index == controller.iconIndex.value
-                              ? controller
-                                  .colorList[controller.colorIndex.value]
+                              ? colorList[controller.colorIndex.value]
                               : Colors.grey,
                         ),
                       ),
@@ -89,13 +88,13 @@ void bottomSheetCategory(BuildContext context) {
               height: 34,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: controller.colorList.length,
+                itemCount: colorList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => Obx(
                   () => ColorWidget(
                     color: index == controller.colorIndex.value
-                        ? controller.colorList[index]
-                        : controller.colorList[index].withOpacity(0.45),
+                        ? colorList[index]
+                        : colorList[index].withOpacity(0.45),
                     onTap: () {
                       controller.colorIndex.value = index;
                     },
