@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../core/values/icons.dart';
-import '../../category/category_controller.dart';
+import '../../../core/values/colors.dart';
 import '../task_list_controller.dart';
 
 // ignore: must_be_immutable
@@ -45,8 +45,7 @@ class DropdownTaskList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: taskController
-                .colorList[taskController.categoryModel.value.color!],
+            color: colorList[taskController.categoryModel.value.color!],
           ),
           elevation: 8,
           offset: const Offset(0, 8),
@@ -108,12 +107,10 @@ class MenuItems {
   }
 
   static onChanged(BuildContext context, MenuItem item) {
-    CategoryController categoryController = Get.find<CategoryController>();
     TaskListController taskController = Get.find<TaskListController>();
     if (item.icon == MyIcons.pallete) {
-      categoryController.bottomSheetChoiceColor(context, () {
-        categoryController.changeThemeCategory();
-      });
+      
+      
     } else if (item.icon == MyIcons.edit) {
       
     } else if (item.icon == MyIcons.trash) {

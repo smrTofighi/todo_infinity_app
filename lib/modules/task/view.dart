@@ -69,8 +69,8 @@ class _TaskPageState extends State<TaskPage> {
                 TextField(
                     maxLines: 3,
                     controller: taskController.taskEditingController,
-                    cursorColor: taskController
-                        .colorList[taskController.categoryModel.value.color!],
+                    cursorColor: 
+                        colorList[taskController.categoryModel.value.color!],
                     decoration: MyInputDecoration.textFieldAddEditTaskPage),
                 const Divider(),
                 const SizedBox(
@@ -100,7 +100,7 @@ class _TaskPageState extends State<TaskPage> {
                           taskController.time.value,
                           style: TextStyle(
                               color: taskController.timeState.value
-                                  ? taskController.colorList[
+                                  ? colorList[
                                       taskController.categoryModel.value.color!]
                                   : Colors.grey,
                               fontSize: 13),
@@ -128,7 +128,7 @@ class _TaskPageState extends State<TaskPage> {
                       child: Text(
                         taskController.categoryModel.value.name!,
                         style: TextStyle(
-                            color: taskController.colorList[
+                            color: colorList[
                                 taskController.categoryModel.value.color!],
                             fontSize: 13),
                       ),
@@ -174,8 +174,8 @@ class TaskAlarm extends StatelessWidget {
               taskController.date.value,
               style: TextStyle(
                   color: taskController.dateState.value
-                      ? taskController
-                          .colorList[taskController.categoryModel.value.color!]
+                      ? 
+                          colorList[taskController.categoryModel.value.color!]
                       : Colors.grey,
                   fontSize: 13),
             ),
@@ -212,7 +212,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all(
-            taskController.colorList[taskController.categoryModel.value.color!],
+            colorList[taskController.categoryModel.value.color!],
           ),
         ),
         child: Text(
