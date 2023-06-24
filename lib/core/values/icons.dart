@@ -55,3 +55,31 @@ class MyIcons {
   static Image work = Image.asset(Assets.icons.work.path);
   static Image dream = Image.asset(Assets.icons.dream.path);
 }
+
+  List<Image> iconList = [
+    MyIcons.tree,
+    MyIcons.bed,
+    MyIcons.book,
+    MyIcons.books,
+    MyIcons.bulb,
+    MyIcons.cake,
+    MyIcons.car,
+    MyIcons.dollar,
+    MyIcons.dream,
+    MyIcons.football,
+    MyIcons.gift,
+    MyIcons.glassCheers,
+    MyIcons.gym,
+    MyIcons.moon,
+    MyIcons.music,
+    MyIcons.handHoldingHeart,
+    MyIcons.home,
+    MyIcons.volleyball,
+    MyIcons.note,
+    MyIcons.plane,
+    MyIcons.school,
+    MyIcons.shop,
+    MyIcons.sunrise,
+    MyIcons.work,
+    MyIcons.world,
+  ];
