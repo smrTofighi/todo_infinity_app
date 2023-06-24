@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 
+import '../../gen/fonts.gen.dart';
+
 class MyTextStyles {
   static const TextStyle categoryTitleBlack = TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black);
+      fontWeight: FontWeight.bold,
+      fontSize: 20.0,
+      color: Colors.black,
+      fontFamily: FontFamily.samim);
   static const TextStyle bigTextWhite = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 28.0, color: Colors.white);
 
