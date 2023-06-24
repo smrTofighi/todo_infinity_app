@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:toastification/toastification.dart';
+import 'package:todo_infinity_app/core/utils/api_constant.dart';
+import 'package:todo_infinity_app/core/utils/api_key.dart';
+import 'package:todo_infinity_app/data/services/dio_service.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/dimens.dart';
 import '../../../core/values/strings.dart';
@@ -10,26 +13,12 @@ import '../../../data/models/task_model.dart';
 import '../../../routes/pages.dart';
 
 class TaskListController extends GetxController {
-  List<Color> colorList = [
-    SolidColors.primary,
-    Colors.red,
-    Colors.green,
-    Colors.brown,
-    Colors.orange,
-    Colors.purple,
-    Colors.amber,
-    Colors.cyan,
-    Colors.lime,
-    Colors.pink,
-    Colors.teal,
-    Colors.blueGrey,
-    Colors.indigo,
-    Colors.lightGreen
-  ];
   Rx<CategoryModel> categoryModel = CategoryModel().obs;
   //? A model of the category that will be quantified
   TextEditingController taskEditingController = TextEditingController();
   //? A TextEditingController is for task title
+  RxInt categoryId = RxInt(0);
+
   RxInt categoryIndex = RxInt(0);
   RxInt importanceIndex = RxInt(0);
   RxInt taskIndex = 0.obs;
@@ -41,6 +30,22 @@ class TaskListController extends GetxController {
   RxBool editTaskState = false.obs;
   RxBool taskCompleteState = false.obs;
 
+  getTodoList() async {
+    var response = await DioService()
+        .getMethod(ApiConstant.listOfCatTodo + categoryId.toString());
+    if (response.data[ApiKey.status] != 200) {
+    } else {
+      response.data[ApiKey.todos].forEach((task) {
+        if (task[ApiKey.status] == '0') {
+          categoryModel.value.todoListOn!.add(TaskModel.fromJson(task));
+        } else {
+          categoryModel.value.todoListOff!.add(TaskModel.fromJson(task));
+        }
+      });
+      Get.toNamed(PageName.taskListPage);
+    }
+  }
+
   toastMessage(String message, BuildContext context) {
     toastification.showSuccess(
       context: context,
@@ -50,11 +55,7 @@ class TaskListController extends GetxController {
   }
 
   deleteTasks(BuildContext context) {
-
-    
-
     toastMessage('موفقیت آمیز بود', context);
-
 
     Get.offAllNamed(PageName.categoryPage);
   }
@@ -70,7 +71,6 @@ class TaskListController extends GetxController {
         width: width / 4,
         child: ElevatedButton(
           onPressed: () {
-
             Get.back();
           },
           style: ButtonStyle(
@@ -95,8 +95,7 @@ class TaskListController extends GetxController {
       ),
       title: '',
       titlePadding: const EdgeInsets.all(0),
-      middleText:
-          'ماموریت ${categoryModel.value.todoList![index].name} حذف شود؟',
+      middleText: 'ماموریت حذف شود؟',
       radius: Dimens.radius,
     );
   }
@@ -113,7 +112,6 @@ class TaskListController extends GetxController {
         width: width / 4,
         child: ElevatedButton(
           onPressed: () {
-          
             Get.back();
           },
           style: ButtonStyle(
@@ -138,94 +136,12 @@ class TaskListController extends GetxController {
       ),
       title: '',
       titlePadding: const EdgeInsets.all(0),
-      middleText:
-          'ماموریت ${categoryModel.value.todoList![index].name} حذف شود؟',
+      middleText: 'ماموریت حذف شود؟',
       radius: Dimens.radius,
     );
   }
 
   addTime(BuildContext context) async {
-    //var width = MediaQuery.of(context).size.width;
-    // var height = MediaQuery.of(context).size.height;
-    // Get.defaultDialog(
-    //   barrierDismissible: false,
-    //   title: MyStrings.importance,
-    //   titleStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    //   content: Column(
-    //     children: [
-    //       Obx(
-    //         () => RadioListTile(
-    //             title: const Text("کم"),
-    //             value: "کم",
-    //             groupValue: time.value,
-    //             onChanged: (value) {
-    //               time.value = value.toString();
-    //             },
-    //             activeColor: categoryModel.value.color),
-    //       ),
-    //       Obx(
-    //         () => RadioListTile(
-    //             title: const Text("متوسط"),
-    //             value: "متوسط",
-    //             groupValue: time.value,
-    //             onChanged: (value) {
-    //               time.value = value.toString();
-    //             },
-    //             activeColor: categoryModel.value.color),
-    //       ),
-    //       Obx(
-    //         () => RadioListTile(
-    //             title: const Text("زیاد"),
-    //             value: "زیاد",
-    //             groupValue: time.value,
-    //             onChanged: (value) {
-    //               time.value = value.toString();
-    //             },
-    //             activeColor: categoryModel.value.color),
-    //       ),
-    //       const SizedBox(
-    //         height: 25.0,
-    //       ),
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //         children: [
-    //           SizedBox(
-    //             height: 35,
-    //             width: width / 3.3,
-    //             child: ElevatedButton(
-    //               onPressed: () {
-    //                 timeState.value = true;
-    //                 Get.back();
-    //               },
-    //               style: ButtonStyle(
-    //                   backgroundColor:
-    //                       MaterialStateProperty.all(categoryModel.value.color)),
-    //               child: const Text('تایید'),
-    //             ),
-    //           ),
-    //           SizedBox(
-    //             height: 35,
-    //             width: width / 3.3,
-    //             child: ElevatedButton(
-    //               onPressed: () {
-    //                 // importance.value = MyStrings.importance;
-    //                 Get.back();
-    //               },
-    //               style: ButtonStyle(
-    //                   backgroundColor:
-    //                       MaterialStateProperty.all(categoryModel.value.color)),
-    //               child: const Text('لغو'),
-    //             ),
-    //           ),
-    //         ],
-    //       )
-    //     ],
-    //   ),
-    //   radius: 6,
-    //   backgroundColor: Colors.white,
-    //   contentPadding: const EdgeInsets.all(8.0),
-    // );
-
     var picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -271,22 +187,16 @@ class TaskListController extends GetxController {
   }
 
   void addTask() {
-
- 
     Get.offNamed(PageName.taskListPage);
   }
 
   editAllTask() {
-    categoryModel.update((val) {
-
-    });
+    categoryModel.update((val) {});
     Get.offNamed(PageName.taskListPage);
   }
 
   editCompleteTask() {
-    categoryModel.update((val) {
-
-    });
+    categoryModel.update((val) {});
     Get.offAllNamed(PageName.categoryPage);
   }
 
@@ -309,7 +219,7 @@ class TaskListController extends GetxController {
     dateState.value = true;
     date.value = list[index].date!;
     time.value = list[index].time!;
-    taskEditingController.text = list[index].name!;
+    taskEditingController.text = list[index].subject!;
     Get.toNamed(PageName.taskPage);
   }
 
@@ -322,7 +232,7 @@ class TaskListController extends GetxController {
     dateState.value = true;
     date.value = list[index].date!;
     time.value = list[index].time!;
-    taskEditingController.text = list[index].name!;
+    taskEditingController.text = list[index].subject!;
     Get.toNamed(PageName.taskPage);
   }
 }
