@@ -51,6 +51,7 @@ dependencies:
   animated_bottom_navigation_bar: ^1.2.0
   dio: ^5.2.0+1
   step_progress_indicator: ^1.0.2
+  validators: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -97,6 +98,12 @@ flutter:
         - asset: assets/fonts/Samim.ttf
           weight: 300
         - asset: assets/fonts/Samim-Bold.ttf
+          weight: 700
+    - family: Fanavari
+      fonts:
+        - asset: assets/fonts/Fanavari-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/Fanavari-Bold.ttf
           weight: 700
   #         style: italic
   #   - family: Trajan Pro
