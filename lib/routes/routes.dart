@@ -6,8 +6,8 @@ import 'package:todo_infinity_app/modules/register/register_page.dart';
 import 'package:todo_infinity_app/modules/splash/splash_page.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import '../modules/category/category_page.dart';
-import '../modules/search/view.dart';
-import '../modules/task_Info/view.dart';
+import '../modules/search/search_page.dart';
+import '../modules/task_Info/task_info_page.dart';
 import '../modules/task_list/task_list_page.dart';
 
 List<GetPage> routes = [
