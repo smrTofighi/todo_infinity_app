@@ -29,9 +29,9 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                       MyIcons.moon.image,
+                        MyIcons.moon.image,
                         size: 19,
-                        color: SolidColors.primary,
+                        color: LightColors.primary,
                       ),
                       const SizedBox(
                         width: 12,
@@ -45,13 +45,13 @@ class MyDrawer extends StatelessWidget {
                   Switch(
                     value: false,
                     onChanged: (value) {},
-                    activeColor: SolidColors.primary,
+                    activeColor: LightColors.primary,
                   )
                 ],
               ),
             ),
             const Divider(
-              color: SolidColors.grey,
+              color: LightColors.grey,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12.0),
@@ -64,7 +64,7 @@ class MyDrawer extends StatelessWidget {
                       ImageIcon(
                         MyIcons.share.image,
                         size: 19,
-                        color: SolidColors.primary,
+                        color: LightColors.primary,
                       ),
                       const SizedBox(
                         width: 12,
@@ -87,9 +87,9 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                       MyIcons.questionSquare.image,
+                        MyIcons.questionSquare.image,
                         size: 19,
-                        color: SolidColors.primary,
+                        color: LightColors.primary,
                       ),
                       const SizedBox(
                         width: 12,
@@ -112,9 +112,9 @@ class MyDrawer extends StatelessWidget {
                   Row(
                     children: [
                       ImageIcon(
-                     MyIcons.power.image,
+                        MyIcons.power.image,
                         size: 19,
-                        color: SolidColors.primary,
+                        color: LightColors.primary,
                       ),
                       const SizedBox(
                         width: 12,

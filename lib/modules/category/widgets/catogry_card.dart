@@ -29,7 +29,7 @@ class CategoryCard extends StatelessWidget {
           height: Get.height / 3.2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: SolidColors.card,
+            color: LightColors.card,
             boxShadow: [
               BoxShadow(
                 color: ShadowColor.black,
@@ -64,13 +64,13 @@ class CategoryCard extends StatelessWidget {
                     Text(
                       categoryController.categoryList[index].name!,
                       overflow: TextOverflow.ellipsis,
-                      style: MyTextStyles.categoryTitleBlack,
+                      style: LightTextStyles.categoryNameTitleBlack,
                     ),
                     const Text(
                       '0 ماموریت',
                       style: TextStyle(
                           fontSize: 14,
-                          color: SolidColors.black,
+                          color: LightColors.black,
                           fontWeight: FontWeight.w300,
                           fontFamily: FontFamily.samim),
                     ),

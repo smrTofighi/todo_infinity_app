@@ -21,7 +21,7 @@ void bottomSheetCategory(BuildContext context) {
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),
-            color: SolidColors.card),
+            color: LightColors.card),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -30,16 +30,16 @@ void bottomSheetCategory(BuildContext context) {
               alignment: Alignment.center,
               child: Text(
                 controller.isEditing.value
-                    ? MyStrings.editCategory
-                    : MyStrings.newCategory,
-                style: MyTextStyles.titleOfBottomSheet,
+                    ? PersianStrings.editCategory
+                    : PersianStrings.newCategory,
+                style: LightTextStyles.titleOfBottomSheet,
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: TextField(
                 controller: controller.textEditingCategory,
-                cursorColor: SolidColors.primary,
+                cursorColor: LightColors.primary,
                 maxLength: 20,
                 style: const TextStyle(fontSize: 14),
                 decoration: const InputDecoration(
@@ -117,7 +117,7 @@ void bottomSheetCategory(BuildContext context) {
                           ? controller.editCategory()
                           : controller.addCategory();
                     },
-                    child: const Text(MyStrings.add),
+                    child: const Text(PersianStrings.add),
                   ),
                 ),
                 const SizedBox(
@@ -131,7 +131,7 @@ void bottomSheetCategory(BuildContext context) {
                       Get.back();
                       controller.clearInputs();
                     },
-                    child: const Text(MyStrings.cancel),
+                    child: const Text(PersianStrings.cancel),
                   ),
                 ),
               ],

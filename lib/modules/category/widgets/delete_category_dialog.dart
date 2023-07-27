@@ -12,8 +12,8 @@ deleteCateogryDialog(int index, BuildContext context) {
 
   Get.defaultDialog(
     barrierDismissible: false,
-    backgroundColor: SolidColors.card,
-    buttonColor: SolidColors.primary,
+    backgroundColor: LightColors.card,
+    buttonColor: LightColors.primary,
     confirm: Container(
       margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       height: 30,
@@ -26,7 +26,7 @@ deleteCateogryDialog(int index, BuildContext context) {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.redAccent),
         ),
-        child: const Text(MyStrings.delete),
+        child: const Text(PersianStrings.delete),
       ),
     ),
     cancel: Container(
@@ -40,10 +40,9 @@ deleteCateogryDialog(int index, BuildContext context) {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.green),
         ),
-        child: const Text(MyStrings.cancel),
+        child: const Text(PersianStrings.cancel),
       ),
     ),
-   
     title: '',
     titleStyle: const TextStyle(fontSize: 10),
     titlePadding: const EdgeInsets.all(0),
