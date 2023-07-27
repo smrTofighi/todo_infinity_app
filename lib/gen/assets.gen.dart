@@ -109,6 +109,9 @@ class $AssetsIconsGen {
   AssetGenImage get moonStars =>
       const AssetGenImage('assets/icons/moon-stars.png');
 
+  /// File path: assets/icons/moon.png
+  AssetGenImage get moon => const AssetGenImage('assets/icons/moon.png');
+
   /// File path: assets/icons/music-alt.png
   AssetGenImage get musicAlt =>
       const AssetGenImage('assets/icons/music-alt.png');
@@ -236,6 +239,7 @@ class $AssetsIconsGen {
         menuDotVertical,
         menu,
         moonStars,
+        moon,
         musicAlt,
         music,
         notebook,
@@ -332,7 +336,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
