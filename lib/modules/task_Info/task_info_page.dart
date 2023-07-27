@@ -32,13 +32,13 @@ class _TaskPageState extends State<TaskPage> {
           return true;
         },
         child: Scaffold(
-          backgroundColor: SolidColors.backGround,
+          backgroundColor: LightColors.backGround,
           appBar: AppBar(
             title: Text(
                 taskController.editTaskState.value
-                    ? MyStrings.editTask
-                    : MyStrings.newTask,
-                style: MyTextStyles.titleOfAppBar),
+                    ? PersianStrings.editTask
+                    : PersianStrings.newTask,
+                style: LightTextStyles.titleOfAppBar),
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -46,9 +46,9 @@ class _TaskPageState extends State<TaskPage> {
               onPressed: () {
                 Get.back();
                 taskController.dateState.value = false;
-                taskController.date.value = MyStrings.addAlarm;
+                taskController.date.value = PersianStrings.addAlarm;
                 taskController.editTaskState.value = false;
-                taskController.time.value = MyStrings.importance;
+                taskController.time.value = PersianStrings.importance;
                 taskController.timeState.value = false;
                 taskController.taskEditingController.text = '';
               },
@@ -69,7 +69,7 @@ class _TaskPageState extends State<TaskPage> {
                 TextField(
                     maxLines: 3,
                     controller: taskController.taskEditingController,
-                    cursorColor: 
+                    cursorColor:
                         colorList[taskController.categoryModel.value.color!],
                     decoration: MyInputDecoration.textFieldAddEditTaskPage),
                 const Divider(),
@@ -174,8 +174,7 @@ class TaskAlarm extends StatelessWidget {
               taskController.date.value,
               style: TextStyle(
                   color: taskController.dateState.value
-                      ? 
-                          colorList[taskController.categoryModel.value.color!]
+                      ? colorList[taskController.categoryModel.value.color!]
                       : Colors.grey,
                   fontSize: 13),
             ),
@@ -216,7 +215,9 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
           ),
         ),
         child: Text(
-          taskController.editTaskState.value ? MyStrings.edit : MyStrings.add,
+          taskController.editTaskState.value
+              ? PersianStrings.edit
+              : PersianStrings.add,
         ),
       ),
     );
