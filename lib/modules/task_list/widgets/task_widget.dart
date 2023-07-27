@@ -37,7 +37,7 @@ class TaskAllWidget extends StatelessWidget {
               topLeft: Radius.circular(Dimens.radius),
               bottomLeft: Radius.circular(Dimens.radius),
             ),
-            backgroundColor: SolidColors.primary,
+            backgroundColor: LightColors.primary,
             foregroundColor: Colors.white,
             icon: Icons.edit,
             //label: 'انجام شد',
@@ -75,7 +75,7 @@ class TaskAllWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 1.55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimens.radius),
-                  color: SolidColors.card,
+                  color: LightColors.card,
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black.withOpacity(0.2),
@@ -141,7 +141,7 @@ class TaskCompleteWidget extends StatelessWidget {
               topLeft: Radius.circular(Dimens.radius),
               bottomLeft: Radius.circular(Dimens.radius),
             ),
-            backgroundColor: SolidColors.primary,
+            backgroundColor: LightColors.primary,
             foregroundColor: Colors.white,
             icon: Icons.edit,
             //label: 'انجام شد',
@@ -183,7 +183,7 @@ class TaskCompleteWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 1.55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimens.radius),
-                  color: SolidColors.card,
+                  color: LightColors.card,
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black.withOpacity(0.2),

@@ -64,7 +64,7 @@ class TaskListController extends GetxController {
     var width = MediaQuery.of(context).size.width;
     Get.defaultDialog(
       barrierDismissible: false,
-      backgroundColor: SolidColors.card,
+      backgroundColor: LightColors.card,
       confirm: Container(
         margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         height: 30,
@@ -105,7 +105,7 @@ class TaskListController extends GetxController {
     // var height = MediaQuery.of(context).size.height;
     Get.defaultDialog(
       barrierDismissible: false,
-      backgroundColor: SolidColors.card,
+      backgroundColor: LightColors.card,
       confirm: Container(
         margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         height: 30,
@@ -203,9 +203,9 @@ class TaskListController extends GetxController {
   //? clear all inputs in add edit task page
   clearInputs() {
     dateState.value = false;
-    date.value = MyStrings.addAlarm;
+    date.value = PersianStrings.addAlarm;
     editTaskState.value = false;
-    time.value = MyStrings.importance;
+    time.value = PersianStrings.importance;
     timeState.value = false;
     taskEditingController.text = '';
   }

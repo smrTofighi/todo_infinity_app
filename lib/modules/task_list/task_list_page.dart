@@ -62,12 +62,14 @@ class BottomSection extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(34.0, 24, 34.0, 0),
         width: Get.width,
         height: Get.height / 1.55,
+
+        //TODO use double
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          color: SolidColors.card,
+          color: LightColors.card,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -115,7 +117,7 @@ class CompleteTaskList extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    MyStrings.noTaskComplete,
+                    PersianStrings.noTaskComplete,
                     style: TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                 ),
@@ -165,7 +167,7 @@ class AllTaskList extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    MyStrings.noTaskHere,
+                    PersianStrings.noTaskHere,
                     style: TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                 ),
@@ -198,7 +200,6 @@ class TopSection extends StatelessWidget {
   CategoryController categoryController = Get.find<CategoryController>();
   TaskListController taskController = Get.find<TaskListController>();
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -217,11 +218,10 @@ class TopSection extends StatelessWidget {
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: SolidColors.card,
+                    color: LightColors.card,
                   ),
                   child: ImageIcon(
-                    iconList[taskController.categoryModel.value.icon!]
-                        .image,
+                    iconList[taskController.categoryModel.value.icon!].image,
                     color: colorList[taskController.categoryModel.value.color!],
                   ),
                 ),
@@ -230,7 +230,7 @@ class TopSection extends StatelessWidget {
                 ),
                 Text(
                   taskController.categoryModel.value.name!,
-                  style: MyTextStyles.bigTextWhite,
+                  style: LightTextStyles.bigTextWhite,
                 ),
                 Obx(
                   () => Text(
