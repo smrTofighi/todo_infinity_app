@@ -17,15 +17,15 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    
-     Get.find<CategoryController>().getCategoryList();
+
+    Get.find<CategoryController>().getCategoryList();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: SolidColors.primary,
+        backgroundColor: LightColors.primary,
         body: SizedBox(
           width: Dimens.infinity,
           child: const Column(
