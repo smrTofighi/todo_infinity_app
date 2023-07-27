@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../values/colors.dart';
 
+//TODO: refacotor this class
+
 class MyInputDecoration {
   static const InputDecoration textFieldAddEditTaskPage = InputDecoration(
     filled: true,
-    fillColor: SolidColors.backGround,
+    fillColor: LightColors.backGround,
     labelText: 'چه برنامه ای داری؟',
     floatingLabelStyle: TextStyle(
-      color: SolidColors.grey,
+      color: LightColors.grey,
     ),
     labelStyle: TextStyle(fontSize: 14),
     border: InputBorder.none,
