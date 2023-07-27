@@ -5,4 +5,6 @@ class PageName {
   static const String splashPage = '/SplashPage';
   static const String searchPage = '/SearchPage';
   static const String mainPage = '/MainPage';
+  static const String registerPage = '/RegisterPage';
+  static const String signInPage = '/SignInPage';
 }
