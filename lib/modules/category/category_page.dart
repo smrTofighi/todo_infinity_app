@@ -61,7 +61,6 @@ class CategoryList extends StatelessWidget {
               onDragStarted: () => controller.changeDeleting(true),
               onDraggableCanceled: (_, __) => controller.changeDeleting(false),
               onDragEnd: (_) => controller.changeDeleting(false),
-
               child: CategoryCard(index: index),
             );
           },
@@ -83,7 +82,7 @@ class CategoriesText extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 12, 16, 12),
         child: Text(
-          MyStrings.categories,
+          PersianStrings.categories,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
         ),
       ),
