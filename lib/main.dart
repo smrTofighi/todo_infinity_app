@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
         Locale('fa', 'IR'), // Farsi, IRAN
       ],
       locale: const Locale('fa', 'IR'),
-      initialBinding: CategoryBinding(),
+      //initialBinding: CategoryBinding(),
       getPages: routes,
-      initialRoute: PageName.splashPage,
+      initialRoute: PageName.signInPage,
     );
   }
 }
