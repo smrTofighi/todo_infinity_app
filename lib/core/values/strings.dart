@@ -1,4 +1,25 @@
-class MyStrings {
+class PersianStrings {
+  //? regiter module
+  static const String doIt = 'انجام بده';
+  static const String welcomeBack = 'باز هم خوش آمدید';
+  static const String enterYourDetailsBelow = 'مشخصات خود را در زیر وارد کنید';
+  static const String email = 'ایمیل';
+  static const String name = 'نام';
+  static const String password = 'رمز عبور';
+  static const String repeatPassword = 'تکرار رمز عبور';
+  static const String signin = 'ورود';
+  static const String signup = 'ثبت نام';
+  static const String dontHaveAnAccount = 'حساب کاربری نداری؟';
+  static const String alreadyHaveAnAccount = 'حساب کاریری داری؟';
+  static const String getStarted = 'ثبت نام کن';
+  static const String getStartedFree = 'رایگان شروع کنید';
+  static const String freeForeverNoCostNeeded =
+      'رایگان برای همیشه، بدون نیاز به هزینه';
+  static const String emailIsNotTrue = 'ایمیل صحیح نمی باشد';
+  static const String passwordCanNotIsEmpty = 'رمز عبور باید کامل باشد';
+  static const String emailCanNotIsEmpty = 'ایمیل باید کامل باشد';
+  static const String nameCanNotIsEmpty = 'نام باید کامل باشد';
+  //?
   static const String delete = 'حذف';
   static const String cancel = 'لغو';
   static const String editCategory = 'ویرایش دسته بندی';
