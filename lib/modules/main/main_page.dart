@@ -23,7 +23,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _ourKey,
-      backgroundColor: SolidColors.backGround,
+      backgroundColor: LightColors.backGround,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -39,7 +39,7 @@ class MainPage extends StatelessWidget {
                 },
                 icon: ImageIcon(
                   Image.asset(Assets.icons.menu.path).image,
-                  color: SolidColors.black,
+                  color: LightColors.black,
                 ),
               ),
               const Spacer(),
@@ -49,7 +49,7 @@ class MainPage extends StatelessWidget {
                 },
                 icon: ImageIcon(
                   MyIcons.search.image,
-                  color: SolidColors.black,
+                  color: LightColors.black,
                 ),
               ),
             ],
@@ -77,12 +77,11 @@ class MainPage extends StatelessWidget {
             icon: controller.deleting.value
                 ? FontAwesomeIcons.trash
                 : FontAwesomeIcons.plus,
-            color: controller.deleting.value ? Colors.red : SolidColors.primary,
+            color: controller.deleting.value ? Colors.red : LightColors.primary,
           ),
         ),
         onAccept: (index) {
           controller.deleteCategory(index);
-          
         },
       ),
       bottomNavigationBar: Obx(
@@ -91,7 +90,7 @@ class MainPage extends StatelessWidget {
             FontAwesomeIcons.house,
             FontAwesomeIcons.chartColumn,
           ],
-          activeColor: SolidColors.primary,
+          activeColor: LightColors.primary,
           backgroundColor: Colors.white,
           activeIndex: activeIndex.value,
           onTap: (index) {
