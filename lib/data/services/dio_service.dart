@@ -8,6 +8,7 @@ class DioService {
     dio.options.headers['content-Type'] = 'application/json';
     return await dio
         .get(url,
+
             options: Options(responseType: ResponseType.json, method: 'GET'))
         .then((response) {
       return response;
@@ -19,7 +20,7 @@ class DioService {
 
     //var token = GetStorage().read(StorageKey.userid);
     //if (token != null) {
-      dio.options.headers['authorization'] = 'token';
+      //dio.options.headers['authorization'] = 'token';
     //}
 
     return await dio
@@ -27,9 +28,7 @@ class DioService {
             data: dio_service.FormData.fromMap(map),
             options: Options(responseType: ResponseType.json, method: 'POST'))
         .then((response) {
-      log(response.headers.toString());
-      log(response.data.toString());
-      log(response.statusCode.toString());
+ 
       return response;
     });
   }
