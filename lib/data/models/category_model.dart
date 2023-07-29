@@ -2,7 +2,7 @@ import 'package:todo_infinity_app/data/models/task_model.dart';
 
 class CategoryModel {
   int? id;
-  String? name;
+  String? title;
   int? icon;
   List<TaskModel>? todoListOn;
   List<TaskModel>? todoListOff;
@@ -10,7 +10,7 @@ class CategoryModel {
 
   CategoryModel({
     this.id,
-    this.name,
+    this.title,
     this.icon,
     this.color,
     this.todoListOn,
@@ -19,7 +19,7 @@ class CategoryModel {
 
   CategoryModel.fromJson(Map<String, dynamic> element) {
     id = element["id"];
-    name = element["title"];
+    title = element["title"];
     icon = element['icon'];
     todoListOn = [];
     todoListOff = [];
