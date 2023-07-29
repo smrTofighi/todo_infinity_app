@@ -6,6 +6,7 @@ import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
+import 'package:todo_infinity_app/modules/register/register_controller.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:validators/validators.dart';
 
@@ -118,7 +119,7 @@ class BottomSection extends StatelessWidget {
         ? _validatePass.value = true
         : _validatePass.value = false;
 
-    if (_validateEmail.value == false || _validatePass.value == false) {
+    if (_validateEmail.value == false && _validatePass.value == false) {
       if (_isEmail.value == false) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -126,6 +127,12 @@ class BottomSection extends StatelessWidget {
             backgroundColor: LightColors.primaryBG,
           ),
         );
+      }
+      else {
+        RegisterController controller = Get.find<RegisterController>();
+        String email = _emailText.text;
+        String password = _passText.text;
+        controller.signInUser( email, password);
       }
     }
   }

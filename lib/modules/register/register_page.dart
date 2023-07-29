@@ -6,6 +6,7 @@ import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
+import 'package:todo_infinity_app/modules/register/register_controller.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import 'package:validators/validators.dart';
 
@@ -46,7 +47,7 @@ class BottomSection extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         width: Dimens.width,
-        height: Dimens.height *0.75,
+        height: Dimens.height * 0.75,
         decoration: AppBoxDecoration.whiteRadius,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -67,9 +68,6 @@ class BottomSection extends StatelessWidget {
               child: Obx(
                 () => TextField(
                   controller: _nameText,
-                  onChanged: (value) {
-                    _isEmail.value = isEmail(value);
-                  },
                   style: LightTextStyles.normall12(LightColors.blackText),
                   decoration: InputDecoration(
                     hintText: PersianStrings.name,
@@ -151,6 +149,7 @@ class BottomSection extends StatelessWidget {
   }
 
   processRegister(BuildContext context) {
+  
     _emailText.text.isEmpty
         ? _validateEmail.value = true
         : _validateEmail.value = false;
@@ -161,16 +160,23 @@ class BottomSection extends StatelessWidget {
         ? _validateName.value = true
         : _validateName.value = false;
 
-    if (_validateEmail.value ||
-        _validatePass.value ||
+    if (_validateEmail.value == false &&
+        _validatePass.value == false &&
         _validateName.value == false) {
-      if (_isEmail.value == false) {
+      if (_isEmail.value == false && _emailText.text.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(PersianStrings.emailIsNotTrue),
             backgroundColor: LightColors.primaryBG,
           ),
         );
+      } else {
+        RegisterController controller = Get.find<RegisterController>();
+        String name = _nameText.text;
+        String email = _emailText.text;
+        String password = _passText.text;
+        String rePassword = _repPassText.text;
+        controller.registerUser(name, email, password, rePassword);
       }
     }
   }
