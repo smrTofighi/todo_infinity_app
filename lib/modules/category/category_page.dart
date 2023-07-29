@@ -16,6 +16,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     super.initState();
+   
   }
 
   @override
@@ -31,40 +32,54 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 }
 
-// ignore: must_be_immutable
 class CategoryList extends StatelessWidget {
   CategoryList({
     super.key,
   });
 
-  CategoryController controller = Get.find<CategoryController>();
+  final CategoryController controller = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     return Obx(
       () => SizedBox(
         width: Get.width,
-        child: GridView.builder(
-          physics: const ClampingScrollPhysics(),
-          itemCount: controller.categoryList.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 0.9),
-          itemBuilder: (context, index) {
-            return LongPressDraggable(
-              data: index,
-              feedback: Opacity(
-                opacity: 0.8,
-                child: CategoryCard(index: index),
+        child: controller.categoryList.isEmpty
+            ? SizedBox(
+                width: size.width,
+                height: size.height * 0.75,
+                child: const Center(
+                  child: Text(
+                    'هنوز دسته بندی ساخته نشده است',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              )
+            : GridView.builder(
+                physics: const ClampingScrollPhysics(),
+                itemCount: controller.categoryList.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, childAspectRatio: 0.9),
+                itemBuilder: (context, index) {
+                  return LongPressDraggable(
+                    data: index,
+                    feedback: Opacity(
+                      opacity: 0.8,
+                      child: CategoryCard(index: index),
+                    ),
+                    onDragStarted: () => controller.changeDeleting(true),
+                    onDraggableCanceled: (_, __) =>
+                        controller.changeDeleting(false),
+                    onDragEnd: (_) => controller.changeDeleting(false),
+                    child: CategoryCard(index: index),
+                  );
+                },
               ),
-              onDragStarted: () => controller.changeDeleting(true),
-              onDraggableCanceled: (_, __) => controller.changeDeleting(false),
-              onDragEnd: (_) => controller.changeDeleting(false),
-              child: CategoryCard(index: index),
-            );
-          },
-        ),
       ),
     );
   }

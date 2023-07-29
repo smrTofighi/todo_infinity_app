@@ -9,12 +9,12 @@ import '../../../core/values/icons.dart';
 import '../../task_list/task_list_controller.dart';
 import '../category_controller.dart';
 
-// ignore: must_be_immutable
+
 class CategoryCard extends StatelessWidget {
   CategoryCard({Key? key, required this.index}) : super(key: key);
   final int index;
-  CategoryController categoryController = Get.find<CategoryController>();
-  TaskListController taskController = Get.find<TaskListController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
+  final TaskListController taskController = Get.find<TaskListController>();
   @override
   Widget build(BuildContext context) {
     int colorIndex = categoryController.categoryList[index].color!;
@@ -62,7 +62,7 @@ class CategoryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      categoryController.categoryList[index].name!,
+                      categoryController.categoryList[index].title!,
                       overflow: TextOverflow.ellipsis,
                       style: LightTextStyles.categoryNameTitleBlack,
                     ),
