@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class MyFloatingActionButton extends StatelessWidget {
   const MyFloatingActionButton(
-      {super.key, required this.onPressed, required this.color, required this.icon});
+      {super.key,
+      required this.onPressed,
+      required this.color,
+      required this.icon});
   final Function() onPressed;
   final Color color;
   final IconData icon;
@@ -18,3 +21,5 @@ class MyFloatingActionButton extends StatelessWidget {
     );
   }
 }
+
+
