@@ -126,7 +126,7 @@ class _TaskPageState extends State<TaskPage> {
                       onPressed: () {},
                       style: MyButtonStyle.textButtonAddEditTaskPage,
                       child: Text(
-                        taskController.categoryModel.value.name!,
+                        taskController.categoryModel.value.title!,
                         style: TextStyle(
                             color: colorList[
                                 taskController.categoryModel.value.color!],

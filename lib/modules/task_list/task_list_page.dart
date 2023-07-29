@@ -229,7 +229,7 @@ class TopSection extends StatelessWidget {
                   height: 16.0,
                 ),
                 Text(
-                  taskController.categoryModel.value.name!,
+                  taskController.categoryModel.value.title!,
                   style: LightTextStyles.bigTextWhite,
                 ),
                 Obx(

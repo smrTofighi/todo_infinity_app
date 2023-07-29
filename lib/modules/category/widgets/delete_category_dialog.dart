@@ -46,7 +46,7 @@ deleteCateogryDialog(int index, BuildContext context) {
     title: '',
     titleStyle: const TextStyle(fontSize: 10),
     titlePadding: const EdgeInsets.all(0),
-    middleText: 'دسته بندی ${controller.categoryList[index].name} حذف شود؟',
+    middleText: 'دسته بندی ${controller.categoryList[index].title} حذف شود؟',
     radius: Dimens.radius,
   );
 }
