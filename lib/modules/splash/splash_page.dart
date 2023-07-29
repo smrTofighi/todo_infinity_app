@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
-
-import '../category/category_controller.dart';
+import 'package:todo_infinity_app/modules/register/register_controller.dart';
 import '../widgets/loading.dart';
 
 class SplashPage extends StatefulWidget {
@@ -17,8 +16,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-
-    Get.find<CategoryController>().getCategoryList();
+    RegisterController controller = Get.find<RegisterController>();
+    Future.delayed(const Duration(seconds: 3))
+        .then((value) => controller.checkUserSignIn());
   }
 
   @override
@@ -32,7 +32,9 @@ class _SplashPageState extends State<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Loading(),
+              Loading(
+                color: Colors.white,
+              ),
             ],
           ),
         ),
