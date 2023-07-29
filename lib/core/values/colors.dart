@@ -18,6 +18,7 @@ class LightColors {
   static const Color black = Colors.black;
 
   static const Color primaryBG = Color(0xff5786ff);
+  static const Color white = Colors.white;
 }
 
 class ShadowColor {
