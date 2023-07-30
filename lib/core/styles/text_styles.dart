@@ -24,7 +24,6 @@ class LightTextStyles {
   static const TextStyle categoryNameTitleBlack = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 20.0,
-    color: Colors.black,
     fontFamily: FontFamily.samim,
   );
   static const TextStyle bigTitle = TextStyle(
