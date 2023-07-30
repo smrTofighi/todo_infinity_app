@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_infinity_app/core/values/colors.dart';
+import 'package:todo_infinity_app/core/values/dimens.dart';
 
 class MyFloatingActionButton extends StatelessWidget {
   const MyFloatingActionButton(
@@ -11,15 +13,31 @@ class MyFloatingActionButton extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: onPressed,
-      backgroundColor: color,
-      child: Icon(
-        icon,
-        size: 20,
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(100),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).shadowColor,
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(0.5, 0.5),
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        backgroundColor: color,
+        child: Icon(
+          icon,
+          size: 20,
+          color: LightColors.white,
+        ),
       ),
     );
   }
 }
-
-

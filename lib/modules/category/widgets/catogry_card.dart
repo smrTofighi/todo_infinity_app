@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -6,15 +8,14 @@ import 'package:todo_infinity_app/gen/fonts.gen.dart';
 import '../../../core/styles/text_styles.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/icons.dart';
-import '../../task_list/task_list_controller.dart';
+import '../../task/task_controller.dart';
 import '../category_controller.dart';
-
 
 class CategoryCard extends StatelessWidget {
   CategoryCard({Key? key, required this.index}) : super(key: key);
   final int index;
   final CategoryController categoryController = Get.find<CategoryController>();
-  final TaskListController taskController = Get.find<TaskListController>();
+  final TaskController taskController = Get.find<TaskController>();
   @override
   Widget build(BuildContext context) {
     int colorIndex = categoryController.categoryList[index].color!;
@@ -29,12 +30,13 @@ class CategoryCard extends StatelessWidget {
           height: Get.height / 3.2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: LightColors.card,
+            color: Theme.of(context).cardColor,
             boxShadow: [
               BoxShadow(
-                color: ShadowColor.black,
-                blurRadius: 6,
-              )
+                  color: Theme.of(context).shadowColor,
+                  blurRadius: 10,
+                  offset: const Offset(0.5, 0.5),
+                  spreadRadius: 4)
             ],
           ),
           child: Column(
@@ -70,7 +72,6 @@ class CategoryCard extends StatelessWidget {
                       '0 ماموریت',
                       style: TextStyle(
                           fontSize: 14,
-                          color: LightColors.black,
                           fontWeight: FontWeight.w300,
                           fontFamily: FontFamily.samim),
                     ),
@@ -111,6 +112,6 @@ class CategoryCard extends StatelessWidget {
     taskController.categoryIndex.value = index;
     var id = categoryList[index].id;
     taskController.categoryId.value = int.parse(id.toString());
-    taskController.getTodoList();
+    taskController.getTaskList();
   }
 }

@@ -23,10 +23,9 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _ourKey,
-      backgroundColor: LightColors.backGround,
+     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(
@@ -39,7 +38,7 @@ class MainPage extends StatelessWidget {
                 },
                 icon: ImageIcon(
                   Image.asset(Assets.icons.menu.path).image,
-                  color: LightColors.black,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
                 ),
               ),
               const Spacer(),
@@ -49,7 +48,7 @@ class MainPage extends StatelessWidget {
                 },
                 icon: ImageIcon(
                   MyIcons.search.image,
-                  color: LightColors.black,
+                  color: Theme.of(context).appBarTheme.iconTheme!.color,
                 ),
               ),
             ],
@@ -90,8 +89,9 @@ class MainPage extends StatelessWidget {
             FontAwesomeIcons.house,
             FontAwesomeIcons.chartColumn,
           ],
+          inactiveColor: Theme.of(context).iconTheme.color,
           activeColor: LightColors.primary,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).bottomAppBarTheme.color,
           activeIndex: activeIndex.value,
           onTap: (index) {
             activeIndex.value = index;

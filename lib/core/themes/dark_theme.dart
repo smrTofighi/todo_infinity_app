@@ -3,30 +3,26 @@ import 'package:flutter/material.dart';
 import '../../gen/fonts.gen.dart';
 import '../values/colors.dart';
 
-ThemeData lightTheme() {
+ThemeData darkTheme() {
   return ThemeData(
-    fontFamily: FontFamily.samim,
-    primarySwatch: Colors.blue,
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: LightColors.backGround,
-    shadowColor: Colors.black.withOpacity(0.1),
-    splashColor: LightColors.primaryBG,
-    cardColor: LightColors.card,
-    appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(color: LightColors.black),
-      backgroundColor: LightColors.backGround,
-      elevation: 0,
-    ),
-   
-    floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: LightColors.primaryBG,),
-    inputDecorationTheme: inputTheme(),
-    elevatedButtonTheme: elevatedButtonTheme(),
-    bottomAppBarTheme: const BottomAppBarTheme(color: LightColors.white),
-    iconTheme: const IconThemeData(
-      color: LightColors.black
-
-    )
-  );
+      fontFamily: FontFamily.samim,
+      primarySwatch: Colors.blue,
+      brightness: Brightness.dark,
+      shadowColor: Colors.white.withOpacity(0.1),
+      scaffoldBackgroundColor: Colors.grey[700],
+      splashColor: Colors.grey[800],
+      
+      cardColor: Colors.grey[800],
+      appBarTheme: AppBarTheme(
+        iconTheme: const IconThemeData(color: LightColors.white),
+        backgroundColor: Colors.grey[700],
+        elevation: 0,
+      ),
+      inputDecorationTheme: inputTheme(),
+      elevatedButtonTheme: elevatedButtonTheme(),
+      bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey[900]),
+      iconTheme: const IconThemeData(color: LightColors.white));
+      
 }
 
 ElevatedButtonThemeData elevatedButtonTheme() {

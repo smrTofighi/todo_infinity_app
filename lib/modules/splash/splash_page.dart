@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/modules/register/register_controller.dart';
 import '../widgets/loading.dart';
@@ -25,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: LightColors.primary,
+        backgroundColor: Theme.of(context).splashColor,
         body: SizedBox(
           width: Dimens.infinity,
           child: const Column(
