@@ -53,4 +53,22 @@ class DioService {
       return response;
     });
   }
+
+  Future<dynamic> putMethod(String url) async {
+    dio.options.headers['content-Type'] = 'application/json';
+
+    var token = GetStorage().read(StorageKeys.token);
+    if (token != null) {
+      dio.options.headers['Authorization'] = 'Bearer $token';
+    }
+
+    return await dio
+        .delete(url,
+
+            //data: dio_service.FormData.fromMap(map),
+            options: Options(responseType: ResponseType.json, method: 'PUT'))
+        .then((response) {
+      return response;
+    });
+  }
 }
