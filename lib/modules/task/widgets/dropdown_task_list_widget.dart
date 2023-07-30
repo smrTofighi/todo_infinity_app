@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../core/values/icons.dart';
 import '../../../core/values/colors.dart';
-import '../task_list_controller.dart';
+import '../task_controller.dart';
 
 // ignore: must_be_immutable
 class DropdownTaskList extends StatelessWidget {
   DropdownTaskList({
     super.key,
   });
-  TaskListController taskController = Get.find<TaskListController>();
+  TaskController taskController = Get.find<TaskController>();
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
@@ -18,7 +18,7 @@ class DropdownTaskList extends StatelessWidget {
         customButton: SizedBox(
           width: 36,
           child: ImageIcon(
-           MyIcons.menuVertical.image,
+            MyIcons.menuVertical.image,
             color: Colors.white,
           ),
         ),
@@ -107,12 +107,9 @@ class MenuItems {
   }
 
   static onChanged(BuildContext context, MenuItem item) {
-    TaskListController taskController = Get.find<TaskListController>();
+    TaskController taskController = Get.find<TaskController>();
     if (item.icon == MyIcons.pallete) {
-      
-      
     } else if (item.icon == MyIcons.edit) {
-      
     } else if (item.icon == MyIcons.trash) {
       taskController.deleteTasks(context);
     }

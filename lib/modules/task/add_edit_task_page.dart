@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/styles/button_style.dart';
 import 'package:todo_infinity_app/core/styles/input_decoration.dart';
+import 'package:todo_infinity_app/core/utils/note_task_dialog.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-
+import 'package:todo_infinity_app/core/styles/extensions.dart';
 import '../../../core/styles/text_styles.dart';
 import '../category/category_controller.dart';
-import '../task_list/task_list_controller.dart';
+import 'task_controller.dart';
 
-// ignore: must_be_immutable
-class TaskPage extends StatefulWidget {
-  const TaskPage({Key? key}) : super(key: key);
+class AddEditTaskPage extends StatefulWidget {
+  const AddEditTaskPage({Key? key}) : super(key: key);
 
   @override
-  State<TaskPage> createState() => _TaskPageState();
+  State<AddEditTaskPage> createState() => _AddEditTaskPageState();
 }
 
-class _TaskPageState extends State<TaskPage> {
-  var taskController = Get.find<TaskListController>();
-  var categoryController = Get.find<CategoryController>();
+class _AddEditTaskPageState extends State<AddEditTaskPage> {
+  final TaskController taskController = Get.find<TaskController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,9 @@ class _TaskPageState extends State<TaskPage> {
             leading: IconButton(
               onPressed: () {
                 Get.back();
-                taskController.dateState.value = false;
-                taskController.date.value = PersianStrings.addAlarm;
+                taskController.alarm.value = PersianStrings.addAlarm;
                 taskController.editTaskState.value = false;
-                taskController.time.value = PersianStrings.importance;
-                taskController.timeState.value = false;
+                taskController.alarmState.value = false;
                 taskController.taskEditingController.text = '';
               },
               color: Colors.black,
@@ -63,9 +61,7 @@ class _TaskPageState extends State<TaskPage> {
             padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 32.0,
-                ),
+                (Dimens.high * 2).height,
                 TextField(
                     maxLines: 3,
                     controller: taskController.taskEditingController,
@@ -73,68 +69,12 @@ class _TaskPageState extends State<TaskPage> {
                         colorList[taskController.categoryModel.value.color!],
                     decoration: MyInputDecoration.textFieldAddEditTaskPage),
                 const Divider(),
-                const SizedBox(
-                  height: 24,
-                ),
+                (Dimens.medium * 2).height,
                 TaskAlarm(),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  children: [
-                    ImageIcon(
-                      MyIcons.clock.image,
-                      size: 18,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        taskController.addTime(context);
-                      },
-                      style: MyButtonStyle.textButtonAddEditTaskPage,
-                      child: Obx(
-                        () => Text(
-                          taskController.time.value,
-                          style: TextStyle(
-                              color: taskController.timeState.value
-                                  ? colorList[
-                                      taskController.categoryModel.value.color!]
-                                  : Colors.grey,
-                              fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  children: [
-                    ImageIcon(
-                      MyIcons.tags.image,
-                      size: 18,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      style: MyButtonStyle.textButtonAddEditTaskPage,
-                      child: Text(
-                        taskController.categoryModel.value.title!,
-                        style: TextStyle(
-                            color: colorList[
-                                taskController.categoryModel.value.color!],
-                            fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
+                (Dimens.medium * 2).height,
+                TaskNote(),
+                (Dimens.medium * 2).height,
+                TaskCategory(),
               ],
             ),
           ),
@@ -145,12 +85,44 @@ class _TaskPageState extends State<TaskPage> {
   }
 }
 
-// ignore: must_be_immutable
+class TaskCategory extends StatelessWidget {
+  TaskCategory({
+    super.key,
+  });
+
+  final TaskController taskController = Get.find<TaskController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ImageIcon(
+          MyIcons.tags.image,
+          size: 18,
+          color: Colors.grey,
+        ),
+        Dimens.medium.width,
+        TextButton(
+          onPressed: () {},
+          style: MyButtonStyle.textButtonAddEditTaskPage,
+          child: Text(
+            taskController.categoryModel.value.title!,
+            style: TextStyle(
+              color: colorList[taskController.categoryModel.value.color!],
+              fontSize: 13,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class TaskAlarm extends StatelessWidget {
   TaskAlarm({
     super.key,
   });
-  TaskListController taskController = Get.find<TaskListController>();
+  final TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -161,19 +133,17 @@ class TaskAlarm extends StatelessWidget {
           size: 18,
           color: Colors.grey,
         ),
-        const SizedBox(
-          width: 16,
-        ),
+        Dimens.medium.width,
         TextButton(
           onPressed: () {
-            taskController.addDate(context);
+            taskController.addAlarm(context);
           },
           style: MyButtonStyle.textButtonAddEditTaskPage,
           child: Obx(
             () => Text(
-              taskController.date.value,
+              taskController.alarm.value,
               style: TextStyle(
-                  color: taskController.dateState.value
+                  color: taskController.alarmState.value
                       ? colorList[taskController.categoryModel.value.color!]
                       : Colors.grey,
                   fontSize: 13),
@@ -185,13 +155,50 @@ class TaskAlarm extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
+class TaskNote extends StatelessWidget {
+  TaskNote({
+    super.key,
+  });
+  final TaskController taskController = Get.find<TaskController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ImageIcon(
+          MyIcons.note.image,
+          size: 18,
+          color: Colors.grey,
+        ),
+        Dimens.medium.width,
+        TextButton(
+          onPressed: () {
+            noteTaskDialog(context);
+          },
+          style: MyButtonStyle.textButtonAddEditTaskPage,
+          child: Obx(
+            () => Text(
+              taskController.note.value,
+              style: TextStyle(
+                color: taskController.noteState.value
+                    ? colorList[taskController.categoryModel.value.color!]
+                    : Colors.grey,
+                fontSize: 13,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class AddEditTaskBottomNavigation extends StatelessWidget {
   AddEditTaskBottomNavigation({
     super.key,
   });
-  var taskController = Get.find<TaskListController>();
-  var categoryController = Get.find<CategoryController>();
+  final TaskController taskController = Get.find<TaskController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +207,7 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          taskController.checkInputsForTask(
-              context, 'تمامی مقادیر باید پر باشند');
+          taskController.addTask();
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

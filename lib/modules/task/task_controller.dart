@@ -4,6 +4,7 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:toastification/toastification.dart';
 import 'package:todo_infinity_app/core/utils/api_constant.dart';
 import 'package:todo_infinity_app/core/utils/api_key.dart';
+import 'package:todo_infinity_app/core/utils/loading_dialog.dart';
 import 'package:todo_infinity_app/data/services/dio_service.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/dimens.dart';
@@ -12,31 +13,53 @@ import '../../../data/models/category_model.dart';
 import '../../../data/models/task_model.dart';
 import '../../../routes/pages.dart';
 
-class TaskListController extends GetxController {
-  Rx<CategoryModel> categoryModel = CategoryModel().obs;
+class TaskController extends GetxController {
   //? A model of the category that will be quantified
+  Rx<CategoryModel> categoryModel = CategoryModel().obs;
+
   TextEditingController taskEditingController = TextEditingController();
   //? A TextEditingController is for task title
+  TextEditingController noteTaskEditingController = TextEditingController();
   RxInt categoryId = RxInt(0);
 
   RxInt categoryIndex = RxInt(0);
   RxInt importanceIndex = RxInt(0);
   RxInt taskIndex = 0.obs;
+  RxInt taskId = RxInt(0);
   RxString category = 'دسته بندی'.obs;
-  RxString date = 'افزودن تاریخ'.obs;
-  RxString time = 'افزودن ساعت'.obs;
-  RxBool timeState = false.obs;
-  RxBool dateState = false.obs;
+  RxString alarm = 'افزودن هشدار'.obs;
+  RxString note = 'افزودن یادداشت'.obs;
+  RxBool alarmState = false.obs;
+  RxBool noteState = false.obs;
   RxBool editTaskState = false.obs;
   RxBool taskCompleteState = false.obs;
+  RxBool isOnList = false.obs;
 
-  getTodoList() async {
-    var response = await DioService()
-        .getMethod(ApiConstant.listOfCatTodo + categoryId.toString());
-    if (response.data[ApiKey.status] != 200) {
-    } else {
-      response.data[ApiKey.todos].forEach((task) {
-        if (task[ApiKey.status] == '0') {
+  addTask() async {
+    String url = ApiConstant.todoAddApi(taskEditingController.text, noteTaskEditingController.text,
+        '1', categoryId.value.toString(), alarm.value, '1');
+
+    var response = await DioService().postMethod(url);
+    if (response.data[ApiKey.success] == true) {
+      var id = response.data[ApiKey.data]['id'];
+      TaskModel model = TaskModel(
+          id: id,
+          subject: taskEditingController.text,
+          category: categoryId.value,
+          dueDate: alarm.value,
+          status: '1');
+      categoryModel.value.todoListOn!.add(model);
+      getTaskList();
+      Get.offNamed(PageName.taskListPage);
+    }
+  }
+
+  getTaskList() async {
+    String url = ApiConstant.categoriShowApi(categoryId.toString());
+    var response = await DioService().getMethod(url);
+    if (response.data[ApiKey.success] == true) {
+      response.data[ApiKey.data].forEach((task) {
+        if (task[ApiKey.status] == '1') {
           categoryModel.value.todoListOn!.add(TaskModel.fromJson(task));
         } else {
           categoryModel.value.todoListOff!.add(TaskModel.fromJson(task));
@@ -44,6 +67,22 @@ class TaskListController extends GetxController {
       });
       Get.toNamed(PageName.taskListPage);
     }
+  }
+
+  deleteTask() async {
+    loadingDialog();
+    String url = ApiConstant.todoDeleteApi(taskId.value.toString());
+    var response = await DioService().deleteMethod(url);
+    if (response.data[ApiKey.success] == true) {
+      categoryModel.update((val) {
+        if (isOnList.value) {
+          val!.todoListOn!.removeAt(taskIndex.value);
+        } else {
+          val!.todoListOff!.removeAt(taskIndex.value);
+        }
+      });
+    }
+    Get.back();
   }
 
   toastMessage(String message, BuildContext context) {
@@ -141,53 +180,28 @@ class TaskListController extends GetxController {
     );
   }
 
-  addTime(BuildContext context) async {
-    var picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (picked != null) {
-      time.value = '${picked.hour.toString()}:${picked.minute.toString()}';
-      timeState.value = true;
-    }
-  }
-
-  addDate(BuildContext context) async {
+  addAlarm(BuildContext context) async {
     String selectedDate = Jalali.now().toJalaliDateTime();
-    Jalali? picked = await showPersianDatePicker(
+    Jalali? datePicked = await showPersianDatePicker(
       context: context,
       initialDate: Jalali.now(),
       firstDate: Jalali(1400, 8),
       lastDate: Jalali(1450, 9),
     );
+    // var picked = await showTimePicker(
+    //   context: context,
+    //   initialTime: TimeOfDay.now(),
+    // );
 
-    if (picked != null && picked.toString() != selectedDate) {
-      date.value = picked.formatCompactDate();
-      dateState.value = true;
+    if (datePicked != null && datePicked.toString() != selectedDate) {
+      alarm.value = datePicked.formatCompactDate();
+      alarmState.value = true;
     }
-  }
-
-  checkInputsForTask(BuildContext context, String title) {
-    if (!dateState.value |
-        !timeState.value |
-        (taskEditingController.text == '')) {
-      toastification.showError(
-        context: context,
-        title: title,
-        autoCloseDuration: const Duration(seconds: 5),
-      );
-    } else {
-      editTaskState.value
-          ? taskCompleteState.value
-              ? editCompleteTask()
-              : editAllTask()
-          : addTask();
-      clearInputs();
-    }
-  }
-
-  void addTask() {
-    Get.offNamed(PageName.taskListPage);
+    // if (picked != null) {
+    //   alarm.value =
+    //       '${alarm.value} \n ${picked.hour.toString()}:${picked.minute.toString()}';
+    //   timeState.value = true;
+    // }
   }
 
   editAllTask() {
@@ -202,11 +216,9 @@ class TaskListController extends GetxController {
 
   //? clear all inputs in add edit task page
   clearInputs() {
-    dateState.value = false;
-    date.value = PersianStrings.addAlarm;
+    alarm.value = PersianStrings.addAlarm;
     editTaskState.value = false;
-    time.value = PersianStrings.importance;
-    timeState.value = false;
+    alarmState.value = false;
     taskEditingController.text = '';
   }
 
@@ -215,12 +227,10 @@ class TaskListController extends GetxController {
     taskIndex.value = index;
     taskCompleteState.value = false;
     editTaskState.value = true;
-    timeState.value = true;
-    dateState.value = true;
-    date.value = list[index].date!;
-    time.value = list[index].time!;
+    alarmState.value = true;
+    alarm.value = list[index].dueDate!;
     taskEditingController.text = list[index].subject!;
-    Get.toNamed(PageName.taskPage);
+    Get.toNamed(PageName.taskInfoPage);
   }
 
   //? go to edit task page for complete task
@@ -228,11 +238,9 @@ class TaskListController extends GetxController {
     taskIndex.value = index;
     taskCompleteState.value = true;
     editTaskState.value = true;
-    timeState.value = true;
-    dateState.value = true;
-    date.value = list[index].date!;
-    time.value = list[index].time!;
+    alarmState.value = true;
+    alarm.value = list[index].dueDate!;
     taskEditingController.text = list[index].subject!;
-    Get.toNamed(PageName.taskPage);
+    Get.toNamed(PageName.taskInfoPage);
   }
 }

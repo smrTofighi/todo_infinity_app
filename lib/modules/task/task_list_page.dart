@@ -6,36 +6,38 @@ import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
-import 'package:todo_infinity_app/modules/task_list/widgets/task_widget.dart';
+import 'package:todo_infinity_app/modules/task/widgets/task_widget.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 import '../../../core/values/strings.dart';
 import '../category/category_controller.dart';
 import '../widgets/floating_action_button.dart';
-import 'task_list_controller.dart';
+import 'task_controller.dart';
 import 'widgets/dropdown_task_list_widget.dart';
 
-// ignore: must_be_immutable
 class TaskListPage extends StatelessWidget {
   TaskListPage({super.key});
-  TaskListController taskController = Get.find<TaskListController>();
-  CategoryController categoryController = Get.find<CategoryController>();
+  final TaskController taskController = Get.find<TaskController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          Get.offAllNamed(PageName.categoryPage);
+          Get.offAllNamed(PageName.mainPage);
           return true;
         },
         child: Scaffold(
           backgroundColor: colorList[taskController.categoryModel.value.color!],
           body: Stack(
-            children: [TopSection(), BottomSection()],
+            children: [
+              TopSection(),
+              BottomSection(),
+            ],
           ),
           floatingActionButton: MyFloatingActionButton(
             onPressed: () {
-              Get.toNamed(PageName.taskPage);
+              Get.toNamed(PageName.taskInfoPage);
             },
             icon: FontAwesomeIcons.plus,
             color: colorList[taskController.categoryModel.value.color!],
@@ -46,13 +48,12 @@ class TaskListPage extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class BottomSection extends StatelessWidget {
   BottomSection({
     super.key,
   });
-  TaskListController taskController = Get.find<TaskListController>();
-  CategoryController categoryController = Get.find<CategoryController>();
+  final TaskController taskController = Get.find<TaskController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +65,12 @@ class BottomSection extends StatelessWidget {
         height: Get.height / 1.55,
 
         //TODO use double
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          borderRadius: const   BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          color: LightColors.card,
+          color: Theme.of(context).cardColor,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -95,7 +96,7 @@ class CompleteTaskList extends StatelessWidget {
     super.key,
   });
 
-  TaskListController taskController = Get.find<TaskListController>();
+  TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +127,16 @@ class CompleteTaskList extends StatelessWidget {
                 width: Dimens.infinity,
                 height:
                     taskController.categoryModel.value.todoListOff!.length * 75,
-                child: ListView.builder(
-                  itemCount:
-                      taskController.categoryModel.value.todoListOff!.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return TaskCompleteWidget(index: index);
-                  },
-                  shrinkWrap: true,
+                child: Obx(
+                  () => ListView.builder(
+                    itemCount:
+                        taskController.categoryModel.value.todoListOff!.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return TaskCompleteWidget(index: index);
+                    },
+                    shrinkWrap: true,
+                  ),
                 ),
               ),
       ),
@@ -147,7 +150,7 @@ class AllTaskList extends StatelessWidget {
     super.key,
   });
   CategoryController categoryController = Get.find<CategoryController>();
-  TaskListController taskController = Get.find<TaskListController>();
+  TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -176,15 +179,17 @@ class AllTaskList extends StatelessWidget {
                 width: Dimens.infinity,
                 height:
                     taskController.categoryModel.value.todoListOn!.length * 75,
-                child: ListView.builder(
-                  itemCount:
-                      taskController.categoryModel.value.todoListOn!.length,
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return TaskAllWidget(index: index);
-                  },
-                  shrinkWrap: true,
+                child: Obx(
+                  () => ListView.builder(
+                    itemCount:
+                        taskController.categoryModel.value.todoListOn!.length,
+                    scrollDirection: Axis.vertical,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return TaskAllWidget(index: index);
+                    },
+                    shrinkWrap: true,
+                  ),
                 ),
               ),
       ),
@@ -192,13 +197,12 @@ class AllTaskList extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class TopSection extends StatelessWidget {
   TopSection({
     super.key,
   });
-  CategoryController categoryController = Get.find<CategoryController>();
-  TaskListController taskController = Get.find<TaskListController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
+  final TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -247,12 +251,11 @@ class TopSection extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class MyAppBar extends StatelessWidget {
   MyAppBar({
     super.key,
   });
-  CategoryController categoryController = Get.find<CategoryController>();
+  final CategoryController categoryController = Get.find<CategoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -263,7 +266,7 @@ class MyAppBar extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Get.offAllNamed(PageName.categoryPage);
+              Get.offAllNamed(PageName.mainPage);
             },
             icon: ImageIcon(
               MyIcons.arrowRight.image,

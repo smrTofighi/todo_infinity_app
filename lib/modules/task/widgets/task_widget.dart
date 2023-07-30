@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/core/styles/box_decoration.dart';
+import 'package:todo_infinity_app/data/models/task_model.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
-import '../task_list_controller.dart';
+import '../task_controller.dart';
 
-// ignore: must_be_immutable
 class TaskAllWidget extends StatelessWidget {
   TaskAllWidget({super.key, required this.index});
   final int index;
-  TaskListController taskController = Get.find<TaskListController>();
+  final TaskController taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
+    List<TaskModel> taskList = taskController.categoryModel.value.todoListOn!;
     //? return widget
     return Slidable(
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
+          //? delete task slidable action
           SlidableAction(
             onPressed: (context) {
-              taskController.deleteAllTask(index, context);
+              taskController.isOnList.value = true;
+              taskController.taskId.value = taskList[index].id!;
+              taskController.taskIndex.value = index;
+              taskController.deleteTask();
             },
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.radius),
@@ -29,8 +35,9 @@ class TaskAllWidget extends StatelessWidget {
             backgroundColor: Colors.redAccent,
             foregroundColor: Colors.white,
             icon: Icons.delete,
-            //label: 'حذف',
           ),
+
+          //? edit task slidable action
           SlidableAction(
             onPressed: (context) {},
             borderRadius: BorderRadius.only(
@@ -40,32 +47,24 @@ class TaskAllWidget extends StatelessWidget {
             backgroundColor: LightColors.primary,
             foregroundColor: Colors.white,
             icon: Icons.edit,
-            //label: 'انجام شد',
           ),
         ],
       ),
       child: GestureDetector(
         onTap: () {},
-        onLongPress: () {
-          taskController.deleteAllTask(index, context);
-        },
+        onLongPress: () {},
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'time',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                  Text(
-                    'date',
-                    style: TextStyle(fontSize: 10, color: Colors.grey),
-                  ),
-                ],
+              //? dueDate of task
+              Center(
+                child: Text(
+                  taskList[index].dueDate!,
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
@@ -73,26 +72,19 @@ class TaskAllWidget extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
                 height: 45,
                 width: MediaQuery.of(context).size.width / 1.55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.radius),
-                  color: LightColors.card,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 5,
-                        spreadRadius: 0.2)
-                  ],
-                ),
+                decoration: AppBoxDecoration.taskWidgetDecoration,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'name',
-                      style: TextStyle(fontSize: 13),
+                    //? subject of task
+                    Text(
+                      taskList[index].subject!,
+                      style: const TextStyle(fontSize: 13),
                     ),
+                    //? status of task
                     Obx(
                       () => Checkbox(
-                        value: true,
+                        value: taskList[index].status! == '1' ? false : true,
                         onChanged: (value) {},
                         activeColor: colorList[
                             taskController.categoryModel.value.color!],
@@ -109,20 +101,23 @@ class TaskAllWidget extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class TaskCompleteWidget extends StatelessWidget {
   TaskCompleteWidget({Key? key, required this.index}) : super(key: key);
-  TaskListController taskController = Get.find<TaskListController>();
+  final TaskController taskController = Get.find<TaskController>();
   final int index;
   @override
   Widget build(BuildContext context) {
+    List<TaskModel> taskList = taskController.categoryModel.value.todoListOff!;
     return Slidable(
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
             onPressed: (context) {
-              taskController.deleteCompleteTask(index, context);
+              taskController.isOnList.value = false;
+              taskController.taskId.value = taskList[index].id!;
+              taskController.taskIndex.value = index;
+              taskController.deleteTask();
             },
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.radius),
@@ -131,12 +126,9 @@ class TaskCompleteWidget extends StatelessWidget {
             backgroundColor: Colors.redAccent,
             foregroundColor: Colors.white,
             icon: Icons.delete,
-            //label: 'حذف',
           ),
           SlidableAction(
-            onPressed: (context) {
-              taskController.goToEditCompleteTask(index, []);
-            },
+            onPressed: (context) {},
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Dimens.radius),
               bottomLeft: Radius.circular(Dimens.radius),
@@ -144,36 +136,23 @@ class TaskCompleteWidget extends StatelessWidget {
             backgroundColor: LightColors.primary,
             foregroundColor: Colors.white,
             icon: Icons.edit,
-            //label: 'انجام شد',
           ),
         ],
       ),
       child: GestureDetector(
-        onTap: () {
-          taskController.goToEditCompleteTask(index, []);
-        },
-        onLongPress: () {
-          taskController.deleteCompleteTask(index, context);
-        },
+        onTap: () {},
+        onLongPress: () {},
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    taskController
-                        .categoryModel.value.todoListOff![index].time!,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                  Text(
-                    taskController
-                        .categoryModel.value.todoListOff![index].date!,
-                    style: const TextStyle(fontSize: 10, color: Colors.grey),
-                  ),
-                ],
+              Center(
+                child: Text(
+                  taskController
+                      .categoryModel.value.todoListOff![index].dueDate!,
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
@@ -181,19 +160,11 @@ class TaskCompleteWidget extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
                 height: 45,
                 width: MediaQuery.of(context).size.width / 1.55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.radius),
-                  color: LightColors.card,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 5,
-                        spreadRadius: 0.2)
-                  ],
-                ),
+                decoration: AppBoxDecoration.taskWidgetDecoration,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    //? subject task
                     Text(
                       taskController
                           .categoryModel.value.todoListOff![index].subject!,
@@ -202,9 +173,11 @@ class TaskCompleteWidget extends StatelessWidget {
                           color: Colors.grey,
                           decoration: TextDecoration.lineThrough),
                     ),
+
+                    //? status task
                     Obx(
                       () => Checkbox(
-                        value: true,
+                        value: taskList[index].status == '2',
                         onChanged: (value) {},
                         activeColor: colorList[
                             taskController.categoryModel.value.color!],
