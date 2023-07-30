@@ -21,6 +21,9 @@ class CategoryController extends GetxController {
   RxBool isEditing = false.obs;
   RxBool deleting = false.obs;
   RxBool loading = false.obs;
+
+  
+
   @override
   void onInit() async {
     super.onInit();
@@ -114,7 +117,6 @@ class CategoryController extends GetxController {
 
   //? get category list and add in categoryList
   getCategoryList() async {
-  
     var response = await DioService().getMethod(ApiConstant.getCategoryListApi);
 
     if (response.data[ApiKey.success] == true) {
@@ -124,6 +126,5 @@ class CategoryController extends GetxController {
     } else {
       log('false');
     }
- 
   }
 }
