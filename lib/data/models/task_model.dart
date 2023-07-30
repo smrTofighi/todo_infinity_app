@@ -2,8 +2,8 @@ class TaskModel {
   int? id;
   String? subject;
   String? description;
-  String? date;
-  String? time;
+  String? dueDate;
+
   int? category;
   String? status;
 
@@ -11,8 +11,7 @@ class TaskModel {
     this.id,
     this.subject,
     this.description,
-    this.time,
-    this.date,
+    this.dueDate,
     this.category,
     this.status,
   });
@@ -22,8 +21,7 @@ class TaskModel {
     subject = element['subject'];
     description = element['description'];
     category = element['category'];
-    date = element['dueDate'];
+    dueDate = element['dueDate'];
     status = element['status'];
-    time = '';
   }
 }
