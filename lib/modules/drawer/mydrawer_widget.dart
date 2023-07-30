@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/modules/register/register_controller.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../core/values/icons.dart';
@@ -11,6 +12,7 @@ class MyDrawer extends StatelessWidget {
     super.key,
   });
   CategoryController categoryController = Get.find<CategoryController>();
+  RegisterController registerController = Get.find<RegisterController>();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,11 +44,17 @@ class MyDrawer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Switch(
-                    value: false,
-                    onChanged: (value) {},
-                    activeColor: LightColors.primary,
-                  )
+                  Obx(
+                    () => Switch.adaptive(
+                      value: registerController.isDarkMode.value,
+                      onChanged: (newValue) {
+                        registerController.isDarkMode.value = newValue;
+                        registerController.switchTheme(
+                            newValue ? ThemeMode.dark : ThemeMode.light);
+                      },
+                      activeColor: LightColors.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
