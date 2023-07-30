@@ -16,12 +16,13 @@ void bottomSheetCategory(BuildContext context) {
         padding: const EdgeInsets.symmetric(vertical: 6.0),
         width: width,
         height: height / 2.2,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            ),
-            color: LightColors.card),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+          color: Theme.of(context).cardColor,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -42,7 +43,8 @@ void bottomSheetCategory(BuildContext context) {
                 cursorColor: LightColors.primary,
                 maxLength: 20,
                 style: const TextStyle(fontSize: 14),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                  fillColor: Theme.of(context).cardColor,
                   hintText: 'نام دسته بندی',
                 ),
               ),
