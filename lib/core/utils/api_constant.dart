@@ -1,6 +1,7 @@
 class ApiConstant {
   ApiConstant._();
-  static const String host = 'http://127.0.0.1:8000/api/';
+  static const String host1 = 'http://10.0.2.2:8000/api/';
+  static const String host = 'http://localhost:8000/api/';
   static String registerApi(
       String name, String email, String password, String rePassword) {
     String url =
@@ -21,6 +22,23 @@ class ApiConstant {
 
   static String categoryDeleteApi(String id) {
     String url = '${host}category/$id';
+    return url;
+  }
+
+  static String categoriShowApi(String id) {
+    String url = '${host}category/$id';
+    return url;
+  }
+
+  static String todoAddApi(String subject, String description, String prioty,
+      String category, String dueDate, String status) {
+    String url =
+        '${host}todos?subject=$subject&description=$description&priority=$prioty&category=$category&dueDate=$dueDate&status=$status';
+    return url;
+  }
+
+  static String todoDeleteApi(String id) {
+    String url = '${host}todos/$id';
     return url;
   }
 
