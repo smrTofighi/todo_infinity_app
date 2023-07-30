@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo_infinity_app/core/utils/api_constant.dart';
@@ -8,6 +9,16 @@ import 'package:todo_infinity_app/data/services/dio_service.dart';
 import 'package:todo_infinity_app/routes/pages.dart';
 
 class RegisterController extends GetxController {
+  //? Changing Theme Mode
+  ThemeMode get theme => Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  RxBool isDarkMode = true.obs;
+
+  void switchTheme(ThemeMode newMode) {
+    Get.changeThemeMode(newMode);
+  }
+
+
+
   checkUserSignIn() async{
     final box = GetStorage();
     if (await box.read(StorageKeys.token) != null) {
