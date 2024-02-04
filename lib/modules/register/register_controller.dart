@@ -24,7 +24,7 @@ class RegisterController extends GetxController {
     if (await box.read(StorageKeys.token) != null) {
       Get.offNamed(PageName.mainPage);
     } else {
-      Get.offNamed(PageName.signInPage);
+      Get.offNamed(PageName.mainPage);
     }
   
   }

@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,12 @@ import 'core/themes/light_theme.dart';
 
 void main() async {
   await GetStorage.init();
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      builder: (context) => const MyApp(),
+      enabled: false,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,8 +28,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ToDo Infinity',
       debugShowCheckedModeBanner: false,
-      theme:lightTheme(),
-      darkTheme:darkTheme(),
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
       themeMode: Get.put(RegisterController()).theme,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

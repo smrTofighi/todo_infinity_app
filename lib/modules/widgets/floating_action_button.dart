@@ -30,6 +30,9 @@ class MyFloatingActionButton extends StatelessWidget {
         ],
       ),
       child: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
         onPressed: onPressed,
         backgroundColor: color,
         child: Icon(

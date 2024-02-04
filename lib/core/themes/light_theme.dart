@@ -5,6 +5,7 @@ import '../values/colors.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
+    useMaterial3: false,
     fontFamily: FontFamily.samim,
     primarySwatch: Colors.blue,
     brightness: Brightness.light,

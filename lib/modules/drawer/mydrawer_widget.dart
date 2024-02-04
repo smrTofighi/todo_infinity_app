@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/modules/register/register_controller.dart';
+import 'package:todo_infinity_app/routes/pages.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 import '../../../../core/values/icons.dart';
@@ -111,29 +112,34 @@ class MyDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 12.0),
-              width: Dimens.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      ImageIcon(
-                        MyIcons.power.image,
-                        size: 19,
-                        color: LightColors.primary,
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      const Text(
-                        'خروج',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
+            GestureDetector(
+              onTap: () {
+                Get.offAllNamed(PageName.signInPage);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 12.0),
+                width: Dimens.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        ImageIcon(
+                          MyIcons.power.image,
+                          size: 19,
+                          color: LightColors.primary,
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        const Text(
+                          'خروج',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

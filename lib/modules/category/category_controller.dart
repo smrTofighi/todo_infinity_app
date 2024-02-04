@@ -22,12 +22,10 @@ class CategoryController extends GetxController {
   RxBool deleting = false.obs;
   RxBool loading = false.obs;
 
-  
-
   @override
   void onInit() async {
     super.onInit();
-    await getCategoryList();
+    //await getCategoryList();
   }
 
   //? Toast Message
@@ -93,23 +91,24 @@ class CategoryController extends GetxController {
   addCategory() async {
     loadingDialog();
     String title = textEditingCategory.text;
-    String icon = iconIndex.value.toString();
-    String color = colorIndex.value.toString();
-    String url = ApiConstant.categoryAddApi(title, icon, color);
-    var response = await DioService().postMethod(url);
-    try {
-      if (response.data[ApiKey.success] == true) {
-        var id = response.data[ApiKey.data]['id'];
-        CategoryModel model = CategoryModel(
-            id: id,
-            title: title,
-            color: colorIndex.value,
-            icon: iconIndex.value);
-        categoryList.add(model);
-      }
-    } catch (error) {
-      log(error.toString());
-    }
+    int icon = iconIndex.value;
+    int color = colorIndex.value;
+    // String url = ApiConstant.categoryAddApi(title, icon, color);
+    // var response = await DioService().postMethod(url);
+    // try {
+    //   if (response.data[ApiKey.success] == true) {
+    //     var id = response.data[ApiKey.data]['id'];
+    //     CategoryModel model = CategoryModel(
+    //         id: id,
+    //         title: title,
+    //         color: colorIndex.value,
+    //         icon: iconIndex.value);
+    //     categoryList.add(model);
+    //   }
+    // } catch (error) {
+    //   log(error.toString());
+    // }
+    categoryList.add(CategoryModel(id: 1, title: title, icon: icon,color: color,todoListOn: [],todoListOff: []));
     clearInputs();
     Get.back();
     Get.back();

@@ -207,7 +207,8 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          taskController.addTask();
+          //taskController.addTask();
+          Get.back();
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

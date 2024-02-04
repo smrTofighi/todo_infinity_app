@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_infinity_app/gen/fonts.gen.dart';
+import 'package:todo_infinity_app/routes/pages.dart';
 
 import '../../../core/styles/text_styles.dart';
 import '../../../core/values/colors.dart';
@@ -112,6 +113,7 @@ class CategoryCard extends StatelessWidget {
     taskController.categoryIndex.value = index;
     var id = categoryList[index].id;
     taskController.categoryId.value = int.parse(id.toString());
-    taskController.getTaskList();
+    //taskController.getTaskList();
+    Get.toNamed(PageName.taskListPage);
   }
 }
