@@ -1,22 +1,20 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:todo_infinity_app/bindings/binding.dart';
+import 'package:todo_infinity_app/binding.dart';
+import 'package:todo_infinity_app/core/locator/locator.dart';
+import 'package:todo_infinity_app/core/routes/pages.dart';
+import 'package:todo_infinity_app/core/routes/routes.dart';
 import 'package:todo_infinity_app/core/themes/dark_theme.dart';
-import 'package:todo_infinity_app/modules/register/register_controller.dart';
-import 'package:todo_infinity_app/routes/pages.dart';
-import 'package:todo_infinity_app/routes/routes.dart';
+
 import 'core/themes/light_theme.dart';
 
 void main() async {
   await GetStorage.init();
+  setUpLocator();
   runApp(
-    DevicePreview(
-      builder: (context) => const MyApp(),
-      enabled: false,
-    ),
+    const MyApp(),
   );
 }
 
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme(),
       darkTheme: darkTheme(),
-      themeMode: Get.put(RegisterController()).theme,
+     
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -40,9 +38,9 @@ class MyApp extends StatelessWidget {
         Locale('fa', 'IR'), // Farsi, IRAN
       ],
       locale: const Locale('fa', 'IR'),
-      initialBinding: RegisterBinding(),
+      initialBinding: AuthBinding(),
       getPages: routes,
-      initialRoute: PageName.splashPage,
+      initialRoute: PageName.splashView,
     );
   }
 }

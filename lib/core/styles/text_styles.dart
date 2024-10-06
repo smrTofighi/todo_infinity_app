@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_infinity_app/core/gen/fonts.gen.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 
-import '../../gen/fonts.gen.dart';
-
 class LightTextStyles {
-  static TextStyle normall12(Color color) {
+  static TextStyle normal12(Color color) {
     return TextStyle(fontSize: 12, color: color);
   }
 
@@ -19,6 +18,9 @@ class LightTextStyles {
 
   static TextStyle normal10(Color color) {
     return TextStyle(fontSize: 10, color: color);
+  }
+  static TextStyle normal14(Color color) {
+    return TextStyle(fontSize: 14, color: color);
   }
 
   static const TextStyle categoryNameTitleBlack = TextStyle(

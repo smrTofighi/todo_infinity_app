@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../gen/fonts.gen.dart';
+import 'package:todo_infinity_app/core/gen/fonts.gen.dart';
+import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import '../values/colors.dart';
 
 ThemeData lightTheme() {
@@ -19,7 +19,7 @@ ThemeData lightTheme() {
       elevation: 0,
     ),
    
-    floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: LightColors.primaryBG,),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: LightColors.primaryBG,),
     inputDecorationTheme: inputTheme(),
     elevatedButtonTheme: elevatedButtonTheme(),
     bottomAppBarTheme: const BottomAppBarTheme(color: LightColors.white),
@@ -33,8 +33,8 @@ ThemeData lightTheme() {
 ElevatedButtonThemeData elevatedButtonTheme() {
   return ElevatedButtonThemeData(
     style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(LightColors.primary),
-        shape: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(LightColors.primary),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
@@ -45,6 +45,8 @@ ElevatedButtonThemeData elevatedButtonTheme() {
 InputDecorationTheme inputTheme() {
   return InputDecorationTheme(
     fillColor: Colors.white,
+    
+    errorStyle: LightTextStyles.normal10(LightColors.redText),
     contentPadding:
         const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0, right: 14),
     filled: true,

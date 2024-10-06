@@ -8,14 +8,14 @@ class AppBoxDecoration {
 
   static BoxDecoration whiteRadius = BoxDecoration(
     borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(Dimens.radius),
-      topRight: Radius.circular(Dimens.radius),
+      topLeft: Radius.circular(AppDimens.radius),
+      topRight: Radius.circular(AppDimens.radius),
     ),
     color: LightColors.backGround,
   );
 
   static BoxDecoration taskWidgetDecoration = BoxDecoration(
-    borderRadius: BorderRadius.circular(Dimens.radius),
+    borderRadius: BorderRadius.circular(AppDimens.radius),
     color: LightColors.card,
     boxShadow: [
       BoxShadow(

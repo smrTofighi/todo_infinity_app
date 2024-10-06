@@ -1,6 +1,6 @@
 class PersianStrings {
   //? regiter module
-  static const String doIt = 'انجام بده';
+  static const String doIt = 'تاسک بینهایت';
   static const String welcomeBack = 'باز هم خوش آمدید';
   static const String enterYourDetailsBelow = 'مشخصات خود را در زیر وارد کنید';
   static const String email = 'ایمیل';
@@ -15,8 +15,8 @@ class PersianStrings {
   static const String getStartedFree = 'رایگان شروع کنید';
   static const String freeForeverNoCostNeeded =
       'رایگان برای همیشه، بدون نیاز به هزینه';
-  static const String emailIsNotTrue = 'ایمیل صحیح نمی باشد';
-  static const String passwordCanNotIsEmpty = 'رمز عبور باید کامل باشد';
+  static const String emailFormatIsNotTrue = 'فرمت ایمیل صحیح نمیباشد';
+  static const String requiredText = 'اجباری';
   static const String emailCanNotIsEmpty = 'ایمیل باید کامل باشد';
   static const String nameCanNotIsEmpty = 'نام باید کامل باشد';
   //?

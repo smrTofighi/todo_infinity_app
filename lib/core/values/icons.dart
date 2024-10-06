@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:todo_infinity_app/gen/assets.gen.dart';
+import 'package:todo_infinity_app/core/gen/assets.gen.dart';
 
 class MyIcons {
   static Image menuVertical = Image.asset(Assets.icons.menuDotVertical.path);

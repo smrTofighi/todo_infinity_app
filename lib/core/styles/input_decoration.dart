@@ -4,7 +4,7 @@ import '../values/colors.dart';
 
 //TODO: refacotor this class
 
-class MyInputDecoration {
+class AppInputDecoration {
   static const InputDecoration textFieldAddEditTaskPage = InputDecoration(
     filled: true,
     fillColor: LightColors.backGround,

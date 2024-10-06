@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../modules/widgets/loading.dart';
+import 'package:todo_infinity_app/core/widgets/loading.dart';
 import '../values/colors.dart';
 
 loadingDialog() {

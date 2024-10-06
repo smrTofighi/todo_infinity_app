@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../gen/fonts.gen.dart';
+import 'package:todo_infinity_app/core/gen/fonts.gen.dart';
 import '../values/colors.dart';
 
 ThemeData darkTheme() {
@@ -28,8 +27,8 @@ ThemeData darkTheme() {
 ElevatedButtonThemeData elevatedButtonTheme() {
   return ElevatedButtonThemeData(
     style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(LightColors.primary),
-        shape: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(LightColors.primary),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
