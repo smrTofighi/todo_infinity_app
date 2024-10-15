@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:todo_infinity_app/core/gen/fonts.gen.dart';
-
 import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
+import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -16,7 +15,7 @@ class CategoryCard extends StatelessWidget {
     required this.colorIndex,
     required this.onTap,
     required this.totalTodos,
-    required this.percentage,
+    required this.percentage, required this.completedTodos,
   });
   final String title;
   final int index;
@@ -25,6 +24,7 @@ class CategoryCard extends StatelessWidget {
   final Function() onTap;
   final int totalTodos;
   final double percentage;
+  final int completedTodos;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class CategoryCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: Get.width / 2.2,
-          height: Get.height / 3.2,
+          width: AppDimens.sizeOfDevice(context).width / 2.2,
+          height: AppDimens.sizeOfDevice(context).height /4.2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: Theme.of(context).cardColor,
@@ -78,9 +78,11 @@ class CategoryCard extends StatelessWidget {
                       style: LightTextStyles.categoryNameTitleBlack,
                     ),
                     Text(
-                      '$totalTodos مأموریت',
+                      '${totalTodos - completedTodos} مأموریت',
                       style: const TextStyle(
                           fontSize: 14,
+                          color: Colors.black,
+    decoration: TextDecoration.none,
                           fontWeight: FontWeight.w300,
                           fontFamily: FontFamily.samim),
                     ),
@@ -94,7 +96,7 @@ class CategoryCard extends StatelessWidget {
                     bottomRight: Radius.circular(8)),
                 child: StepProgressIndicator(
                   totalSteps: totalTodos == 0 ? 1 : totalTodos,
-                  currentStep: percentage.toInt(),
+                  currentStep: completedTodos == 0 ? 0 : completedTodos,
                   size: 5,
                   padding: 0,
                   selectedGradientColor: LinearGradient(

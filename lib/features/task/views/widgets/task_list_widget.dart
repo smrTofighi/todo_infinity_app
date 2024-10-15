@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_infinity_app/core/routes/pages.dart';
+import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/widgets/task_single/task_widget.dart';
 import 'package:todo_infinity_app/data/models/todo_model.dart';
@@ -34,7 +38,7 @@ class TodoListWidget extends StatelessWidget {
             ? const NoTodoHere()
             : SizedBox(
                 width: AppDimens.infinity,
-                height: todoList.length * 75,
+                height: todoList.length * 80,
                 child: Obx(
                   () => ListView.builder(
                     itemCount: todoList.length,
@@ -42,7 +46,22 @@ class TodoListWidget extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return TodoItemWidget(
-                       todo: todoList[index],
+                        todo: todoList[index],
+                        color: colorList[taskVM.model.categoryModel.colorIndex],
+                        onChanged: (value) {
+                          final id = todoList[index].id;
+                          final bool isCompleted = value!;
+                          log("1 : $isCompleted");
+                          taskVM.updateIsCompleted(id, isCompleted);
+                        },
+                        onDelete: (_) {
+                          taskVM.deleteTodo(todoList[index]);
+                        },
+                        onEdit: (_){
+                          taskVM.isEditing(true);
+                          taskVM.setTodo(todoList[index], index);
+                          Get.toNamed(PageName.taskSingleView);
+                        },
                       );
                     },
                     shrinkWrap: true,

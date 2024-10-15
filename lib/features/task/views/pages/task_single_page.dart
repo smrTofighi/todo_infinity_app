@@ -1,20 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-
-import 'package:todo_infinity_app/core/styles/button_style.dart';
 import 'package:todo_infinity_app/core/styles/extensions.dart';
-import 'package:todo_infinity_app/core/styles/input_decoration.dart';
-import 'package:todo_infinity_app/core/utils/note_task_dialog.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
+import 'package:todo_infinity_app/features/main/main_category/view_model/main_category_view_model.dart';
 import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
+import 'package:todo_infinity_app/features/task/views/widgets/task_single_text_field.dart';
 import 'package:todo_infinity_app/features/task/views/widgets/todo_category.dart';
 
 import '../../../../../core/styles/text_styles.dart';
+import '../widgets/task_note_unactiove.dart';
 
 class TaskSinglePage extends StatefulWidget {
   const TaskSinglePage({super.key});
@@ -25,20 +24,23 @@ class TaskSinglePage extends StatefulWidget {
 
 class _TaskSinglePageState extends State<TaskSinglePage> {
   final TaskViewModel taskVM = Get.find<TaskViewModel>();
+  final MainCategoryViewModel categoryVM = Get.find<MainCategoryViewModel>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: LightColors.backGround,
         appBar: AppBar(
-          title: const Text(PersianStrings.newTask,
+          title: Text(taskVM.isEditing.value ? PersianStrings.editTask: PersianStrings.newTask,
               style: LightTextStyles.titleOfAppBar),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {
+              taskVM.clearSingleTodoAfterAdd();
               Get.back();
             },
             color: Colors.black,
@@ -55,24 +57,60 @@ class _TaskSinglePageState extends State<TaskSinglePage> {
             child: Column(
               children: [
                 Gap(AppDimens.high * 2),
-                TextFormField(
-                  maxLines: 3,
+                TaskSinglePageTextField(
+                  controller: taskVM.todoEditingController,
+                  categoryModel: taskVM.model.categoryModel,
+                  onChanged: (value) {},
                   validator: (value) {
-                    if(value!.isEmpty){
+                    if (value!.isEmpty) {
                       return PersianStrings.requiredText;
                     }
                     return null;
                   },
-                  controller: taskVM.todoEditingController,
-                  decoration: AppInputDecoration.textFieldAddEditTaskPage,
                 ),
-                const Divider(),
                 (AppDimens.medium * 2).height,
-                TaskAlarm(),
+                Obx(
+                  () => taskVM.isActiveNote.value
+                      ? TaskSinglePageTextField(
+                          controller: taskVM.descEditingController,
+                          categoryModel: taskVM.model.categoryModel,
+                          onChanged: (value) {
+                            taskVM.model.description(value);
+                          },
+                          validator: (value) {
+                            return null;
+                          },
+                          icon: GestureDetector(
+                            onTap: () => taskVM.isActiveNote(false),
+                            child: const Icon(Icons.close),
+                          ),
+                        )
+                          .animate(delay: const Duration(milliseconds: 250))
+                          .fade()
+                      : TaskNoteUnActive(),
+                ),
                 (AppDimens.medium * 2).height,
-                TaskNote(),
-                (AppDimens.medium * 2).height,
-                const TodoCategory(),
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'دسته بندی :',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ),
+                Gap(AppDimens.high),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TaskSinglePageCategory(
+                    title: taskVM.model.categoryModel.title,
+                    bgColor: colorList[taskVM.model.categoryModel.colorIndex],
+                    isEmpty: taskVM.model.categoryModel.title.isEmpty.obs,
+                    icon: iconList[taskVM.model.categoryModel.iconIndex].image,
+                    onTap: () {
+                      //taskCategoryBottomSheet(context);
+                    },
+                  ),
+                ),
+                Gap(AppDimens.high),
               ],
             ),
           ),
@@ -85,83 +123,16 @@ class _TaskSinglePageState extends State<TaskSinglePage> {
   }
 }
 
-class TaskAlarm extends StatelessWidget {
-  const TaskAlarm({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ImageIcon(
-          MyIcons.notification.image,
-          size: 18,
-          color: Colors.grey,
-        ),
-        AppDimens.medium.width,
-        TextButton(
-          onPressed: () {},
-          style: MyButtonStyle.textButtonAddEditTaskPage,
-          child: Text(
-            '',
-            style: TextStyle(color: Colors.grey, fontSize: 13),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class TaskNote extends StatelessWidget {
-  TaskNote({
-    super.key,
-  });
-  final TaskViewModel taskVM = Get.find<TaskViewModel>();
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => noteTaskDialog(context),
-      child: Obx(
-        () => Row(
-          children: [
-            ImageIcon(
-              MyIcons.note.image,
-              size: 18,
-              color: taskVM.model.description.value.isEmpty
-                  ? Colors.grey
-                  : colorList[taskVM.model.categoryModel.colorIndex],
-            ),
-            AppDimens.medium.width,
-            Text(
-              taskVM.model.description.value.isEmpty
-                  ? 'توضیحات'
-                  : taskVM.model.description.value,
-              style: TextStyle(
-                color: taskVM.model.description.value.isEmpty
-                    ? Colors.grey
-                    : colorList[taskVM.model.categoryModel.colorIndex],
-                fontSize: 13,
-                fontWeight: taskVM.model.description.value.isEmpty
-                    ? FontWeight.w300
-                    : FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class AddEditTaskBottomNavigation extends StatelessWidget {
   AddEditTaskBottomNavigation({
     super.key,
     required this.formKey,
   });
+
   final GlobalKey<FormState> formKey;
 
   final TaskViewModel taskVM = Get.find<TaskViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -170,7 +141,12 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           if (formKey.currentState!.validate()) {
-            taskVM.addTodo();
+            if(taskVM.isEditing.value){
+              taskVM.updateTodo();
+            }
+            else {
+              taskVM.addTodo();
+            }
             Get.back();
           }
         },
@@ -185,7 +161,8 @@ class AddEditTaskBottomNavigation extends StatelessWidget {
             colorList[taskVM.model.categoryModel.colorIndex],
           ),
         ),
-        child: const Text(
+        child: Text(
+          taskVM.isEditing.value ? PersianStrings.edit :
           PersianStrings.add,
         ),
       ),

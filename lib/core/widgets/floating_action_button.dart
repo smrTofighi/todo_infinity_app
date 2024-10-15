@@ -6,9 +6,11 @@ class MyFloatingActionButton extends StatelessWidget {
       {super.key,
       required this.onPressed,
       required this.color,
-      required this.icon});
+      required this.icon, required this.isLoading,
+      });
   final Function() onPressed;
   final Color color;
+  final bool isLoading;
   final IconData icon;
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,9 @@ class MyFloatingActionButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
         ),
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         backgroundColor: color,
-        child: Icon(
+        child: isLoading ? const CircularProgressIndicator( color: Colors.white, ) : Icon(
           icon,
           size: 20,
           color: LightColors.white,

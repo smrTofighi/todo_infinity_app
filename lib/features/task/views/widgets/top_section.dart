@@ -36,7 +36,8 @@ class TopSection extends StatelessWidget {
                     tag: 'tag ${taskListWM.model.categoryModel.title}',
                     child: ImageIcon(
                       iconList[taskListWM.model.categoryModel.iconIndex].image,
-                      color: colorList[taskListWM.model.categoryModel.colorIndex],
+                      color:
+                          colorList[taskListWM.model.categoryModel.colorIndex],
                     ),
                   ),
                 ),
@@ -47,9 +48,14 @@ class TopSection extends StatelessWidget {
                   taskListWM.model.categoryModel.title,
                   style: LightTextStyles.bigTextWhite,
                 ),
-                Text(
-                  ' ماموریت',
-                  style: const TextStyle(color: Colors.white),
+                GetBuilder<TaskViewModel>(
+                 
+                  builder: (vm) {
+                    return Text(
+                      '${vm.model.categoryModel.activeTodos?.length ?? 0} ماموریت',
+                      style: const TextStyle(color: Colors.white),
+                    );
+                  },
                 )
               ],
             ),

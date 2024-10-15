@@ -90,6 +90,7 @@ class MainView extends StatelessWidget {
             onPressed: () {
               categoryVM.showBottomSheetCategory(context);
             },
+            isLoading: false,
             icon: categoryVM.deleting.value
                 ? FontAwesomeIcons.trash
                 : FontAwesomeIcons.plus,

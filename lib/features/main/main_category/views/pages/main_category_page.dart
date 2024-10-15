@@ -4,6 +4,7 @@ import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
 import 'package:todo_infinity_app/core/widgets/loading.dart';
 import 'package:todo_infinity_app/core/widgets/main_category/catogry_card.dart';
+import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
 import '../../view_model/main_category_view_model.dart';
 
 // ignore: must_be_immutable
@@ -79,6 +80,8 @@ class CategoryList extends StatelessWidget {
                         colorIndex: vm.model.categoryList[index].colorIndex,
                         totalTodos: vm.model.categoryList[index].totalTodos,
                         percentage: vm.model.categoryList[index].percentage,
+                        completedTodos:
+                            vm.model.categoryList[index].completedTodos,
                         onTap: () {
                           vm.goToTaskListPage(vm.model.categoryList[index]);
                         },
@@ -95,6 +98,8 @@ class CategoryList extends StatelessWidget {
                       colorIndex: vm.model.categoryList[index].colorIndex,
                       totalTodos: vm.model.categoryList[index].totalTodos,
                       percentage: vm.model.categoryList[index].percentage,
+                      completedTodos:
+                          vm.model.categoryList[index].completedTodos,
                       onTap: () {
                         vm.goToTaskListPage(vm.model.categoryList[index]);
                       },

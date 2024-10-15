@@ -1,54 +1,55 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/core/styles/extensions.dart';
-import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
-import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
 
-class TodoCategory extends StatelessWidget {
-  const TodoCategory({
-    super.key,
-  });
+
+class TaskSinglePageCategory extends StatelessWidget {
+  const TaskSinglePageCategory(
+      {super.key,
+      required this.title,
+      required this.bgColor,
+      required this.isEmpty,
+      required this.icon,
+      required this.onTap});
+
+  final String title;
+  final Color bgColor;
+  final RxBool isEmpty;
+  final ImageProvider icon;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TaskViewModel>(
-      builder: (taskVM) {
-        return GestureDetector(
-          onTap:  (){},
-          child: Row(
-            children: [
-              ImageIcon(
-                taskVM.model.categoryModel.title.isEmpty
-                    ? MyIcons.tags.image
-                    : iconList[taskVM.model.categoryModel.iconIndex].image,
-                size: 18,
-                color: taskVM.model.categoryModel.title.isEmpty
-                    ? Colors.grey
-                    : colorList[taskVM.model.categoryModel.colorIndex],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        width: 100,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppDimens.radius),
+          color: isEmpty.value ? Colors.transparent : bgColor.withOpacity(0.8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ImageIcon(
+              isEmpty.value ? MyIcons.tags.image : icon,
+              size: 20,
+              color: isEmpty.value ? Colors.grey : Colors.white,
+            ),
+            Text(
+              isEmpty.value ? 'انتخاب دسته بندی' : title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
+                color: isEmpty.value ? Colors.grey : Colors.white,
               ),
-              AppDimens.medium.width,
-              Text(
-                  taskVM.model.categoryModel.title.isEmpty
-                      ? 'انتخاب دسته بندی'
-                      : taskVM.model.categoryModel.title,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: taskVM.model.categoryModel.title.isEmpty
-                        ? FontWeight.w300
-                        : FontWeight.bold,
-                    color: taskVM.model.categoryModel.title.isEmpty
-                        ? Colors.grey
-                        : colorList[taskVM.model.categoryModel.colorIndex],
-                  ),
-                ),
-              
-            ],
-          ),
-        );
-      },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -20,6 +20,42 @@ class MainCategoryModel {
   final StorageService _storageService = locator<StorageService>();
   List<CategoryModel> categoryList = [];
   String errorMessage = '';
+
+  Future<Either<Failure, void>> deleteCategory(
+      {required String categoryId, required int index}) async {
+    try {
+      if (await _connectionChecker.hasConnection) {
+        await _appwriteProvider.databases!.deleteDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.categoryCollectionId,
+          documentId: categoryId,
+        );
+        final todosResponse = await _appwriteProvider.databases!.listDocuments(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.todoCollectionId,
+          queries: [
+            Query.equal('categoryId', categoryId),
+          ],
+        );
+        for (var todo in todosResponse.documents) {
+          await _appwriteProvider.databases!.deleteDocument(
+            databaseId: AppwriteConfig.databaseId,
+            collectionId: AppwriteConfig.todoCollectionId,
+            documentId: todo.$id,
+          );
+        }
+        categoryList.removeAt(index);
+        return right(null);
+      } else {
+        return left(Failure('Check Your Internet Connection'));
+      }
+    } on AppwriteException catch (err) {
+      return left(Failure(err.message!));
+    } on ServerException catch (err) {
+      return left(Failure(err.toString()));
+    }
+  }
+
   Future<Either<Failure, List<CategoryModel>>> getCategory(
       {required String userId}) async {
     try {

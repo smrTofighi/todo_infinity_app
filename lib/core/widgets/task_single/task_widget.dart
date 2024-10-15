@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/styles/box_decoration.dart';
+import 'package:todo_infinity_app/core/utils/datetime_formtting.dart';
 import 'package:todo_infinity_app/data/models/todo_model.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/dimens.dart';
 
 class TodoItemWidget extends StatelessWidget {
-  const TodoItemWidget({super.key, required this.todo,});
+  const TodoItemWidget({
+    super.key,
+    required this.todo,
+    required this.onChanged,
+    required this.color, required this.onDelete, required this.onEdit,
+  });
 
   final TodoModel todo;
+  final Color color;
+  final Function(BuildContext?) onDelete;
+  final Function(BuildContext?) onEdit;
+  final ValueChanged<bool?> onChanged;
 
   @override
   Widget build(BuildContext context) {
-
     //? return widget
     return Slidable(
       startActionPane: ActionPane(
@@ -21,7 +32,7 @@ class TodoItemWidget extends StatelessWidget {
         children: [
           //? delete task slidable action
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: onDelete,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(AppDimens.radius),
               bottomRight: Radius.circular(AppDimens.radius),
@@ -33,7 +44,7 @@ class TodoItemWidget extends StatelessWidget {
 
           //? edit task slidable action
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: onEdit,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(AppDimens.radius),
               bottomLeft: Radius.circular(AppDimens.radius),
@@ -49,47 +60,34 @@ class TodoItemWidget extends StatelessWidget {
         onLongPress: () {},
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              //? dueDate of task
-              Center(
-                child: Text(
-                 '',
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
-                  textAlign: TextAlign.center,
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(4, 4, 12, 4),
+            margin: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
+            decoration: AppBoxDecoration.taskWidgetDecoration,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //? subject of task
+                Text(
+                  todo.title,
+                  style: TextStyle(
+                    color: todo.isComplete ? Colors.grey : Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    decoration:
+                        todo.isComplete ? TextDecoration.lineThrough : null,
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(4, 0, 12, 0),
-                margin:
-                const EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
-                height: 45,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 1.55,
-                decoration: AppBoxDecoration.taskWidgetDecoration,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //? subject of task
-                    Text(
-                     todo.title,
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    //? status of task
-                    Checkbox(
-                      value: todo.isComplete,
-                      onChanged: (value) {},
-                    ),
-
-                  ],
+                //? status of task
+                Checkbox(
+                  activeColor: color,
+                  value: todo.isComplete,
+                  onChanged: onChanged,
                 ),
-              )
-            ],
+              ],
+            ),
           ),
-        ),
+        ).animate(delay: const Duration(milliseconds: 250)).fade().move(),
       ),
     );
   }

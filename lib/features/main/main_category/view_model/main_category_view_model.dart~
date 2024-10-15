@@ -82,10 +82,10 @@ class MainCategoryViewModel extends GetxController {
     );
   }
 
-  void goToTaskListPage(CategoryModel category,) {
+  void goToTaskListPage(CategoryModel category, int index) {
 
     final TaskViewModel taskVM = Get.put(TaskViewModel());
-    taskVM.setCategory(category);
+    taskVM.setCategory(category, index);
     taskVM.getTodos();
     Get.toNamed(PageName.taskListView);
   }

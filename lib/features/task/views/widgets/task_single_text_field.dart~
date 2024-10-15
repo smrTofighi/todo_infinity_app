@@ -5,18 +5,16 @@ import '../../../../core/values/dimens.dart';import '../../../../data/models/cat
 
 class TaskSinglePageTextField extends StatelessWidget {
   const TaskSinglePageTextField(
-      {super.key, required this.controller, required this.categoryModel, this.icon = const SizedBox(),required this.validator, required this.onChanged});
+      {super.key, required this.controller, required this.categoryModel, this.icon = const SizedBox(),required this.validator});
 
   final TextEditingController controller;
   final CategoryModel categoryModel;
   final String? Function(String?) validator;
-  final Function(String) onChanged;
   final Widget icon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       validator:validator,
-      onChanged:onChanged ,
       cursorColor: colorList[categoryModel.colorIndex],
       controller: controller,
       decoration: AppInputDecoration.textFieldAddEditTaskPage.copyWith(
