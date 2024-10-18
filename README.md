@@ -1,13 +1,13 @@
 # todo_infinity_app
 
 <p align="center">
-  <img src="https://drive.google.com/uc?id=1pbKfpDgZVtL9pCSUqTu2EbYfVd8fXxv3" width="200" />
-  <img src="https://drive.google.com/uc?id=1M-dT3wvOtdT6h-ML_PayFHAyWoEDSWcN" width="200" />
+  <img src="https://drive.google.com/uc?id=1pbKfpDgZVtL9pCSUqTu2EbYfVd8fXxv3" width="300" />
+  <img src="https://drive.google.com/uc?id=1M-dT3wvOtdT6h-ML_PayFHAyWoEDSWcN" width="300" />
 </p>
 
 <p align="center">
-  <img src="https://drive.google.com/uc?id=1MxTI7TefMQGF1YEVZy9PbGaCHN-_AsJv" width="200" />
-  <img src="https://drive.google.com/uc?id=1vepzXI0l3hPaiuU1o4-GlOPfF9AIbFsA" width="200" />
+  <img src="https://drive.google.com/uc?id=1MxTI7TefMQGF1YEVZy9PbGaCHN-_AsJv" width="300" />
+  <img src="https://drive.google.com/uc?id=1vepzXI0l3hPaiuU1o4-GlOPfF9AIbFsA" width="300" />
 </p>
 
 A new Flutter project.
