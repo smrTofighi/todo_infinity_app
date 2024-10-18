@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:todo_infinity_app/binding.dart';
 import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/features/main/main_page.dart';
+import 'package:todo_infinity_app/features/profile/views/pages/profile_page.dart';
 import 'package:todo_infinity_app/features/search/search_view.dart';
 import 'package:todo_infinity_app/features/splash/splash_page.dart';
 import 'package:todo_infinity_app/features/task/views/pages/task_single_page.dart';
@@ -19,24 +20,29 @@ List<GetPage> routes = [
     page: () => const LogInPage(),
   ),
   GetPage(
-    name: PageName.splashView,
+    name: PageName.splash,
     page: () => const SplashPage(),
   ),
   GetPage(
     name: PageName.main,
-    page: () => MainView(),
-    bindings: [CategoryBinding(), TaskBinding()],
+    page: () => MainPage(),
+    bindings: [CategoryBinding(), TaskBinding(), ReportBinding()],
   ),
   GetPage(
-      name: PageName.taskListView,
+      name: PageName.taskList,
       page: () => TaskListPage(),
       binding: TaskBinding()),
   GetPage(
-    name: PageName.taskSingleView,
+    name: PageName.taskSingle,
     page: () => const TaskSinglePage(),
   ),
   GetPage(
     name: PageName.search,
     page: () => const SearchView(),
+  ),
+  GetPage(
+    name: PageName.profile,
+    page: () =>  ProfilePage(),
+    binding: ProfileBinding()
   ),
 ];

@@ -9,22 +9,22 @@ ThemeData lightTheme() {
     fontFamily: FontFamily.samim,
     primarySwatch: Colors.blue,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: LightColors.backGround,
+    scaffoldBackgroundColor: AppColors.backGround,
     shadowColor: Colors.black.withOpacity(0.1),
-    splashColor: LightColors.primaryBG,
-    cardColor: LightColors.card,
+    splashColor: AppColors.primaryBG,
+    cardColor: AppColors.card,
     appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(color: LightColors.black),
-      backgroundColor: LightColors.backGround,
+      iconTheme: IconThemeData(color: AppColors.black),
+      backgroundColor: AppColors.backGround,
       elevation: 0,
     ),
    
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: LightColors.primaryBG,),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: AppColors.primaryBG,),
     inputDecorationTheme: inputTheme(),
     elevatedButtonTheme: elevatedButtonTheme(),
-    bottomAppBarTheme: const BottomAppBarTheme(color: LightColors.white),
+    bottomAppBarTheme: const BottomAppBarTheme(color: AppColors.white),
     iconTheme: const IconThemeData(
-      color: LightColors.black
+      color: AppColors.black
 
     )
   );
@@ -33,7 +33,7 @@ ThemeData lightTheme() {
 ElevatedButtonThemeData elevatedButtonTheme() {
   return ElevatedButtonThemeData(
     style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(LightColors.primary),
+        backgroundColor: WidgetStateProperty.all(AppColors.primary),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
@@ -46,12 +46,12 @@ InputDecorationTheme inputTheme() {
   return InputDecorationTheme(
     fillColor: Colors.white,
     
-    errorStyle: LightTextStyles.normal10(LightColors.redText),
+    errorStyle: AppTextStyles.normal10(AppColors.redText),
     contentPadding:
         const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0, right: 14),
     filled: true,
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: LightColors.primary),
+      borderSide: const BorderSide(color: AppColors.primary),
       borderRadius: BorderRadius.circular(6),
     ),
     enabledBorder: OutlineInputBorder(

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:todo_infinity_app/features/task/views/widgets/task_list_widget.dart';
 
 import '../../../../core/values/colors.dart';
-import '../../../../core/widgets/loading.dart';
+import '../../../main/widgets/loading.dart';
 import '../../view_model/task_view_model.dart';
 
 class BottomSection extends StatelessWidget {

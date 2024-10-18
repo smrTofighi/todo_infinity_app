@@ -8,17 +8,17 @@ class AppInputDecoration {
   AppInputDecoration._();
   static  InputDecoration textFieldAddEditTaskPage = InputDecoration(
     filled: true,
-    fillColor: LightColors.backGround,
+    fillColor: AppColors.backGround,
     labelText: 'چه برنامه ای داری؟',
     floatingLabelStyle: const TextStyle(
-      color: LightColors.grey,
+      color: AppColors.grey,
     ),
     labelStyle: const TextStyle(fontSize: 14),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppDimens.radius)
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: LightColors.primary),
+      borderSide: const BorderSide(color: AppColors.primary),
       borderRadius: BorderRadius.circular(AppDimens.radius)
     ),
     enabledBorder: OutlineInputBorder(
@@ -33,17 +33,17 @@ class AppInputDecoration {
 
   static InputDecoration textFieldDescription = InputDecoration(
     filled: true,
-    fillColor: LightColors.backGround,
+    fillColor: AppColors.backGround,
     labelText: 'توضیحات',
     floatingLabelStyle: const TextStyle(
-      color: LightColors.grey,
+      color: AppColors.grey,
     ),
     labelStyle: const TextStyle(fontSize: 14),
     border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppDimens.radius)
     ),
     focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: LightColors.primary),
+        borderSide: const BorderSide(color: AppColors.primary),
         borderRadius: BorderRadius.circular(AppDimens.radius)
     ),
     enabledBorder: OutlineInputBorder(

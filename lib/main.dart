@@ -6,7 +6,6 @@ import 'package:todo_infinity_app/binding.dart';
 import 'package:todo_infinity_app/core/locator/locator.dart';
 import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/core/routes/routes.dart';
-import 'package:todo_infinity_app/core/themes/dark_theme.dart';
 
 import 'core/themes/light_theme.dart';
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'ToDo Infinity',
       debugShowCheckedModeBanner: false,
       theme: lightTheme(),
-      darkTheme: darkTheme(),
+    
      
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('fa', 'IR'),
       initialBinding: AuthBinding(),
       getPages: routes,
-      initialRoute: PageName.splashView,
+      initialRoute: PageName.splash,
     );
   }
 }

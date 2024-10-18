@@ -103,10 +103,10 @@ class MainCategoryModel {
           );
           final int total = totalTodos.total;
           final int completed = completedTodos.total;
-          final double percentage = total > 0 ? (completed / total) * 100 : 0;
+          //final double percentage = total > 0 ? (completed / total) * 100 : 0;
           category.totalTodos = total;
           category.completedTodos = completed;
-          log('total: $total completed: $completed percentage: $percentage');
+        
         }
         return right(categoryList);
       } else {

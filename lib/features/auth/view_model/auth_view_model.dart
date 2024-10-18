@@ -9,7 +9,6 @@ import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/data/services/storage_service.dart';
 import 'package:todo_infinity_app/core/utils/custom_snackbar.dart';
 import 'package:todo_infinity_app/features/auth/model/auth_model.dart';
-import 'package:todo_infinity_app/features/main/main_category/view_model/main_category_view_model.dart';
 
 class AuthViewModel extends GetxController {
   late AuthModel _model;

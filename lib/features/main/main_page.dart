@@ -1,24 +1,19 @@
-
-import 'dart:developer';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/gen/assets.gen.dart';
-import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
-import 'package:todo_infinity_app/core/widgets/mydrawer_widget.dart';
+import 'package:todo_infinity_app/features/main/widgets/mydrawer_widget.dart';
 import 'package:todo_infinity_app/features/main/main_category/views/pages/main_category_page.dart';
 import 'package:todo_infinity_app/features/main/main_category/view_model/main_category_view_model.dart';
-import 'package:todo_infinity_app/features/main/main_report/report_page.dart';
-import '../../core/values/icons.dart';
-import '../../core/widgets/floating_action_button.dart';
+import 'package:todo_infinity_app/features/main/main_report/view_model/main_report_view_model.dart';
+import 'package:todo_infinity_app/features/main/main_report/views/page/report_page.dart';
+import 'widgets/floating_action_button.dart';
 
 // ignore: must_be_immutable
-class MainView extends StatelessWidget {
-  MainView({super.key});
+class MainPage extends StatelessWidget {
+  MainPage({super.key});
   final GlobalKey<ScaffoldState> _ourKey = GlobalKey<ScaffoldState>();
   final RxInt activeIndex = 0.obs;
   final MainCategoryViewModel categoryVM = Get.find<MainCategoryViewModel>();
@@ -45,40 +40,18 @@ class MainView extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () {
-                  var list = [];
-                
-                  
-                  Map<String, dynamic> categories = {'categories' : list};
-              Clipboard.setData(ClipboardData(text: categories.toString()));
-              log(categories.toString());
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('رشته کپی شد!')),
-              );
-                },
-                icon:const Icon(Icons.copy)
-              ),
-              IconButton(
-                onPressed: () {
-                  Get.toNamed(PageName.search);
-                },
-                icon: ImageIcon(
-                  MyIcons.search.image,
-                  color: Theme.of(context).appBarTheme.iconTheme!.color,
-                ),
-              ),
+              
             ],
           ),
         ),
       ),
-      drawer: MyDrawer(),
+      drawer: const AppDrawer(),
       body: SafeArea(
         child: Obx(
           () => IndexedStack(
             index: activeIndex.value,
-            children: const [
-              MainCategoryPage(),
+            children: [
+              const MainCategoryPage(),
               ReportPage(),
             ],
           ),
@@ -94,12 +67,10 @@ class MainView extends StatelessWidget {
             icon: categoryVM.deleting.value
                 ? FontAwesomeIcons.trash
                 : FontAwesomeIcons.plus,
-            color: categoryVM.deleting.value ? Colors.red : LightColors.primary,
+            color: categoryVM.deleting.value ? Colors.red : AppColors.primary,
           ),
         ),
-        onAcceptWithDetails: (index) {
-         
-        },
+        onAcceptWithDetails: (index) {},
       ),
       bottomNavigationBar: Obx(
         () => AnimatedBottomNavigationBar(
@@ -108,11 +79,14 @@ class MainView extends StatelessWidget {
             FontAwesomeIcons.chartColumn,
           ],
           inactiveColor: Theme.of(context).iconTheme.color,
-          activeColor: LightColors.primary,
+          activeColor: AppColors.primary,
           backgroundColor: Theme.of(context).bottomAppBarTheme.color,
           activeIndex: activeIndex.value,
           onTap: (index) {
             activeIndex.value = index;
+            if (index == 1) {
+              Get.find<MainReportViewModel>().getCategoryAndTodos(context);
+            }
           },
           gapLocation: GapLocation.center,
         ),

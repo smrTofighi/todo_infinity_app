@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
-import 'package:todo_infinity_app/core/widgets/task_single/task_widget.dart';
+import 'package:todo_infinity_app/features/task/views/widgets/task_widget.dart';
 import 'package:todo_infinity_app/data/models/todo_model.dart';
 import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
 import 'package:todo_infinity_app/features/task/views/widgets/no_todo_here.dart';
@@ -60,7 +60,7 @@ class TodoListWidget extends StatelessWidget {
                         onEdit: (_){
                           taskVM.isEditing(true);
                           taskVM.setTodo(todoList[index], index);
-                          Get.toNamed(PageName.taskSingleView);
+                          Get.toNamed(PageName.taskSingle);
                         },
                       );
                     },

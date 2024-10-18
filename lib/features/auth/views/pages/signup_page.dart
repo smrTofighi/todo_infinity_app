@@ -7,9 +7,9 @@ import 'package:todo_infinity_app/core/styles/box_decoration.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/core/widgets/loading.dart';
+import 'package:todo_infinity_app/features/auth/views/widgets/auth_tile.dart';
+import 'package:todo_infinity_app/features/main/widgets/loading.dart';
 import 'package:todo_infinity_app/features/auth/view_model/auth_view_model.dart';
-import 'package:todo_infinity_app/features/auth/views/pages/login_page.dart';
 import 'package:todo_infinity_app/features/auth/views/widgets/auth_top_section.dart';
 import 'package:todo_infinity_app/features/auth/views/widgets/custom_textfield.dart';
 
@@ -22,7 +22,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: LightColors.primaryBG,
+        backgroundColor: AppColors.primaryBG,
         body: Stack(
           children: [
             BottomSection(),

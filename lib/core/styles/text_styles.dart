@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_infinity_app/core/gen/fonts.gen.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 
-class LightTextStyles {
+class AppTextStyles {
   static TextStyle normal12(Color color) {
     return TextStyle(fontSize: 12, color: color);
   }
@@ -43,9 +43,9 @@ class LightTextStyles {
   );
 
   static const TextStyle importanceTextTaskListPageComplete =
-      TextStyle(fontSize: 11, color: LightColors.grey);
+      TextStyle(fontSize: 11, color: AppColors.grey);
   static const TextStyle importanceTextTaskListPageAll =
-      TextStyle(fontSize: 11, color: LightColors.black);
+      TextStyle(fontSize: 11, color: AppColors.black);
 
   static const TextStyle titleOfAppBar = TextStyle(
     color: Colors.black,

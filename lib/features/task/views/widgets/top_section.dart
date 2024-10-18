@@ -30,7 +30,7 @@ class TopSection extends StatelessWidget {
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: LightColors.card,
+                    color: AppColors.card,
                   ),
                   child: Hero(
                     tag: 'tag ${taskListWM.model.categoryModel.title}',
@@ -46,7 +46,7 @@ class TopSection extends StatelessWidget {
                 ),
                 Text(
                   taskListWM.model.categoryModel.title,
-                  style: LightTextStyles.bigTextWhite,
+                  style: AppTextStyles.bigTextWhite,
                 ),
                 GetBuilder<TaskViewModel>(
                  

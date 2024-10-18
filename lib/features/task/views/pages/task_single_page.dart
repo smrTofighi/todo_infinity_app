@@ -31,10 +31,10 @@ class _TaskSinglePageState extends State<TaskSinglePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: LightColors.backGround,
+        backgroundColor: AppColors.backGround,
         appBar: AppBar(
           title: Text(taskVM.isEditing.value ? PersianStrings.editTask: PersianStrings.newTask,
-              style: LightTextStyles.titleOfAppBar),
+              style: AppTextStyles.titleOfAppBar),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.transparent,

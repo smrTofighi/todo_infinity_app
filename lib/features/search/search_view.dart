@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_infinity_app/core/widgets/search/search_task_widget.dart';
+import 'package:todo_infinity_app/features/search/search_task_widget.dart';
 import '../../../core/styles/text_styles.dart';
 import '../../../core/values/colors.dart';
 import '../../../core/values/dimens.dart';
@@ -12,9 +12,9 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColors.backGround,
+      backgroundColor: AppColors.backGround,
       appBar: AppBar(
-        title: const Text('جستجو', style: LightTextStyles.titleOfAppBar),
+        title: const Text('جستجو', style: AppTextStyles.titleOfAppBar),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,

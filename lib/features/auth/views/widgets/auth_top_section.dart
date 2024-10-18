@@ -28,7 +28,7 @@ class AuthTopSection extends StatelessWidget {
             children: [
               Text(
                 message,
-                style: LightTextStyles.normal12(LightColors.white54Text),
+                style: AppTextStyles.normal12(AppColors.white54Text),
               ),
               AppDimens.small.width,
               TextButton(
@@ -46,7 +46,7 @@ class AuthTopSection extends StatelessWidget {
           (AppDimens.high * 4).height,
           Text(
             PersianStrings.doIt,
-            style: LightTextStyles.bold28Fanavari(LightColors.whiteText),
+            style: AppTextStyles.bold28Fanavari(AppColors.whiteText),
           ).animate(delay: 350.milliseconds).fadeIn(),
         ],
       ),

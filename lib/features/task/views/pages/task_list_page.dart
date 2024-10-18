@@ -5,7 +5,7 @@ import 'package:todo_infinity_app/core/routes/pages.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
 import 'package:todo_infinity_app/features/task/views/widgets/top_section.dart';
-import '../../../../core/widgets/floating_action_button.dart';
+import '../../../main/widgets/floating_action_button.dart';
 import '../widgets/bottom_sheet.dart';
 
 class TaskListPage extends StatelessWidget {
@@ -28,7 +28,7 @@ class TaskListPage extends StatelessWidget {
           () =>  MyFloatingActionButton(
             onPressed: () {
               taskVM.isEditing(false);
-              Get.toNamed(PageName.taskSingleView);
+              Get.toNamed(PageName.taskSingle);
             },
             icon: FontAwesomeIcons.plus,
             isLoading: taskVM.isLoadingUpdate.value,

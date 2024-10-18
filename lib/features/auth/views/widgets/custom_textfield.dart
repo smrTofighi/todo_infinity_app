@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         keyboardType: type,
-        style: LightTextStyles.normal14(LightColors.blackText),
+        style: AppTextStyles.normal14(AppColors.blackText),
         validator: validator,
         decoration: InputDecoration(
           hintText: hint,

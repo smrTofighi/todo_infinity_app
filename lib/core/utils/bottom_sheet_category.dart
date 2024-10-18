@@ -6,10 +6,10 @@ import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/icons.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/core/widgets/loading.dart';
+import 'package:todo_infinity_app/features/main/widgets/loading.dart';
 import 'package:todo_infinity_app/features/auth/views/widgets/custom_textfield.dart';
 import 'package:todo_infinity_app/features/main/main_category/view_model/main_category_view_model.dart';
-import '../widgets/main_category/color_widget.dart';
+import '../../features/main/main_category/views/widgets/color_widget.dart';
 
 void bottomSheetCategory(
   String title,
@@ -22,8 +22,8 @@ void bottomSheetCategory(
   RxBool emailValidate = false.obs;
   final RxInt colorIndex = 0.obs;
   final RxInt iconIndex = 0.obs;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _categoryController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController categoryController = TextEditingController();
   Get.bottomSheet(
     Container(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -37,7 +37,7 @@ void bottomSheetCategory(
         color: Theme.of(context).cardColor,
       ),
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -46,13 +46,13 @@ void bottomSheetCategory(
               alignment: Alignment.center,
               child: Text(
                 title,
-                style: LightTextStyles.titleOfBottomSheet,
+                style: AppTextStyles.titleOfBottomSheet,
               ),
             ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: CustomTextField(
-                  controller: _categoryController,
+                  controller: categoryController,
                   hint: 'دسته بندی',
                   validator: (val) {
                     if (val!.isEmpty) {
@@ -109,7 +109,7 @@ void bottomSheetCategory(
               () => categoryVM.isLoadingBottomSheet.value
                   ? const Center(
                     child: Loading(
-                        color: LightColors.primary,
+                        color: AppColors.primary,
                         size: 42,
                       ),
                   )
@@ -122,7 +122,7 @@ void bottomSheetCategory(
                           child: ElevatedButton(
                             onPressed: () {
                               categoryVM.addCategory(
-                                title: _categoryController.text,
+                                title: categoryController.text,
                                 iconIndex: iconIndex.value,
                                 colorIndex: colorIndex.value,
                                 context: context,

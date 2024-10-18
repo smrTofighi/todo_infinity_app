@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/routes/pages.dart';
-import 'package:todo_infinity_app/core/styles/extensions.dart';
 import 'package:todo_infinity_app/core/styles/box_decoration.dart';
-import 'package:todo_infinity_app/core/styles/text_styles.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/core/widgets/loading.dart';
+import 'package:todo_infinity_app/features/auth/views/widgets/auth_tile.dart';
+import 'package:todo_infinity_app/features/main/widgets/loading.dart';
 import 'package:todo_infinity_app/features/auth/view_model/auth_view_model.dart';
 import 'package:todo_infinity_app/features/auth/views/widgets/auth_top_section.dart';
 import 'package:todo_infinity_app/features/auth/views/widgets/custom_textfield.dart';
@@ -21,7 +20,7 @@ class LogInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: LightColors.primaryBG,
+        backgroundColor: AppColors.primaryBG,
         body: Stack(
           children: [
             AuthTopSection(
@@ -117,32 +116,6 @@ class BottomSection extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class AuthTile extends StatelessWidget {
-  const AuthTile({
-    super.key,
-    required this.title,
-    required this.subtitle,
-  });
-  final String title;
-  final String subtitle;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: LightTextStyles.bigTitle,
-        ),
-        AppDimens.small.height,
-        Text(
-          subtitle,
-          style: LightTextStyles.normal12(LightColors.greyText),
-        ),
-      ],
     );
   }
 }

@@ -29,11 +29,27 @@ class MainCategoryViewModel extends GetxController {
   RxBool isLoading = RxBool(false);
   RxBool isError = RxBool(false);
 
-
   @override
   void onInit() {
     getCategories();
     super.onInit();
+  }
+
+  void deleteCategory(
+      String categoryId, int index, BuildContext context) async {
+    isLoading(true);
+    var response =
+        await _model.deleteCategory(categoryId: categoryId, index: index);
+    response.fold(
+      (l) {
+        isLoading(false);
+        CustomSnackbar.showError(context, l.message);
+      },
+      (r) {
+        isLoading(false);
+        update();
+      },
+    );
   }
 
   void addCategory(
@@ -62,9 +78,7 @@ class MainCategoryViewModel extends GetxController {
       },
     );
   }
-  void up(){
-    update();
-  }
+
 
   void getCategories() async {
     isLoading(true);
@@ -82,12 +96,13 @@ class MainCategoryViewModel extends GetxController {
     );
   }
 
-  void goToTaskListPage(CategoryModel category,) {
-
+  void goToTaskListPage(
+    CategoryModel category,
+  ) {
     final TaskViewModel taskVM = Get.put(TaskViewModel());
     taskVM.setCategory(category);
     taskVM.getTodos();
-    Get.toNamed(PageName.taskListView);
+    Get.toNamed(PageName.taskList);
   }
 
   showBottomSheetCategory(context) {

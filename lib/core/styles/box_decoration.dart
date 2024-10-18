@@ -11,12 +11,12 @@ class AppBoxDecoration {
       topLeft: Radius.circular(AppDimens.radius),
       topRight: Radius.circular(AppDimens.radius),
     ),
-    color: LightColors.backGround,
+    color: AppColors.backGround,
   );
 
   static BoxDecoration taskWidgetDecoration = BoxDecoration(
     borderRadius: BorderRadius.circular(AppDimens.radius),
-    color: LightColors.card,
+    color: AppColors.card,
     boxShadow: [
       BoxShadow(
           color: Colors.black.withOpacity(0.2),

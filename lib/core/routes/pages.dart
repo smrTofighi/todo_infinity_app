@@ -1,9 +1,10 @@
 class PageName {
-  static const String taskListView = '/TaskListView';
-  static const String taskSingleView = '/TaskSingleView';
-  static const String splashView = '/';
+  static const String taskList = '/taskListPage';
+  static const String taskSingle = '/taskSinglePage';
+  static const String splash = '/';
   static const String search = '/searchPage';
   static const String main = '/mainPage';
   static const String signUp = '/signUpPage';
   static const String logIn = '/logInPage';
+  static const String profile = '/profilePage';
 }

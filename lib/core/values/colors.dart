@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LightColors {
+class AppColors {
   //? text colors
   static const Color white54Text = Colors.white54;
   static Color greyText = Colors.grey.shade600;
@@ -26,7 +26,7 @@ class ShadowColor {
 }
 
 List<Color> colorList = [
-  LightColors.primary,
+  AppColors.primary,
   Colors.red,
   Colors.green,
   Colors.brown,

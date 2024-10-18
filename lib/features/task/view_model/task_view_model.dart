@@ -125,7 +125,7 @@ class TaskViewModel extends GetxController {
 
         update();
         clearSingleTodoAfterAdd();
-        log(document.data.toString());
+       
       },
     );
   }

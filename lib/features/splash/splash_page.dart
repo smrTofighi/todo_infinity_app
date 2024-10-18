@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/values/dimens.dart';
 import 'package:todo_infinity_app/features/auth/view_model/auth_view_model.dart';
-import '../../core/widgets/loading.dart';
+import '../main/widgets/loading.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

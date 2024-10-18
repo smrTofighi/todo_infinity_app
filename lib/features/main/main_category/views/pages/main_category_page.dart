@@ -1,10 +1,10 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_infinity_app/core/values/colors.dart';
 import 'package:todo_infinity_app/core/values/strings.dart';
-import 'package:todo_infinity_app/core/widgets/loading.dart';
-import 'package:todo_infinity_app/core/widgets/main_category/catogry_card.dart';
-import 'package:todo_infinity_app/features/task/view_model/task_view_model.dart';
+import 'package:todo_infinity_app/features/main/widgets/loading.dart';
+import 'package:todo_infinity_app/features/main/main_category/views/widgets/catogry_card.dart';
 import '../../view_model/main_category_view_model.dart';
 
 // ignore: must_be_immutable
@@ -21,7 +21,7 @@ class MainCategoryPage extends StatelessWidget {
             () => Get.find<MainCategoryViewModel>().isLoading.value
                 ? const Center(
                     child: Loading(
-                      color: LightColors.primary,
+                      color: AppColors.primary,
                       size: 50,
                     ),
                   )
@@ -83,14 +83,23 @@ class CategoryList extends StatelessWidget {
                         completedTodos:
                             vm.model.categoryList[index].completedTodos,
                         onTap: () {
-                          vm.goToTaskListPage(vm.model.categoryList[index]);
+                          //vm.goToTaskListPage(vm.model.categoryList[index]);
                         },
                       ),
                     ),
-                    onDragStarted: () => categoryVM.changeDeleting(true),
-                    onDraggableCanceled: (_, __) =>
-                        categoryVM.changeDeleting(false),
-                    onDragEnd: (_) => categoryVM.changeDeleting(false),
+                    onDragStarted: () {
+                      categoryVM.changeDeleting(true);
+                      log('start');
+                    },
+                    onDraggableCanceled: (_, __) {
+                      categoryVM.changeDeleting(false);
+                      log('cancle');
+                    },
+                    onDragEnd: (_) {
+                      categoryVM.changeDeleting(false);
+                      categoryVM.deleteCategory(
+                          vm.model.categoryList[index].id, index, context);
+                    },
                     child: CategoryCard(
                       title: vm.model.categoryList[index].title,
                       index: index,
